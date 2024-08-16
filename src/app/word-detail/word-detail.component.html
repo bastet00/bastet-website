@@ -1,0 +1,17 @@
+<div>
+  <h1>Word Detail</h1>
+  <p>ID: {{ word!.id }}</p>
+  <h2>Arabic Words</h2>
+  <ul>
+    <li *ngFor="let arabicWord of word?.Arabic">
+      {{ arabicWord.Word }}
+    </li>
+  </ul>
+  <h2>Egyptian Words</h2>
+  <ul>
+    <li *ngFor="let egyptianWord of word?.Egyptian">
+      &#13000;
+      {{ egyptianWord.Word }} - {{ egyptianWord.Symbol }}
+    </li>
+  </ul>
+</div>
