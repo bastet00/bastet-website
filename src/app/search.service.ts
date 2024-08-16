@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
-import { WordList } from './dto/word.dto';
+import { Word, WordList } from './dto/word.dto';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SearchService {
+  constructor(private http: HttpClient) {}
   readonly baseUrl = 'https://angular.io/assets/images/tutorials/faa';
 
   protected words: WordList = [
@@ -44,8 +47,9 @@ export class SearchService {
     },
   ];
 
-  getWords(): WordList {
-    return this.words;
+  getWords(word: string, lang: string): Observable<WordList> {
+    return this.http
+      .get<WordList>('http://localhost:3000', { params: { lang, word } })
+      .pipe();
   }
-
 }

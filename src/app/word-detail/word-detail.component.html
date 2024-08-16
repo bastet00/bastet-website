@@ -10,8 +10,7 @@
   <h2>Egyptian Words</h2>
   <ul>
     <li *ngFor="let egyptianWord of word?.Egyptian">
-      &#13000;
-      {{ egyptianWord.Word }} - {{ egyptianWord.Symbol }}
+      {{ egyptianWord.Word }} - {{'&#x' + egyptianWord.Symbol + ';'}}
     </li>
   </ul>
 </div>

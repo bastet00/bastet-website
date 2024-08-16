@@ -19,12 +19,15 @@ export class AppComponent {
   words: WordList = [];
   selectedLanguage = 'Arabic';
   languages = ['Arabic', 'Egyptian'];
+  icon = '&#' + 'x00013150' + ';';
 
   filterResults(text: string) {
     if (!text) {
       return;
     }
     console.log(this.selectedLanguage);
-    this.words = this.searchService.getWords();
+    this.searchService
+      .getWords(text, this.selectedLanguage)
+      .subscribe((words) => (this.words = words));
   }
 }
