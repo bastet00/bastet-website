@@ -6,6 +6,7 @@ import { WordList } from './dto/word.dto';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NavbarComponent } from './navbar/navbar.component';
+import { LandingComponent } from './landing/landing.component';
 
 @Component({
   selector: 'app-root',
@@ -16,6 +17,7 @@ import { NavbarComponent } from './navbar/navbar.component';
     CommonModule,
     FormsModule,
     NavbarComponent,
+    LandingComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
