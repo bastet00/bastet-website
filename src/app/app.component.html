@@ -1,22 +1,25 @@
-<main class="main">
-  <h1 class="text-3xl font-bold underline">
-    Hello world!𓅐 <span [innerHTML]="icon"></span>
-
-  </h1>
-  <section>
-    <form>
-      <input type="text" placeholder="Filter by city" #filter>
-      <select type="string" name="select-language" [(ngModel)]="selectedLanguage">
-        <option *ngFor="let lang of languages" [ngValue]="lang">{{lang}}</option>
-      </select>
-      <button class="primary" type="button" (click)="filterResults(filter.value)">Search</button>
-    </form>
-  </section>
-  <section class="results">
-    <word-detail *ngFor="let word of words" [word]="word">
-    </word-detail>
-  </section>
-
+<!-- <main class="main"> -->
+<!--   <h1 class="text-3xl font-bold underline"> -->
+<!--     Hello world!𓅐 <span [innerHTML]="icon"></span> -->
+<!---->
+<!--   </h1> -->
+<!--   <section> -->
+<!--     <form> -->
+<!--       <input type="text" placeholder="Filter by city" #filter> -->
+<!--       <select type="string" name="select-language" [(ngModel)]="selectedLanguage"> -->
+<!--         <option *ngFor="let lang of languages" [ngValue]="lang">{{lang}}</option> -->
+<!--       </select> -->
+<!--       <button class="primary" type="button" (click)="filterResults(filter.value)">Search</button> -->
+<!--     </form> -->
+<!--   </section> -->
+<!--   <section class="results"> -->
+<!--     <word-detail *ngFor="let word of words" [word]="word"> -->
+<!--     </word-detail> -->
+<!--   </section> -->
+<!---->
+<!-- </main> -->
+<!---->
+<!-- <router-outlet /> -->
+<main class="container">
+  <app-navbar></app-navbar>
 </main>
-
-<router-outlet />
