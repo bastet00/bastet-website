@@ -16,10 +16,39 @@
   opacity: 0.08;
   background: black -257.351px -0.181px / 140.255% 144.646% no-repeat;
   mix-blend-mode: difference;
+  pointer-events: none;
+}
+
+.half-colored::after {
+  content: "";
+  width: 100%;
+  height: 50%;
+  background-color: #f6831c;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  opacity: 0.2;
+  pointer-events: none;
 }
 
 @layer components {
   .container {
     @apply w-4/5 mx-auto
+  }
+
+  .translation-area-wrapper {
+    @apply w-3/4 h-2/5 relative
+  }
+
+  .translation-area {
+    @apply bg-inputBackground border-none rounded-lg outline-none p-4 text-2xl text-white w-full h-full resize-none
+  }
+
+  .options-wrapper {
+    @apply hidden md:flex absolute bottom-2 right-0
+  }
+
+  .options-btn {
+    @apply border border-[#6F5A2B] text-gray-400 rounded-2xl mx-2 p-1
   }
 }
