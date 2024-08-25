@@ -5,6 +5,7 @@ export interface Language {
 
 export interface ArabicWord {
   Word: string;
+  Symbol: string;
 }
 
 export interface EgyptianWord {
@@ -16,4 +17,9 @@ export interface TranslationRes {
   id: string;
   Arabic: ArabicWord[];
   Egyptian: EgyptianWord[];
+}
+
+export interface SerializedRes {
+  to: ArabicWord[] | EgyptianWord[];
+  from: ArabicWord[] | EgyptianWord[];
 }

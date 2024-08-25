@@ -1,10 +1,6 @@
 import { Component } from '@angular/core';
-import {
-  ArabicWord,
-  EgyptianWord,
-  Language,
-  TranslationRes,
-} from './interface';
+import { Language, SerializedRes } from './interface';
+import { controllDisplay, generateText, translation } from './utils';
 
 @Component({
   selector: 'app-landing',
@@ -14,45 +10,61 @@ import {
   styleUrl: './landing.component.scss',
 })
 export class LandingComponent {
-  private url = 'http://localhost:3000';
-
   languages: Language[] = [
-    { text: 'عربي', query: 'Arabic' },
     { text: 'هيروغليفي', query: 'Egyptian' },
+    { text: 'عربي', query: 'Arabic' },
   ];
 
   onClick(): void {
+    controllDisplay(false);
     let stash = {} as Language;
     stash = this.languages[0];
     this.languages[0] = this.languages[1];
     this.languages[1] = stash;
   }
 
-  async onChange(word: string): Promise<void> {
-    const transFrom = this.languages[0].query;
-    const transTo = this.languages[1].query;
-    const translateToBox = document.getElementById('trans-to')
-      ?.children[0] as HTMLTextAreaElement;
-    if (word) {
-      const call = await fetch(`${this.url}?lang=${transFrom}&word=${word}`, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+  private hanlder: ReturnType<typeof setTimeout> | null = null;
 
-      const res: TranslationRes[] = await call.json();
-      if (call.ok && Boolean(res.length)) {
-        const test1 = res
-          .map(
-            (res) =>
-              res[transTo as keyof TranslationRes] as
-                | ArabicWord[]
-                | EgyptianWord[],
-          )[0]
-          .map((words) => words.Word);
-        translateToBox.classList.remove('hidden');
-        translateToBox.value = `${test1.join('')}`;
+  appendTranslation(data: SerializedRes | null): void {
+    const translationTo = document.getElementById(
+      'trans-result',
+    ) as HTMLParagraphElement;
+    const translationMatch = document.getElementById(
+      'trans-match',
+    ) as HTMLParagraphElement;
+
+    if (data) {
+      // user call was about translation to Egyptian so there might be symbol shown
+      if (this.languages[0].query === 'Egyptian') {
+        translationTo.innerHTML = generateText(data.to, true);
+        translationMatch.innerHTML = generateText(data.from);
+        return;
       }
+      translationTo.innerHTML = generateText(data.to);
+      translationMatch.innerHTML = generateText(data.from);
+      return;
+    }
+  }
+
+  async onChange(word: string): Promise<void> {
+    // if user doesn't type for ${delay} millseconds call is excuted
+    const delay: number = 300;
+
+    if (this.hanlder) {
+      clearTimeout(this.hanlder);
+    }
+
+    if (word.trim() !== '') {
+      this.hanlder = setTimeout(async () => {
+        const data = await translation(
+          this.languages[1].query,
+          this.languages[0].query,
+          word,
+        );
+        this.appendTranslation(data);
+      }, delay);
+    } else {
+      controllDisplay(false);
     }
   }
 }

@@ -5,6 +5,7 @@ module.exports = {
     extend: {
       colors: {
         main: "#f6831c",
+        secondary: "#E7B133",
         titleColor: "#f4931e",
         navBackground: "#312719",
         inputBackground: "#302718",

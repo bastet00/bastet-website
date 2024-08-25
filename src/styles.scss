@@ -23,19 +23,23 @@
   pointer-events: none;
 }
 
+
 .half-colored::after {
   content: "";
   width: 100%;
-  height: 50%;
-  background-color: #f6831c;
   position: absolute;
   left: 0;
   bottom: 0;
-  opacity: 0.2;
+  z-index: -1;
+  /* Keep it behind the text */
   pointer-events: none;
 }
 
 @layer components {
+  .half-colored {
+    @apply w-fit text-3xl relative z-[1];
+  }
+
   .container {
     @apply w-4/5 mx-auto
   }
