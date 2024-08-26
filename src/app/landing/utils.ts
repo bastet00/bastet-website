@@ -43,7 +43,7 @@ export async function translation(
   word: string,
 ): Promise<RenameResponseKeys | void> {
   try {
-    const url = 'http://localhost:3000';
+    const url = 'https://bastet-server-ef94bb4e91eb.herokuapp.com/search';
 
     const response = await fetch(`${url}?lang=${from}&word=${word}`, {
       headers: {

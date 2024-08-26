@@ -49,7 +49,9 @@ export class SearchService {
 
   getWords(word: string, lang: string): Observable<WordList> {
     return this.http
-      .get<WordList>('http://localhost:3000', { params: { lang, word } })
+      .get<WordList>('https://bastet-server-ef94bb4e91eb.herokuapp.com/search', {
+        params: { lang, word },
+      })
       .pipe();
   }
 }
