@@ -1,6 +1,11 @@
-import { Component } from '@angular/core';
-import { Language, SerializedRes } from './interface';
-import { controllDisplay, generateText, translation } from './utils';
+import { Component, OnInit } from '@angular/core';
+import {
+  ArabicWord,
+  EgyptianWord,
+  Language,
+  RenameResponseKeys,
+} from './interface';
+import { controllDisplay, symbolTranslator, translation } from './utils';
 
 @Component({
   selector: 'app-landing',
@@ -9,11 +14,28 @@ import { controllDisplay, generateText, translation } from './utils';
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.scss',
 })
-export class LandingComponent {
+export class LandingComponent implements OnInit {
+  localKey: string = 'selectedLanguages';
+
   languages: Language[] = [
     { text: 'هيروغليفي', query: 'Egyptian' },
     { text: 'عربي', query: 'Arabic' },
   ];
+
+  ngOnInit(): void {
+    this.loadLanguages();
+  }
+
+  loadLanguages(): void {
+    const storedLanguages = window.localStorage.getItem(this.localKey);
+    if (storedLanguages) {
+      this.languages = JSON.parse(storedLanguages);
+    }
+  }
+
+  updateLanguage(): void {
+    window.localStorage.setItem(this.localKey, JSON.stringify(this.languages));
+  }
 
   onClick(): void {
     controllDisplay(false);
@@ -21,33 +43,44 @@ export class LandingComponent {
     stash = this.languages[0];
     this.languages[0] = this.languages[1];
     this.languages[1] = stash;
+    this.updateLanguage();
+  }
+
+  textGenerator(arrOfWords: ArabicWord[], symbol?: string): string {
+    const text = arrOfWords.map((words) => words.Word);
+    if (symbol) {
+      return text.join(' , ') + symbolTranslator(symbol);
+    } else {
+      return text.join(' , ');
+    }
+  }
+
+  isToEgy(obj: RenameResponseKeys) {
+    const result = document.getElementById(
+      'trans-result',
+    ) as HTMLParagraphElement;
+    const match = document.getElementById(
+      'trans-match',
+    ) as HTMLParagraphElement;
+
+    if (this.languages[0].query === 'Egyptian') {
+      result.classList.add('translation-to-egy-text');
+      result.innerHTML = this.textGenerator(
+        obj.to,
+        (obj.to[0] as EgyptianWord).Symbol,
+      );
+      match.innerHTML = this.textGenerator(obj.from);
+    } else {
+      result.classList.remove('translation-to-egy-text');
+      match.classList.add('translation-to-egy-text');
+      result.innerHTML = this.textGenerator(obj.to);
+      match.innerHTML = this.textGenerator(obj.from);
+    }
   }
 
   private hanlder: ReturnType<typeof setTimeout> | null = null;
 
-  appendTranslation(data: SerializedRes | null): void {
-    const translationTo = document.getElementById(
-      'trans-result',
-    ) as HTMLParagraphElement;
-    const translationMatch = document.getElementById(
-      'trans-match',
-    ) as HTMLParagraphElement;
-
-    if (data) {
-      // user call was about translation to Egyptian so there might be symbol shown
-      if (this.languages[0].query === 'Egyptian') {
-        translationTo.innerHTML = generateText(data.to, true);
-        translationMatch.innerHTML = generateText(data.from);
-        return;
-      }
-      translationTo.innerHTML = generateText(data.to);
-      translationMatch.innerHTML = generateText(data.from);
-      return;
-    }
-  }
-
   async onChange(word: string): Promise<void> {
-    // if user doesn't type for ${delay} millseconds call is excuted
     const delay: number = 300;
 
     if (this.hanlder) {
@@ -57,11 +90,16 @@ export class LandingComponent {
     if (word.trim() !== '') {
       this.hanlder = setTimeout(async () => {
         const data = await translation(
-          this.languages[1].query,
           this.languages[0].query,
+          this.languages[1].query,
           word,
         );
-        this.appendTranslation(data);
+
+        if (data) {
+          this.isToEgy(data);
+        } else {
+          controllDisplay(false);
+        }
       }, delay);
     } else {
       controllDisplay(false);

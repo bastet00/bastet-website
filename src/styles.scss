@@ -37,7 +37,15 @@
 
 @layer components {
   .half-colored {
-    @apply w-fit text-3xl relative z-[1];
+    @apply text-3xl relative z-[1];
+  }
+
+  .info-arabic-text {
+    @apply mx-auto half-colored text-white after:bg-orange-500 after:opacity-20 after:h-1/2
+  }
+
+  .translation-to-egy-text {
+    @apply half-colored text-secondary after:bg-[#275EA5] after:h-1/6
   }
 
   .container {
