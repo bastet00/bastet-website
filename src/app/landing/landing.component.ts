@@ -74,7 +74,10 @@ export class LandingComponent implements OnInit {
       result.classList.remove('translation-to-egy-text');
       match.classList.add('translation-to-egy-text');
       result.innerHTML = this.textGenerator(obj.to);
-      match.innerHTML = this.textGenerator(obj.from);
+      match.innerHTML = this.textGenerator(
+        obj.from,
+        (obj.from[0] as EgyptianWord).Symbol,
+      );
     }
   }
 
