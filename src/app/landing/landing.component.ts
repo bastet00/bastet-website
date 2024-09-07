@@ -6,11 +6,12 @@ import {
   RenameResponseKeys,
 } from './interface';
 import { controllDisplay, symbolTranslator, translation } from './utils';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-landing',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.scss',
 })
@@ -83,6 +84,7 @@ export class LandingComponent implements OnInit {
   }
 
   private hanlder: ReturnType<typeof setTimeout> | null = null;
+  loading: boolean = false;
 
   async onChange(word: string): Promise<void> {
     const delay: number = 300;
@@ -92,6 +94,8 @@ export class LandingComponent implements OnInit {
     }
 
     if (word.trim() !== '') {
+      this.loading = true;
+      controllDisplay(false);
       this.hanlder = setTimeout(async () => {
         const data = await translation(
           this.languages[0].query,
@@ -104,6 +108,7 @@ export class LandingComponent implements OnInit {
         } else {
           controllDisplay(false);
         }
+        this.loading = false;
       }, delay);
     } else {
       controllDisplay(false);

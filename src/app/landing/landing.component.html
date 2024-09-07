@@ -122,6 +122,9 @@ TODO: textarea gets ruined in big text
       <!-- end user input -->
       <!-- start translation input  -->
       <div class="translation-area-wrapper">
+        <div *ngIf="loading" class="w-[200px] h-[150px] shrink-0 mx-auto">
+          <img src="loader.gif" alt="Loading..." />
+        </div>
         <div
           class="hidden translation-area placeholder:text-right"
           id="translation-box"
