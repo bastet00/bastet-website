@@ -65,6 +65,7 @@ export class LandingComponent implements OnInit {
 
     if (this.languages[0].query === 'Egyptian') {
       result.classList.add('translation-to-egy-text');
+      match.classList.remove('translation-to-egy-text');
       result.innerHTML = this.textGenerator(
         obj.to,
         (obj.to[0] as EgyptianWord).Symbol,
