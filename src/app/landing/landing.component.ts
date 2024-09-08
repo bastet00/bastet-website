@@ -19,8 +19,8 @@ export class LandingComponent implements OnInit {
   localKey: string = 'selectedLanguages';
 
   languages: Language[] = [
-    { text: 'هيروغليفي', query: 'Egyptian' },
-    { text: 'عربي', query: 'Arabic' },
+    { text: 'هيروغليفي', query: 'Arabic' },
+    { text: 'عربي', query: 'Egyptian' },
   ];
 
   ngOnInit(): void {
@@ -58,10 +58,10 @@ export class LandingComponent implements OnInit {
 
   isToEgy(obj: RenameResponseKeys) {
     const result = document.getElementById(
-      'trans-result',
+      'trans-result'
     ) as HTMLParagraphElement;
     const match = document.getElementById(
-      'trans-match',
+      'trans-match'
     ) as HTMLParagraphElement;
 
     if (this.languages[0].query === 'Egyptian') {
@@ -69,7 +69,7 @@ export class LandingComponent implements OnInit {
       match.classList.remove('translation-to-egy-text');
       result.innerHTML = this.textGenerator(
         obj.to,
-        (obj.to[0] as EgyptianWord).Symbol,
+        (obj.to[0] as EgyptianWord).Symbol
       );
       match.innerHTML = this.textGenerator(obj.from);
     } else {
@@ -78,7 +78,7 @@ export class LandingComponent implements OnInit {
       result.innerHTML = this.textGenerator(obj.to);
       match.innerHTML = this.textGenerator(
         obj.from,
-        (obj.from[0] as EgyptianWord).Symbol,
+        (obj.from[0] as EgyptianWord).Symbol
       );
     }
   }
@@ -100,7 +100,7 @@ export class LandingComponent implements OnInit {
         const data = await translation(
           this.languages[0].query,
           this.languages[1].query,
-          word,
+          word
         );
 
         if (data) {
