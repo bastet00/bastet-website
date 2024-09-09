@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Language } from '../interface';
+import { LanguageService } from '../../services/language.service';
 
 @Component({
   selector: 'app-lang-switcher',
@@ -9,33 +10,16 @@ import { Language } from '../interface';
   styleUrl: './lang-switcher.component.scss',
 })
 export class LangSwitcherComponent implements OnInit {
-  localKey: string = 'selectedLanguages';
-
-  languages: Language[] = [
-    { text: 'هيروغليفي', query: 'Arabic' },
-    { text: 'عربي', query: 'Egyptian' },
-  ];
+  constructor(private languageService: LanguageService) {}
+  languages: Language[] = [];
 
   ngOnInit(): void {
-    this.loadLanguages();
-  }
-
-  loadLanguages(): void {
-    const storedLanguages = window.localStorage.getItem(this.localKey);
-    if (storedLanguages) {
-      this.languages = JSON.parse(storedLanguages);
-    }
-  }
-
-  updateLanguage(): void {
-    window.localStorage.setItem(this.localKey, JSON.stringify(this.languages));
+    this.languageService.languages$.subscribe((lang) => {
+      this.languages = lang;
+    });
   }
 
   onClick(): void {
-    let stash = {} as Language;
-    stash = this.languages[0];
-    this.languages[0] = this.languages[1];
-    this.languages[1] = stash;
-    this.updateLanguage();
+    this.languageService.swapLanguages();
   }
 }

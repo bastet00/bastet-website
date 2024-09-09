@@ -1,27 +1,24 @@
 import { Component } from '@angular/core';
-import { ArabicWord } from './interface';
-import { symbolTranslator } from './utils';
-import { CommonModule } from '@angular/common';
 import { StaticComponent } from './static/static.component';
 import { LangSwitcherComponent } from './lang-switcher/lang-switcher.component';
+import { UserInputComponent } from './user-input/user-input.component';
 
 @Component({
   selector: 'app-landing',
   standalone: true,
-  imports: [CommonModule, StaticComponent, LangSwitcherComponent],
+  imports: [StaticComponent, LangSwitcherComponent, UserInputComponent],
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.scss',
 })
 export class LandingComponent {
-  textGenerator(arrOfWords: ArabicWord[], symbol?: string): string {
-    const text = arrOfWords.map((words) => words.Word);
-    if (symbol) {
-      return text.join(' , ') + symbolTranslator(symbol);
-    } else {
-      return text.join(' , ');
-    }
-  }
-
+  // textGenerator(arrOfWords: ArabicWord[], symbol?: string): string {
+  //   const text = arrOfWords.map((words) => words.Word);
+  //   if (symbol) {
+  //     return text.join(' , ') + symbolTranslator(symbol);
+  //   } else {
+  //     return text.join(' , ');
+  //   }
+  // }
   // isToEgy(obj: RenameResponseKeys) {
   //   const result = document.getElementById(
   //     'trans-result',
