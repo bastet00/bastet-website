@@ -3,6 +3,7 @@ import { StaticComponent } from './static/static.component';
 import { LangSwitcherComponent } from './lang-switcher/lang-switcher.component';
 import { UserInputComponent } from './user-input/user-input.component';
 import { TranslationBoxComponent } from './translation-box/translation-box.component';
+import { SuspendComponent } from '../suspend/suspend.component';
 
 @Component({
   selector: 'app-landing',
@@ -12,6 +13,7 @@ import { TranslationBoxComponent } from './translation-box/translation-box.compo
     LangSwitcherComponent,
     UserInputComponent,
     TranslationBoxComponent,
+    SuspendComponent,
   ],
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.scss',

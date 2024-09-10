@@ -17,10 +17,3 @@ export interface TranslationRes {
   Arabic: ArabicWord[];
   Egyptian: EgyptianWord[];
 }
-
-export type OmitIDResponse = Omit<TranslationRes, 'id'>;
-
-export interface RenameResponseKeys {
-  to: ArabicWord[] | EgyptianWord[];
-  from: ArabicWord[] | EgyptianWord[];
-}

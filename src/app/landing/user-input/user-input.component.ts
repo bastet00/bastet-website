@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { LanguageService } from '../../services/language.service';
-import { Language, TranslationRes } from '../interface';
+import { Language } from '../interface';
 import { CommonModule } from '@angular/common';
-import { translation } from '../utils';
+import { TranslationService } from '../../services/translation.service';
 
 @Component({
   selector: 'app-user-input',
@@ -12,7 +12,10 @@ import { translation } from '../utils';
   styleUrl: './user-input.component.scss',
 })
 export class UserInputComponent implements OnInit {
-  constructor(private languageService: LanguageService) {}
+  constructor(
+    private languageService: LanguageService,
+    private translationService: TranslationService,
+  ) {}
 
   private languages: Language[] = [];
   ngOnInit(): void {
@@ -20,8 +23,6 @@ export class UserInputComponent implements OnInit {
       this.languages = lang;
     });
   }
-
-  data = [] as TranslationRes[];
 
   loading: boolean = false;
   private handler: ReturnType<typeof setTimeout> | null = null;
@@ -35,13 +36,12 @@ export class UserInputComponent implements OnInit {
 
     if (word.trim() !== '') {
       this.handler = setTimeout(() => {
-        translation(this.languages[0].query, word).subscribe({
-          next: (data: TranslationRes[]) => {
-            this.data = data;
-            console.log(this.data);
-          },
-        });
+        this.translationService
+          .translation(this.languages[0].query, word)
+          .subscribe();
       }, delay);
+    } else {
+      this.translationService.setNull();
     }
   }
 }

@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-suspend',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './suspend.component.html',
-  styleUrl: './suspend.component.scss'
+  styleUrl: './suspend.component.scss',
 })
-export class SuspendComponent {
-
-}
+export class SuspendComponent {}

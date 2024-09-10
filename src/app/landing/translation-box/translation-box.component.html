@@ -1,8 +1,20 @@
 <div class="translation-area-wrapper mx-auto">
-  <div class="translation-area">
-    <p class="w-fit"></p>
-    <p class="w-fit"></p>
-    <div class="self-end flex items-center gap-x-4">
+  <app-suspend *ngIf="loading"></app-suspend>
+  <div class="translation-area" *ngIf="Egyptian.length">
+    <div class="flex gap-x-2 translation-to-egy-text w-fit">
+      @for (obj of Egyptian; track obj.Word) {
+        <span>{{ obj?.Word }}</span>
+        <p class="w-fit" [innerHTML]="sanitizeSymbol(obj.Symbol)">
+          {{ obj?.Symbol }}
+        </p>
+      }
+    </div>
+
+    @for (obj of Arabic; track obj.Word) {
+      <p class="w-fit">{{ obj.Word }}</p>
+    }
+
+    <div class="flex items-center gap-x-4 w-fit mr-auto">
       <svg
         width="20"
         height="20"
