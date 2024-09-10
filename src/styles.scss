@@ -31,7 +31,6 @@
   left: 0;
   bottom: 0;
   z-index: -1;
-  /* Keep it behind the text */
   pointer-events: none;
 }
 
@@ -41,7 +40,7 @@
   }
 
   .info-arabic-text {
-    @apply mx-auto half-colored text-white after:bg-orange-500 after:opacity-20 after:h-1/2
+    @apply mx-auto w-fit half-colored text-white after:bg-orange-500 after:opacity-20 after:h-1/2
   }
 
   .translation-to-egy-text {
@@ -53,11 +52,11 @@
   }
 
   .translation-area-wrapper {
-    @apply w-3/4 h-2/5 relative
+    @apply w-3/4 relative
   }
 
   .translation-area {
-    @apply bg-inputBackground border-none rounded-lg outline-none p-4 text-2xl text-white w-full h-full resize-none
+    @apply bg-inputBackground border-none rounded-lg outline-none p-4 text-2xl text-white w-full resize-none
   }
 
   .options-wrapper {
