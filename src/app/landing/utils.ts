@@ -1,8 +1,6 @@
-import {
-  OmitIDResponse,
-  RenameResponseKeys,
-  TranslationRes,
-} from './interface';
+import { fromFetch } from 'rxjs/fetch';
+import { TranslationRes } from './interface';
+import { catchError, Observable, of, switchMap } from 'rxjs';
 
 export function symbolTranslator(sy: string) {
   const symbol = '0x' + sy;
@@ -10,59 +8,30 @@ export function symbolTranslator(sy: string) {
   return `&#${entity};`;
 }
 
-export function controllDisplay(dis: boolean): void {
-  const translationBox = document.getElementById(
-    'translation-box',
-  ) as HTMLDivElement;
-  if (dis) translationBox.classList.remove('hidden');
-  if (!dis) translationBox.classList.add('hidden');
-}
-
-function renameKeys(
-  resObject: TranslationRes,
-  to: string,
-  from: string,
-): RenameResponseKeys {
-  /*
-   * @param ${to} access ${resObject} object, catch language user needed to transfer to
-   * @param ${from} access ${resObject} object, catch language user needed to transfer from
-   * @return object contains two keys { to:[], from:[] }
-   * */
-  return Object.assign(
-    {},
-    {
-      ['to']: resObject[to as keyof OmitIDResponse],
-      ['from']: resObject[from as keyof OmitIDResponse],
-    },
-  );
-}
-
-export async function translation(
-  to: string,
+export function translation(
   from: string,
   word: string,
-): Promise<RenameResponseKeys | void> {
-  try {
-    const url = 'https://bastet-server-ef94bb4e91eb.herokuapp.com/search';
+): Observable<TranslationRes[]> {
+  const url = 'https://bastet-server-ef94bb4e91eb.herokuapp.com/search';
+  const controller = new AbortController();
+  const signal = controller.signal;
 
-    const response = await fetch(`${url}?lang=${from}&word=${word}`, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error('Failed to fetch translation');
-    }
-
-    const res: TranslationRes[] = await response.json();
-    if (res.length) {
-      controllDisplay(true);
-      return renameKeys(res[0], to, from);
-    } else {
-      controllDisplay(false);
-    }
-  } catch (err) {
-    console.error('Error during translation:', err);
-  }
+  return fromFetch(`${url}?lang=${from}&word=${word}`, {
+    signal,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  }).pipe(
+    switchMap((response) => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error('Failed to fetch translation');
+      }
+    }),
+    catchError((err) => {
+      console.error('Error during translation:', err);
+      return of([]);
+    }),
+  );
 }

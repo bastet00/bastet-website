@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LanguageService } from '../../services/language.service';
-import { Language } from '../interface';
+import { Language, TranslationRes } from '../interface';
 import { CommonModule } from '@angular/common';
 import { translation } from '../utils';
 
@@ -21,23 +21,26 @@ export class UserInputComponent implements OnInit {
     });
   }
 
+  data = [] as TranslationRes[];
+
   loading: boolean = false;
   private handler: ReturnType<typeof setTimeout> | null = null;
 
   onChange(word: string): void {
     const delay = 300;
+
     if (this.handler) {
       clearTimeout(this.handler);
     }
 
     if (word.trim() !== '') {
-      this.handler = setTimeout(async () => {
-        const data = await translation(
-          this.languages[0].query,
-          this.languages[1].query,
-          word,
-        );
-        console.log(data);
+      this.handler = setTimeout(() => {
+        translation(this.languages[0].query, word).subscribe({
+          next: (data: TranslationRes[]) => {
+            this.data = data;
+            console.log(this.data);
+          },
+        });
       }, delay);
     }
   }
