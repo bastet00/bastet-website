@@ -17,3 +17,10 @@ export interface TranslationRes {
   Arabic: ArabicWord[];
   Egyptian: EgyptianWord[];
 }
+
+export interface TranslationResToView {
+  id: string;
+  Arabic: string;
+  Egyptian: string;
+  Symbol: string;
+}
