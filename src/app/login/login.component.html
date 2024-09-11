@@ -1,1 +1,38 @@
-<p>login works!</p>
+<form
+  [formGroup]="loginForm"
+  (submit)="submitCreds()"
+  class="h-screen bg-black flex items-center justify-center flex-col gap-y-4"
+>
+  <label for="user" class="w-1/2">
+    <input
+      placeholder="User"
+      formControlName="user"
+      class="border-b w-full border-b-main outline-none text-left bg-transparent text-white p-2"
+    />
+  </label>
+  <label for="password" class="w-1/2">
+    <input
+      type="password"
+      formControlName="password"
+      placeholder="Password"
+      class="border-b border-b-main w-full outline-none text-left bg-transparent text-white p-2"
+    />
+    <div
+      *ngIf="loginForm.get('user')?.touched && loginForm.get('user')?.invalid"
+      class="text-red-500"
+    >
+      <p *ngIf="loginForm.get('user')?.hasError('required')">
+        Username is required
+      </p>
+      <small *ngIf="loginForm.get('user')?.hasError('minlength')"
+        >Username must be at least 3 characters</small
+      >
+    </div>
+  </label>
+  <input
+    type="submit"
+    name="sub"
+    value="Submit"
+    class="text-white border px-4 py-2 rounded-md border-main"
+  />
+</form>
