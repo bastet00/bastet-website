@@ -1,11 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { LoginService } from '../services/login.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -14,17 +16,29 @@ import {
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
+  constructor(
+    private loginService: LoginService,
+    private router: Router,
+  ) {}
+  isTrusted: boolean = false;
+
+  ngOnInit(): void {
+    this.loginService.isTrusted$.subscribe(
+      (isTrusted) => (this.isTrusted = isTrusted),
+    );
+
+    if (this.isTrusted) {
+      this.router.navigateByUrl('/');
+    }
+  }
+
   loginForm = new FormGroup({
-    user: new FormControl('', [Validators.required, Validators.minLength(3)]),
     password: new FormControl('', [Validators.required]),
   });
 
   submitCreds() {
-    const user = this.loginForm.value.user ?? '';
     const password = this.loginForm.value.password ?? '';
-
-    console.log('User:', user);
-    console.log('Password:', password);
+    this.loginService.login(password).subscribe();
   }
 }
