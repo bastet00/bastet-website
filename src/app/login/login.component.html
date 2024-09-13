@@ -16,23 +16,11 @@
     <small *ngIf="invalidPass" class="text-red-800 block"
       >by the way we don't have contact us</small
     >
-
-    <!-- <div -->
-    <!--   *ngIf="loginForm.get('user')?.touched && loginForm.get('user')?.invalid" -->
-    <!--   class="text-red-500" -->
-    <!-- > -->
-    <!--   <p *ngIf="loginForm.get('user')?.hasError('required')"> -->
-    <!--     Username is required -->
-    <!--   </p> -->
-    <!--   <small *ngIf="loginForm.get('user')?.hasError('minlength')" -->
-    <!--     >Username must be at least 3 characters</small -->
-    <!--   > -->
-    <!-- </div> -->
   </label>
   <input
     type="submit"
     name="sub"
     value="Submit"
-    class="text-white border px-4 py-2 rounded-md border-main"
+    class="text-white border px-4 py-2 rounded-md border-main cursor-pointer"
   />
 </form>

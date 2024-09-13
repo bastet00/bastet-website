@@ -1,1 +1,26 @@
-<p>admin works!</p>
+<div class="min-h-[100dvh] bg-black relative top-0">
+  <div class="absolute left-1/2 -translate-x-1/2 w-full bg-black">
+    <app-lang-switcher></app-lang-switcher>
+    <app-user-input></app-user-input>
+    @for (obj of data; track obj.id) {
+      <div class="container text-white text-2xl" id="{{ obj.id }}">
+        <label for="Egyptian" class="flex items-center gap-x-4">
+          مصري:
+          <input
+            value="{{ obj.Egyptian }}"
+            class="text-2xl bg-transparent border-b outline-none border-b-main"
+          />
+          <p [innerHTML]="sanitizeSymbol(obj.Symbol)">{{ obj.Symbol }}</p>
+        </label>
+        <label for="Arabic" class="flex items-center gap-x-4">
+          ترجمات:
+          <input
+            value="{{ obj.Arabic }}"
+            class="text-2xl bg-transparent border-b outline-none border-b-main"
+          />
+        </label>
+      </div>
+      <br />
+    }
+  </div>
+</div>
