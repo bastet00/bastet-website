@@ -20,7 +20,7 @@ export class LoginService {
     if (localStorage.getItem(this.localKey)) {
       this.isTrustedSubjects.next(true);
     } else {
-      console.log('new member');
+      this.isTrustedSubjects.next(false);
     }
   }
 

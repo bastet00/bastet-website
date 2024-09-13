@@ -10,6 +10,13 @@
       placeholder="Password"
       class="border-b border-b-main w-full outline-none text-left bg-transparent text-white p-2"
     />
+    <small *ngIf="invalidPass" class="text-red-800"
+      >Try to reach to you password provider via contact us</small
+    >
+    <small *ngIf="invalidPass" class="text-red-800 block"
+      >by the way we don't have contact us</small
+    >
+
     <!-- <div -->
     <!--   *ngIf="loginForm.get('user')?.touched && loginForm.get('user')?.invalid" -->
     <!--   class="text-red-500" -->

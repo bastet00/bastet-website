@@ -23,13 +23,19 @@ export class LoginComponent implements OnInit {
   ) {}
   isTrusted: boolean = false;
 
+  private goTo() {
+    this.router.navigateByUrl('/admin');
+  }
+
+  invalidPass = false;
+
   ngOnInit(): void {
     this.loginService.isTrusted$.subscribe(
       (isTrusted) => (this.isTrusted = isTrusted),
     );
 
     if (this.isTrusted) {
-      this.router.navigateByUrl('/admin');
+      this.goTo();
     }
   }
 
@@ -39,6 +45,10 @@ export class LoginComponent implements OnInit {
 
   submitCreds() {
     const password = this.loginForm.value.password ?? '';
-    this.loginService.login(password).subscribe();
+    this.loginService.login(password).subscribe((trusted) => {
+      if (trusted) {
+        this.goTo();
+      } else this.invalidPass = true;
+    });
   }
 }
