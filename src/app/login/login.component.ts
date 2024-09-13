@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
     );
 
     if (this.isTrusted) {
-      this.router.navigateByUrl('/');
+      this.router.navigateByUrl('/admin');
     }
   }
 
