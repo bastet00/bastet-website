@@ -6,9 +6,9 @@ import { fromFetch } from 'rxjs/fetch';
   providedIn: 'root',
 })
 export class LoginService {
-  private url = `http://localhost:3000/login?password=`;
+  private url = `https://bastet-server-ef94bb4e91eb.herokuapp.com/login?password=`;
   private isTrustedSubjects: BehaviorSubject<boolean> = new BehaviorSubject(
-    false,
+    false
   );
   private localKey = 'isAuthBefore';
   isTrusted$ = this.isTrustedSubjects.asObservable();
@@ -44,7 +44,7 @@ export class LoginService {
         console.error('Login error:', error);
         this.isTrustedSubjects.next(false);
         return of(false);
-      }),
+      })
     );
   }
 }
