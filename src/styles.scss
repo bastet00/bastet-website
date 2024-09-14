@@ -62,6 +62,7 @@
   }
 
   .options-btn {
-    @apply border border-[#6F5A2B] text-gray-400 rounded-2xl mx-2 p-1
+    @apply border border-[#6F5A2B] text-gray-400 rounded-2xl m-1 p-1;
+    @apply hover:border-titleColor;
   }
 }
