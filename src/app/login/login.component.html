@@ -1,0 +1,26 @@
+<form
+  [formGroup]="loginForm"
+  (submit)="submitCreds()"
+  class="h-screen bg-black flex items-center justify-center flex-col gap-y-4"
+>
+  <label for="password" class="w-1/2">
+    <input
+      type="password"
+      formControlName="password"
+      placeholder="Password"
+      class="border-b border-b-main w-full outline-none text-left bg-transparent text-white p-2"
+    />
+    <small *ngIf="invalidPass" class="text-red-800"
+      >Try to reach to you password provider via contact us</small
+    >
+    <small *ngIf="invalidPass" class="text-red-800 block"
+      >by the way we don't have contact us</small
+    >
+  </label>
+  <input
+    type="submit"
+    name="sub"
+    value="Submit"
+    class="text-white border px-4 py-2 rounded-md border-main cursor-pointer"
+  />
+</form>

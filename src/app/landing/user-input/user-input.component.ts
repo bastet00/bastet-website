@@ -18,6 +18,7 @@ export class UserInputComponent implements OnInit {
   ) {}
 
   private languages: Language[] = [];
+
   ngOnInit(): void {
     this.languageService.languages$.subscribe((lang) => {
       this.languages = lang;

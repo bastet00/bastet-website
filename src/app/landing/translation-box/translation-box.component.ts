@@ -20,7 +20,7 @@ import { SuspendComponent } from '../../suspend/suspend.component';
 export class TranslationBoxComponent implements OnInit {
   constructor(
     private transService: TranslationService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
   ) {}
 
   Egyptian = [] as EgyptianWord[];
