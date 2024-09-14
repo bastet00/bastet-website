@@ -6,11 +6,12 @@ import { UserInputComponent } from '../landing/user-input/user-input.component';
 import { TranslationService } from '../services/translation.service';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { TranslationResToView } from '../landing/interface';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-admin',
   standalone: true,
-  imports: [LangSwitcherComponent, UserInputComponent],
+  imports: [LangSwitcherComponent, UserInputComponent, FormsModule],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.scss',
 })
@@ -52,6 +53,6 @@ export class AdminComponent implements OnInit {
   }
 
   put(obj: TranslationResToView) {
-    console.log(obj);
+    console.log(obj.Arabic);
   }
 }

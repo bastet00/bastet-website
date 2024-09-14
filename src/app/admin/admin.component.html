@@ -9,7 +9,7 @@
           class="relative flex items-center text-3xl text-white"
         >
           <span class="block">مصري:</span>
-          <input value="{{ obj.Egyptian }}" class="admin-trans-result" />
+          <input [(ngModel)]="obj.Egyptian" class="admin-trans-result" />
         </label>
         <label class="text-white text-3xl flex items-center gap-x-4">
           رمز:
@@ -25,7 +25,7 @@
 
         <label class="text-white text-3xl flex items-center gap-x-4">
           ترجمات:
-          <input class="admin-trans-result" value="{{ obj.Arabic }}" />
+          <input [(ngModel)]="obj.Arabic" class="admin-trans-result" />
         </label>
 
         <div class="mx-auto w-fit flex items-center gap-x-4">
