@@ -3,36 +3,37 @@
     <app-lang-switcher></app-lang-switcher>
     <app-user-input></app-user-input>
     @for (obj of data; track obj.id) {
-      <div class="container text-white text-2xl" id="{{ obj.id }}">
-        <label for="Egyptian" class="relative block">
-          <span class="block sm:inline">مصري:</span>
+      <div class="container flex flex-col gap-y-4" id="{{ obj.id }}">
+        <label
+          for="Egyptian"
+          class="relative flex items-center text-3xl text-white"
+        >
+          <span class="block">مصري:</span>
+          <input value="{{ obj.Egyptian }}" class="admin-trans-result" />
+        </label>
+        <label class="text-white text-3xl flex items-center gap-x-4">
+          رمز:
+          <span
+            [innerHTML]="sanitizeSymbol(obj.Symbol)"
+            class="text-main"
+          ></span>
           <input
-            value="{{ obj.Egyptian }}"
-            class="text-xl sm:text-2xl bg-transparent border-b outline-none border-b-main py-2 w-full sm:w-auto"
+            class="admin-trans-result max-w-40"
+            placeholder="اضف رمز اخر"
           />
         </label>
 
-        <div class="mt-4">
-          <span>رمز:</span>
-          <span [innerHTML]="sanitizeSymbol(obj.Symbol)">
-            {{ obj.Symbol }}
-          </span>
-        </div>
-
-        <div class="mt-4">
-          <input
-            class="text-xl sm:text-2xl bg-transparent border-b outline-none border-b-main w-full sm:w-auto"
-            placeholder="اضافه رمز اخر للتعديل"
-          />
-        </div>
-
-        <label for="Arabic" class="block sm:flex items-center gap-x-4 mt-4">
-          <span class="block sm:inline">ترجمات:</span>
-          <input
-            value="{{ obj.Arabic }}"
-            class="text-xl sm:text-2xl bg-transparent border-b outline-none border-b-main w-full sm:w-auto"
-          />
+        <label class="text-white text-3xl flex items-center gap-x-4">
+          ترجمات:
+          <input class="admin-trans-result" value="{{ obj.Arabic }}" />
         </label>
+
+        <div class="mx-auto w-fit flex items-center gap-x-4">
+          <button class="admin-trans-btn" (click)="delete(obj.id)">حذف</button>
+          <button class="admin-trans-btn" (click)="put(obj)">
+            تأكيد التعديل
+          </button>
+        </div>
       </div>
       <br />
     }

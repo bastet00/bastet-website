@@ -46,4 +46,12 @@ export class AdminComponent implements OnInit {
   sanitizeSymbol(symbol: string): SafeHtml {
     return this.senitizer.bypassSecurityTrustHtml(symbol);
   }
+
+  delete(id: string) {
+    console.log(id);
+  }
+
+  put(obj: TranslationResToView) {
+    console.log(obj);
+  }
 }
