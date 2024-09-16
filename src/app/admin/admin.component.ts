@@ -50,10 +50,16 @@ export class AdminComponent implements OnInit {
     return this.senitizer.bypassSecurityTrustHtml(symbol);
   }
 
-  async delete(id: string) {
-    console.log(id);
+  clearDisplayedDocs(id: string) {
+    this.data = this.data.filter((obj) => obj.id !== id);
+  }
 
-    this.singleDoc.delete(id).subscribe(async (res) => res);
+  async delete(id: string) {
+    this.singleDoc.delete(id).subscribe((res) => {
+      if (res.ok) {
+        this.clearDisplayedDocs(id);
+      }
+    });
   }
 
   put(newObj: TranslationResToView) {
