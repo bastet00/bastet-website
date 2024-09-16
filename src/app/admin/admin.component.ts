@@ -5,7 +5,7 @@ import { LangSwitcherComponent } from '../landing/lang-switcher/lang-switcher.co
 import { UserInputComponent } from '../landing/user-input/user-input.component';
 import { TranslationService } from '../services/translation.service';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { TranslationResToView } from '../landing/interface';
+import { TranslationRes, TranslationResToView } from '../landing/interface';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -52,7 +52,12 @@ export class AdminComponent implements OnInit {
     console.log(id);
   }
 
-  put(obj: TranslationResToView) {
-    console.log(obj.Arabic);
+  put(newObj: TranslationResToView) {
+    let x = {} as TranslationRes;
+    this.translationService.data$.subscribe((res) => {
+      x = res.filter((obj) => obj.id === newObj.id)[0];
+    });
+    console.log(x);
+    console.log(newObj);
   }
 }
