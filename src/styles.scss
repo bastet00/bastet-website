@@ -32,10 +32,12 @@
   pointer-events: none;
 }
 
+
 @layer components {
   .half-colored {
     @apply text-3xl relative z-[1];
   }
+
 
   .info-arabic-text {
     @apply mx-auto w-fit half-colored text-white after:bg-orange-500 after:opacity-20 after:h-1/2
@@ -59,6 +61,15 @@
 
   .options-wrapper {
     @apply hidden md:flex absolute bottom-2 right-0
+  }
+
+  .admin-trans-result {
+    @apply bg-transparent border-b outline-none border-b-main py-2 w-full
+  }
+
+
+  .admin-trans-btn {
+    @apply text-white border border-main rounded-xl p-2
   }
 
   .options-btn {

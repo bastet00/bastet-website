@@ -17,7 +17,7 @@ export class UserInputComponent implements OnInit {
   translationText: string = '';
   constructor(
     private languageService: LanguageService,
-    private translationService: TranslationService
+    private translationService: TranslationService,
   ) {}
 
   private languages: Language[] = [];
@@ -32,7 +32,7 @@ export class UserInputComponent implements OnInit {
   private handler: ReturnType<typeof setTimeout> | null = null;
 
   onChange(event: unknown, options: { delay?: number } = { delay: 300 }): void {
-    console.log(this.translationText, event);
+    // console.log(this.translationText, event);
     const { delay } = options;
 
     if (this.handler) {

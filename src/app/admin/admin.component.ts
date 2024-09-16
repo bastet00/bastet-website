@@ -5,12 +5,14 @@ import { LangSwitcherComponent } from '../landing/lang-switcher/lang-switcher.co
 import { UserInputComponent } from '../landing/user-input/user-input.component';
 import { TranslationService } from '../services/translation.service';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { TranslationResToView } from '../landing/interface';
+import { TranslationRes, TranslationResToView } from '../landing/interface';
+import { FormsModule } from '@angular/forms';
+import { SingleDocService } from '../services/single-doc.service';
 
 @Component({
   selector: 'app-admin',
   standalone: true,
-  imports: [LangSwitcherComponent, UserInputComponent],
+  imports: [LangSwitcherComponent, UserInputComponent, FormsModule],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.scss',
 })
@@ -20,6 +22,7 @@ export class AdminComponent implements OnInit {
     private router: Router,
     private translationService: TranslationService,
     private senitizer: DomSanitizer,
+    private singleDocService: SingleDocService,
   ) {}
 
   data: TranslationResToView[] = [];
@@ -45,5 +48,36 @@ export class AdminComponent implements OnInit {
 
   sanitizeSymbol(symbol: string): SafeHtml {
     return this.senitizer.bypassSecurityTrustHtml(symbol);
+  }
+
+  clearDisplayedDocs(id: string) {
+    this.data = this.data.filter((obj) => obj.id !== id);
+  }
+
+  updateSymbol(event: Event, id: string) {
+    const inputElement = event.target as HTMLInputElement;
+    const obj = this.data.find((obj) => obj.id === id);
+    if (obj) {
+      obj.Symbol = inputElement.value;
+    }
+  }
+
+  async delete(id: string) {
+    this.singleDocService.delete(id).subscribe((res) => {
+      if (res.ok) {
+        this.clearDisplayedDocs(id);
+      }
+    });
+  }
+
+  async put(newObj: TranslationResToView) {
+    console.log(newObj.id);
+    this.translationService.data$.subscribe((res) => {
+      const target = res.find((obj) => obj.id === newObj.id);
+      if (target) {
+        this.singleDocService.put(target, newObj).subscribe();
+        console.log(newObj.id); // trace changes
+      }
+    });
   }
 }
