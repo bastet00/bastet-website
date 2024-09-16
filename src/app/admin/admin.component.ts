@@ -7,6 +7,7 @@ import { TranslationService } from '../services/translation.service';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { TranslationRes, TranslationResToView } from '../landing/interface';
 import { FormsModule } from '@angular/forms';
+import { SingleDocService } from '../services/single-doc.service';
 
 @Component({
   selector: 'app-admin',
@@ -21,6 +22,7 @@ export class AdminComponent implements OnInit {
     private router: Router,
     private translationService: TranslationService,
     private senitizer: DomSanitizer,
+    private singleDoc: SingleDocService,
   ) {}
 
   data: TranslationResToView[] = [];
@@ -48,8 +50,10 @@ export class AdminComponent implements OnInit {
     return this.senitizer.bypassSecurityTrustHtml(symbol);
   }
 
-  delete(id: string) {
+  async delete(id: string) {
     console.log(id);
+
+    this.singleDoc.delete(id).subscribe(async (res) => res);
   }
 
   put(newObj: TranslationResToView) {
