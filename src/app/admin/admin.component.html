@@ -18,7 +18,7 @@
             class="text-main"
           ></span>
           <input
-            [(ngModel)]="obj.Symbol"
+            (input)="updateSymbol($event, obj.id)"
             class="admin-trans-result max-w-40"
             placeholder="اضف رمز اخر"
           />

@@ -22,7 +22,7 @@ export class AdminComponent implements OnInit {
     private router: Router,
     private translationService: TranslationService,
     private senitizer: DomSanitizer,
-    private singleDoc: SingleDocService,
+    private singleDocService: SingleDocService,
   ) {}
 
   data: TranslationResToView[] = [];
@@ -54,20 +54,30 @@ export class AdminComponent implements OnInit {
     this.data = this.data.filter((obj) => obj.id !== id);
   }
 
+  updateSymbol(event: Event, id: string) {
+    const inputElement = event.target as HTMLInputElement;
+    const obj = this.data.find((obj) => obj.id === id);
+    if (obj) {
+      obj.Symbol = inputElement.value;
+    }
+  }
+
   async delete(id: string) {
-    this.singleDoc.delete(id).subscribe((res) => {
+    this.singleDocService.delete(id).subscribe((res) => {
       if (res.ok) {
         this.clearDisplayedDocs(id);
       }
     });
   }
 
-  put(newObj: TranslationResToView) {
-    let x = {} as TranslationRes;
+  async put(newObj: TranslationResToView) {
+    console.log(newObj.id);
     this.translationService.data$.subscribe((res) => {
-      x = res.filter((obj) => obj.id === newObj.id)[0];
+      const target = res.find((obj) => obj.id === newObj.id);
+      if (target) {
+        this.singleDocService.put(target, newObj).subscribe();
+        console.log(newObj.id); // trace changes
+      }
     });
-    console.log(x);
-    console.log(newObj);
   }
 }

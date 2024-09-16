@@ -23,6 +23,12 @@ export class TranslationService {
 
   constructor() {}
 
+  toSymbol(sy: string) {
+    const symbol = '0x' + sy;
+    const entity = parseInt(symbol, 16);
+    return `&#${entity};`;
+  }
+
   translation(from: string, word: string): Observable<TranslationRes[]> {
     const controller = new AbortController();
     const signal = controller.signal;
@@ -48,7 +54,7 @@ export class TranslationService {
       tap((translation: TranslationRes[]) => {
         translation.forEach((obj: TranslationRes) => {
           obj.Egyptian.forEach(
-            (obj: EgyptianWord) => (obj.Symbol = toSymbol(obj.Symbol)),
+            (obj: EgyptianWord) => (obj.Symbol = this.toSymbol(obj.Symbol)),
           );
         });
 
