@@ -1,4 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnInit,
+  QueryList,
+  ViewChildren,
+} from '@angular/core';
 import { TranslationService } from '../../services/translation.service';
 import {
   ArabicWord,
@@ -27,6 +33,10 @@ export class TranslationBoxComponent implements OnInit {
   Arabic = [] as ArabicWord[];
   words = [] as TranslationResToView[];
   loading = true;
+  @ViewChildren('translationRef') transRefs!: QueryList<ElementRef>;
+
+  helperText: string = '';
+  hoverToElement: string | null = null;
 
   ngOnInit(): void {
     this.transService.data$.subscribe({
@@ -47,6 +57,34 @@ export class TranslationBoxComponent implements OnInit {
         this.loading = loading;
       },
     });
+  }
+
+  toClipboard(id: string) {
+    this.hoverToElement = id;
+
+    const ele = this.transRefs.find(
+      (ref) => ref.nativeElement.getAttribute('data-id') === id,
+    )?.nativeElement as HTMLDivElement;
+
+    let toCopy = '';
+    ele.childNodes.forEach((node) => (toCopy += node.textContent));
+    navigator.clipboard.writeText(toCopy);
+    this.helperText = 'تم النسخ ✓';
+
+    setTimeout(() => {
+      this.hoverToElement = null;
+    }, 1000);
+  }
+
+  onMouseHover(id: string, event: MouseEvent) {
+    this.hoverToElement = id;
+    this.helperText = 'انسخ';
+    (event.currentTarget as SVGElement).classList.add('scale-125');
+  }
+
+  onMouseLeave(event: MouseEvent) {
+    this.hoverToElement = null;
+    (event.currentTarget as SVGElement).classList.remove('scale-125');
   }
 
   sanitizeSymbol(symbol: string): SafeHtml {
