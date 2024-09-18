@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit } from '@angular/core';
 import { TranslationService } from '../../services/translation.service';
 import {
   ArabicWord,
@@ -47,6 +47,15 @@ export class TranslationBoxComponent implements OnInit {
         this.loading = loading;
       },
     });
+  }
+
+  selectText(event: MouseEvent) {
+    const range = document.createRange();
+    const target = event.currentTarget as HTMLDivElement;
+
+    range.selectNodeContents(target);
+    const selection = window.getSelection();
+    selection?.addRange(range);
   }
 
   sanitizeSymbol(symbol: string): SafeHtml {
