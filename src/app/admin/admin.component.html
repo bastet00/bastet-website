@@ -29,6 +29,11 @@
           <input [(ngModel)]="obj.Arabic" class="admin-trans-result" />
         </label>
 
+        <label class="text-white text-3xl flex items-center gap-x-4">
+          انجليزي:
+          <input [(ngModel)]="obj.English" class="admin-trans-result" />
+        </label>
+                
         <div class="mx-auto w-fit flex items-center gap-x-4">
           <button class="admin-trans-btn" (click)="delete(obj.id)">حذف</button>
           <button class="admin-trans-btn" (click)="put(obj)">

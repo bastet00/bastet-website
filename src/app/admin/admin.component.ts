@@ -5,7 +5,7 @@ import { LangSwitcherComponent } from '../landing/lang-switcher/lang-switcher.co
 import { UserInputComponent } from '../landing/user-input/user-input.component';
 import { TranslationService } from '../services/translation.service';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { TranslationRes, TranslationResToView } from '../landing/interface';
+import { TranslationResToView } from '../landing/interface';
 import { FormsModule } from '@angular/forms';
 import { SingleDocService } from '../services/single-doc.service';
 
@@ -22,7 +22,7 @@ export class AdminComponent implements OnInit {
     private router: Router,
     private translationService: TranslationService,
     private senitizer: DomSanitizer,
-    private singleDocService: SingleDocService,
+    private singleDocService: SingleDocService
   ) {}
 
   data: TranslationResToView[] = [];
@@ -38,9 +38,16 @@ export class AdminComponent implements OnInit {
         res.forEach((obj) => {
           const id = obj.id;
           const ar = obj.Arabic.map((index) => index.Word).join(' - ');
+          const en = obj.English.map((index) => index.Word).join(' - ');
           const eg = obj.Egyptian[0].Word;
           const sym = obj.Egyptian[0].Symbol;
-          this.data.push({ id: id, Arabic: ar, Egyptian: eg, Symbol: sym });
+          this.data.push({
+            id: id,
+            Arabic: ar,
+            Egyptian: eg,
+            Symbol: sym,
+            English: en,
+          });
         });
       });
     });
