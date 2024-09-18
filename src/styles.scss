@@ -16,10 +16,6 @@
   position: absolute;
 }
 
-.copied {
-  color: green;
-  transform: scale(1.1);
-}
 
 .back-section-image {
   mix-blend-mode: difference;
@@ -43,6 +39,9 @@
     @apply text-3xl relative z-[1];
   }
 
+  .copied {
+    @apply text-main scale-110
+  }
 
   .info-arabic-text {
     @apply mx-auto w-fit half-colored text-white after:bg-orange-500 after:opacity-20 after:h-1/2

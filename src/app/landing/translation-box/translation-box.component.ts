@@ -73,16 +73,18 @@ export class TranslationBoxComponent implements OnInit {
 
     setTimeout(() => {
       this.hoverToElement = null;
-    }, 2000);
+    }, 1000);
   }
 
-  onMouseHover(id: string) {
+  onMouseHover(id: string, event: MouseEvent) {
     this.hoverToElement = id;
     this.helperText = 'انسخ';
+    (event.currentTarget as SVGElement).classList.add('scale-125');
   }
 
-  onMouseLeave() {
+  onMouseLeave(event: MouseEvent) {
     this.hoverToElement = null;
+    (event.currentTarget as SVGElement).classList.remove('scale-125');
   }
 
   sanitizeSymbol(symbol: string): SafeHtml {
