@@ -65,7 +65,11 @@ export class TranslationBoxComponent implements OnInit {
 
     range.selectNodeContents(target);
     const selection = window.getSelection();
-    selection?.addRange(range);
+
+    if (selection) {
+      selection.removeAllRanges();
+      selection.addRange(range);
+    }
   }
 
   toClipboard(id: string) {
