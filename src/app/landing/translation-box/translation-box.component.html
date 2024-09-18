@@ -3,6 +3,7 @@
     <app-suspend *ngIf="loading"></app-suspend>
     <div class="translation-area" *ngIf="words.length">
       <div
+        #translationRef
         class="flex gap-x-2 translation-to-egy-text w-fit select-text"
         (dblclick)="selectText($event)"
       >
@@ -16,6 +17,7 @@
 
       <div class="flex items-center gap-x-4 w-fit mr-auto">
         <svg
+          (click)="toClipboard()"
           width="20"
           height="20"
           viewBox="0 0 20 20"

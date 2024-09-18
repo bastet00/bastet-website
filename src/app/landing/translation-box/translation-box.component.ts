@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { TranslationService } from '../../services/translation.service';
 import {
   ArabicWord,
@@ -27,6 +27,7 @@ export class TranslationBoxComponent implements OnInit {
   Arabic = [] as ArabicWord[];
   words = [] as TranslationResToView[];
   loading = true;
+  @ViewChild('translationRef') transRef!: ElementRef;
 
   ngOnInit(): void {
     this.transService.data$.subscribe({
@@ -56,6 +57,13 @@ export class TranslationBoxComponent implements OnInit {
     range.selectNodeContents(target);
     const selection = window.getSelection();
     selection?.addRange(range);
+  }
+
+  toClipboard() {
+    const ele = this.transRef.nativeElement as HTMLDivElement;
+    let toCopy = '';
+    ele.childNodes.forEach((node) => (toCopy += node.textContent));
+    navigator.clipboard.writeText(toCopy);
   }
 
   sanitizeSymbol(symbol: string): SafeHtml {
