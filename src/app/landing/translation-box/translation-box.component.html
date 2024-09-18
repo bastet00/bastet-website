@@ -6,6 +6,7 @@
         #translationRef
         class="flex gap-x-2 translation-to-egy-text w-fit select-text"
         (dblclick)="selectText($event)"
+        [attr.data-id]="word.id"
       >
         <span>{{ word?.Egyptian }}</span>
         <span class="w-fit" [innerHTML]="sanitizeSymbol(word.Symbol)">
@@ -15,9 +16,18 @@
 
       <p class="w-fit">{{ word.Arabic }}</p>
 
-      <div class="flex items-center gap-x-4 w-fit mr-auto">
+      <div class="relative flex items-center gap-x-4 w-fit mr-auto">
+        <span
+          class="transition-all duration-1000 ease-in-out text-main text-lg"
+          [ngClass]="{ copied: helperText === 'تم النسخ ✓' }"
+          *ngIf="hoverToElement === word.id"
+          >{{ helperText }}</span
+        >
         <svg
-          (click)="toClipboard()"
+          class="cursor-pointer"
+          (click)="toClipboard(word.id)"
+          (mouseenter)="onMouseHover(word.id)"
+          (mouseleave)="onMouseLeave()"
           width="20"
           height="20"
           viewBox="0 0 20 20"

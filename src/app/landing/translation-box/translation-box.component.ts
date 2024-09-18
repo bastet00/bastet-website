@@ -1,4 +1,10 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnInit,
+  QueryList,
+  ViewChildren,
+} from '@angular/core';
 import { TranslationService } from '../../services/translation.service';
 import {
   ArabicWord,
@@ -27,7 +33,10 @@ export class TranslationBoxComponent implements OnInit {
   Arabic = [] as ArabicWord[];
   words = [] as TranslationResToView[];
   loading = true;
-  @ViewChild('translationRef') transRef!: ElementRef;
+  @ViewChildren('translationRef') transRefs!: QueryList<ElementRef>;
+
+  helperText: string = '';
+  hoverToElement: string | null = null;
 
   ngOnInit(): void {
     this.transService.data$.subscribe({
@@ -59,11 +68,30 @@ export class TranslationBoxComponent implements OnInit {
     selection?.addRange(range);
   }
 
-  toClipboard() {
-    const ele = this.transRef.nativeElement as HTMLDivElement;
+  toClipboard(id: string) {
+    this.hoverToElement = id;
+
+    const ele = this.transRefs.find(
+      (ref) => ref.nativeElement.getAttribute('data-id') === id,
+    )?.nativeElement as HTMLDivElement;
+
     let toCopy = '';
     ele.childNodes.forEach((node) => (toCopy += node.textContent));
     navigator.clipboard.writeText(toCopy);
+    this.helperText = 'تم النسخ ✓';
+
+    setTimeout(() => {
+      this.hoverToElement = null;
+    }, 2000);
+  }
+
+  onMouseHover(id: string) {
+    this.hoverToElement = id;
+    this.helperText = 'انسخ';
+  }
+
+  onMouseLeave() {
+    this.hoverToElement = null;
   }
 
   sanitizeSymbol(symbol: string): SafeHtml {

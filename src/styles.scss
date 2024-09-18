@@ -16,6 +16,11 @@
   position: absolute;
 }
 
+.copied {
+  color: green;
+  transform: scale(1.1);
+}
+
 .back-section-image {
   mix-blend-mode: difference;
   pointer-events: none;
