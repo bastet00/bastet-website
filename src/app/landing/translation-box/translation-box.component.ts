@@ -59,19 +59,6 @@ export class TranslationBoxComponent implements OnInit {
     });
   }
 
-  selectText(event: MouseEvent) {
-    const range = document.createRange();
-    const target = event.currentTarget as HTMLDivElement;
-
-    range.selectNodeContents(target);
-    const selection = window.getSelection();
-
-    if (selection) {
-      selection.removeAllRanges();
-      selection.addRange(range);
-    }
-  }
-
   toClipboard(id: string) {
     this.hoverToElement = id;
 

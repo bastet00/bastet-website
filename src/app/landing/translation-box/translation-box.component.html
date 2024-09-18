@@ -5,11 +5,10 @@
       <div
         #translationRef
         class="flex gap-x-2 translation-to-egy-text w-fit select-text"
-        (dblclick)="selectText($event)"
         [attr.data-id]="word.id"
       >
-        <span>{{ word?.Egyptian }}</span>
-        <span class="w-fit" [innerHTML]="sanitizeSymbol(word.Symbol)">
+        <span class="w-fit" [innerHTML]="sanitizeSymbol(word.Egyptian+ word.Symbol)">
+          {{ word?.Egyptian }}
           {{ word?.Symbol }}
         </span>
       </div>
