@@ -52,6 +52,12 @@ export class SingleDocService {
     }
 
     target.Arabic = newObj.Arabic.split('-').map((word) => ({ Word: word }));
+    if (newObj.English) {
+      target.English = newObj.English.split('-').map((word) => ({
+        Word: word,
+      }));
+    }
+
     target.Egyptian[0].Word = newObj.Egyptian;
 
     if (newObj.Symbol.length < 8) {

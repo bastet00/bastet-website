@@ -78,11 +78,12 @@ export class AdminComponent implements OnInit {
   }
 
   async put(newObj: TranslationResToView) {
-    console.log(newObj.id);
+    console.log(newObj);
     this.translationService.data$.subscribe((res) => {
       const target = res.find((obj) => obj.id === newObj.id);
       if (target) {
         this.singleDocService.put(target, newObj).subscribe();
+        alert('تم التعديل بنجاح');
         console.log(newObj.id); // trace changes
       }
     });
