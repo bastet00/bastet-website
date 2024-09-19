@@ -8,6 +8,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { TranslationResToView } from '../landing/interface';
 import { FormsModule } from '@angular/forms';
 import { SingleDocService } from '../services/single-doc.service';
+import { firstValueFrom, lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-admin',
@@ -22,7 +23,7 @@ export class AdminComponent implements OnInit {
     private router: Router,
     private translationService: TranslationService,
     private senitizer: DomSanitizer,
-    private singleDocService: SingleDocService,
+    private singleDocService: SingleDocService
   ) {}
 
   data: TranslationResToView[] = [];
@@ -72,22 +73,30 @@ export class AdminComponent implements OnInit {
   }
 
   async delete(id: string) {
-    this.singleDocService.delete(id).subscribe((res) => {
-      if (res.ok) {
-        this.clearDisplayedDocs(id);
-      }
-    });
+    const res = await lastValueFrom(this.singleDocService.delete(id));
+    if (res.ok) {
+      this.clearDisplayedDocs(id);
+      alert('تم الحذف بنجاح');
+    } else {
+      alert('حدث خطأ ما');
+    }
   }
 
   async put(newObj: TranslationResToView) {
     console.log(newObj);
-    this.translationService.data$.subscribe((res) => {
-      const target = res.find((obj) => obj.id === newObj.id);
-      if (target) {
-        this.singleDocService.put(target, newObj).subscribe();
-        alert('تم التعديل بنجاح');
-        console.log(newObj.id); // trace changes
+    const res = await firstValueFrom(this.translationService.data$);
+    console.log(res);
+    const target = res.find((obj) => obj.id === newObj.id);
+    if (target) {
+      const putRes = await lastValueFrom(
+        this.singleDocService.put(target, newObj)
+      );
+      if (putRes.ok) {
+        console.log('تم التحديث بنجاح');
+      } else {
+        console.log('حدث خطأ ما');
       }
-    });
+      console.log(newObj.id); // trace changes
+    }
   }
 }
