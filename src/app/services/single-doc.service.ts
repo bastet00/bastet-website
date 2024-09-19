@@ -29,35 +29,35 @@ export class SingleDocService {
       }),
       catchError((error) => {
         return throwError(() => new Error(error));
-      })
+      }),
     );
   }
 
-  convertToUTF32(charRef: string) {
-    const codePoint = parseInt(charRef.replace('&#', '').replace(';', ''), 10);
-
-    const utf32Hex = codePoint.toString(16).toUpperCase();
-
-    const utf32 = utf32Hex.padStart(8, '0');
-
-    return utf32;
+  hexToSymbol(hex: string) {
+    const codePoint = parseInt(hex, 16);
+    return String.fromCodePoint(codePoint);
   }
 
   put(
     target: TranslationRes,
-    newObj: TranslationResToView
+    newObj: TranslationResToView,
   ): Observable<Response> {
     if (!this.key) {
       return throwError(() => new Error('No auth key found'));
     }
 
-    target.Arabic = newObj.Arabic.split('-').map((word) => ({ Word: word }));
+    target.Arabic = newObj.Arabic.split('-').map((word) => ({
+      Word: word.trim(),
+    }));
     target.Egyptian[0].Word = newObj.Egyptian;
+    const htmlEntityLength = 8;
 
-    if (newObj.Symbol.length < 8) {
-      target.Egyptian[0].Symbol = newObj.Symbol;
+    if (newObj.Symbol.length === htmlEntityLength) {
+      if (newObj.hexSym) {
+        target.Egyptian[0].Symbol = this.hexToSymbol(target.Egyptian[0].Symbol);
+      }
     } else {
-      target.Egyptian[0].Symbol = this.convertToUTF32(newObj.Symbol);
+      target.Egyptian[0].Symbol = newObj.Symbol;
     }
 
     return fromFetch(`${this.url}${newObj.id}`, {
@@ -76,7 +76,7 @@ export class SingleDocService {
       }),
       catchError((error) => {
         return throwError(() => new Error(error));
-      })
+      }),
     );
   }
 }

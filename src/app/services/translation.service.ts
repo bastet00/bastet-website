@@ -8,8 +8,7 @@ import {
   tap,
 } from 'rxjs';
 import { fromFetch } from 'rxjs/fetch';
-import { EgyptianWord, TranslationRes } from '../landing/interface';
-import { toSymbol } from '../landing/utils';
+import { TranslationRes } from '../landing/interface';
 
 @Injectable({
   providedIn: 'root',
@@ -52,12 +51,6 @@ export class TranslationService {
       }),
 
       tap((translation: TranslationRes[]) => {
-        translation.forEach((obj: TranslationRes) => {
-          obj.Egyptian.forEach(
-            (obj: EgyptianWord) => (obj.Symbol = this.toSymbol(obj.Symbol)),
-          );
-        });
-
         this.dataSubject.next(translation);
       }),
 
