@@ -12,6 +12,7 @@ export class SingleDocService {
   constructor() {}
 
   private key = localStorage.getItem(AUTH_KEY);
+
   delete(id: string): Observable<Response> {
     if (!this.key) {
       return throwError(() => new Error('No auth key found'));
@@ -50,11 +51,12 @@ export class SingleDocService {
       Word: word.trim(),
     }));
     target.Egyptian[0].Word = newObj.Egyptian;
+
     const htmlEntityLength = 8;
 
     if (newObj.Symbol.length === htmlEntityLength) {
       if (newObj.hexSym) {
-        target.Egyptian[0].Symbol = this.hexToSymbol(target.Egyptian[0].Symbol);
+        target.Egyptian[0].Symbol = this.hexToSymbol(newObj.hexSym);
       }
     } else {
       target.Egyptian[0].Symbol = newObj.Symbol;
