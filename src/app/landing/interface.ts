@@ -6,7 +6,7 @@ export interface Language {
 export interface ArabicWord {
   Word: string;
 }
-export type EnglishWord = ArabicWord
+export type EnglishWord = ArabicWord;
 
 export interface EgyptianWord {
   Word: string;
@@ -26,4 +26,5 @@ export interface TranslationResToView {
   Egyptian: string;
   English?: string;
   Symbol: string;
+  hexSym?: string;
 }
