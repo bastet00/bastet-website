@@ -22,7 +22,7 @@ export class AdminComponent implements OnInit {
     private router: Router,
     private translationService: TranslationService,
     private senitizer: DomSanitizer,
-    private singleDocService: SingleDocService
+    private singleDocService: SingleDocService,
   ) {}
 
   data: TranslationResToView[] = [];
@@ -40,13 +40,15 @@ export class AdminComponent implements OnInit {
           const ar = obj.Arabic.map((index) => index.Word).join(' - ');
           const en = obj.English.map((index) => index.Word).join(' - ');
           const eg = obj.Egyptian[0].Word;
-          const sym = obj.Egyptian[0].Symbol;
+          const sym = this.translationService.toSymbol(obj.Egyptian[0].Symbol);
+          const hexSym = obj.Egyptian[0].Symbol;
           this.data.push({
             id: id,
             Arabic: ar,
             Egyptian: eg,
             Symbol: sym,
             English: en,
+            hexSym: hexSym,
           });
         });
       });
