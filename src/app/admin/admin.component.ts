@@ -83,20 +83,17 @@ export class AdminComponent implements OnInit {
   }
 
   async put(newObj: TranslationResToView) {
-    console.log(newObj);
     const res = await firstValueFrom(this.translationService.data$);
-    console.log(res);
     const target = res.find((obj) => obj.id === newObj.id);
     if (target) {
       const putRes = await lastValueFrom(
         this.singleDocService.put(target, newObj)
       );
       if (putRes.ok) {
-        console.log('تم التحديث بنجاح');
+        alert('تم التحديث بنجاح');
       } else {
-        console.log('حدث خطأ ما');
+        alert('حدث خطأ ما');
       }
-      console.log(newObj.id); // trace changes
     }
   }
 }

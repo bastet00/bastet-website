@@ -32,7 +32,6 @@ export class UserInputComponent implements OnInit {
   private handler: ReturnType<typeof setTimeout> | null = null;
 
   onChange(event: unknown, options: { delay?: number } = { delay: 300 }): void {
-    // console.log(this.translationText, event);
     const { delay } = options;
 
     if (this.handler) {
