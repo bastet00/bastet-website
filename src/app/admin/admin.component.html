@@ -1,6 +1,5 @@
 <div class="min-h-[100dvh] bg-black relative top-0">
   <div class="absolute left-1/2 -translate-x-1/2 w-full bg-black">
-    <app-lang-switcher></app-lang-switcher>
     <app-user-input></app-user-input>
     @for (obj of data; track obj.id) {
       <div class="container flex flex-col gap-y-4" id="{{ obj.id }}">

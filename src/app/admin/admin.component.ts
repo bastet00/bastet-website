@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginService } from '../services/login.service';
 import { Router } from '@angular/router';
-import { LangSwitcherComponent } from '../landing/lang-switcher/lang-switcher.component';
 import { UserInputComponent } from '../landing/user-input/user-input.component';
 import { TranslationService } from '../services/translation.service';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
@@ -13,7 +12,7 @@ import { firstValueFrom, lastValueFrom } from 'rxjs';
 @Component({
   selector: 'app-admin',
   standalone: true,
-  imports: [LangSwitcherComponent, UserInputComponent, FormsModule],
+  imports: [UserInputComponent, FormsModule],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.scss',
 })

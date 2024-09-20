@@ -17,15 +17,20 @@ export class UserInputComponent implements OnInit {
   translationText: string = '';
   constructor(
     private languageService: LanguageService,
-    private translationService: TranslationService,
+    private translationService: TranslationService
   ) {}
 
-  private languages: Language[] = [];
+  languages: Language[] = [];
 
   ngOnInit(): void {
     this.languageService.languages$.subscribe((lang) => {
       this.languages = lang;
     });
+  }
+
+  onLanguageSwitch(): void {
+    this.languageService.swapLanguages();
+    this.onChange(this.translationText, { delay: 0 });
   }
 
   loading: boolean = false;
