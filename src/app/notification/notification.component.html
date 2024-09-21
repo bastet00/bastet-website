@@ -1,0 +1,10 @@
+<!-- <div class="bg-[#312719] rounded-r-md border-l-4 opacity-90 border-[#214017] text-white p-4 fixed bottom-4 left-5 z-50"
+  role="alert">
+  <p> لقد تم تقديم هذه الكلمة للمراجعة، شكرا لك</p>
+</div> -->
+
+<div [class]="getAlertClasses()"
+  class=" bg-[#312719] rounded-r-md border-l-4 opacity-90  text-white p-4 fixed bottom-4 left-5 z-50" role="alert"
+  *ngIf="showAlert">
+  <p>{{ message }}</p>
+</div>

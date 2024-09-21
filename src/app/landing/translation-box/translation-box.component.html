@@ -7,14 +7,15 @@
       شيء صحيحًا
       وتريد منا أن نضيف هذه
       الكلمة،
-      <span class="cursor-pointer text-main">
+      <span (click)="addWordSuggestion()" class="cursor-pointer text-main">
         انقر هنا.
-
       </span>
     </p>
 
   </div>
 </div>
+<app-notification [showAlert]="showAddingSuggestionSuccess" type="success"
+  message=" لقد تم تقديم هذه الكلمة للمراجعة، شكرا لك"></app-notification>
 }
 @for (word of words; track word.id) {
 <div class="translation-area-wrapper mx-auto mt-2">
