@@ -17,8 +17,10 @@ export class TranslationService {
   private url = 'https://bastet-server-ef94bb4e91eb.herokuapp.com/search';
   private dataSubject = new BehaviorSubject<TranslationRes[]>([]);
   private loadingSubject = new BehaviorSubject<boolean>(false);
+  private emptyResSubject = new BehaviorSubject<boolean>(false);
   data$ = this.dataSubject.asObservable();
   loading$ = this.loadingSubject.asObservable();
+  emptyRes$ = this.emptyResSubject.asObservable();
 
   constructor() {}
 
@@ -51,13 +53,22 @@ export class TranslationService {
       }),
 
       tap((translation: TranslationRes[]) => {
+        if (translation.length === 0) {
+          console.log('emptyResSubject.next(true)', translation);
+
+          this.emptyResSubject.next(true);
+        } else {
+          console.log('emptyResSubject.next(false)', translation);
+          this.emptyResSubject.next(false);
+        }
+
         this.dataSubject.next(translation);
       }),
 
       catchError((err) => {
         console.error('Error during translation:', err);
         return of([]);
-      }),
+      })
     );
   }
   setNull() {

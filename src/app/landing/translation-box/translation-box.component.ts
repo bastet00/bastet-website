@@ -37,6 +37,7 @@ export class TranslationBoxComponent implements OnInit {
 
   helperText: string = '';
   hoverToElement: string | null = null;
+  emptyRes = false;
 
   ngOnInit(): void {
     this.transService.data$.subscribe({
@@ -55,6 +56,11 @@ export class TranslationBoxComponent implements OnInit {
     this.transService.loading$.subscribe({
       next: (loading) => {
         this.loading = loading;
+      },
+    });
+    this.transService.emptyRes$.subscribe({
+      next: (emptyRes) => {
+        this.emptyRes = emptyRes;
       },
     });
   }
