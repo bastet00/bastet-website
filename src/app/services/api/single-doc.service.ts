@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { catchError, Observable, of, switchMap, throwError } from 'rxjs';
 import { fromFetch } from 'rxjs/fetch';
-import { AUTH_KEY } from './login.service';
-import { TranslationRes, TranslationResToView } from '../landing/interface';
+import { AUTH_KEY } from '../login.service';
+import { TranslationRes, TranslationResToView } from '../../landing/interface';
 
 @Injectable({
   providedIn: 'root',
 })
-export class SingleDocService {
+export class WordAdminService {
   private url = 'https://bastet-server-ef94bb4e91eb.herokuapp.com/';
   constructor() {}
 
@@ -30,7 +30,7 @@ export class SingleDocService {
       }),
       catchError((error) => {
         return throwError(() => new Error(error));
-      }),
+      })
     );
   }
 
@@ -41,7 +41,7 @@ export class SingleDocService {
 
   put(
     target: TranslationRes,
-    newObj: TranslationResToView,
+    newObj: TranslationResToView
   ): Observable<Response> {
     if (!this.key) {
       return throwError(() => new Error('No auth key found'));
@@ -85,7 +85,7 @@ export class SingleDocService {
       }),
       catchError((error) => {
         return throwError(() => new Error(error));
-      }),
+      })
     );
   }
 }

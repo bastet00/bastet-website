@@ -6,7 +6,7 @@ import { TranslationService } from '../services/translation.service';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { TranslationResToView } from '../landing/interface';
 import { FormsModule } from '@angular/forms';
-import { SingleDocService } from '../services/api/single-doc.service';
+import { WordAdminService } from '../services/api/single-doc.service';
 import { firstValueFrom, lastValueFrom } from 'rxjs';
 
 @Component({
@@ -22,7 +22,7 @@ export class AdminComponent implements OnInit {
     private router: Router,
     private translationService: TranslationService,
     private senitizer: DomSanitizer,
-    private singleDocService: SingleDocService
+    private singleDocService: WordAdminService
   ) {}
 
   data: TranslationResToView[] = [];

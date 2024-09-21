@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { SingleDocService } from './single-doc.service';
+import { WordAdminService } from './single-doc.service';
 
 describe('SingleDocService', () => {
-  let service: SingleDocService;
+  let service: WordAdminService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(SingleDocService);
+    service = TestBed.inject(WordAdminService);
   });
 
   it('should be created', () => {
