@@ -8,6 +8,11 @@
   src: url(FontsFree-Net-STC-Forward-Regular-1.ttf);
 }
 
+.reset-tw,
+.reset-tw * {
+    all: revert !important;
+}
+
 .overlay::after {
   content: "";
   width: 100%;
