@@ -1,7 +1,7 @@
 @if (emptyRes) {
 
 <div class="translation-area-wrapper text-right mx-auto mt-2 md-10">
-  <div class="translation-area">
+  <div class="translation-result-area">
 
     <p class="w-fit text-sm">لسوء الحظ، قاموسنا لا يحتوي على هذه الكلمة. التحقق من الإملاء الخاص بك. إذا كان كل
       شيء صحيحًا
@@ -20,7 +20,7 @@
 @for (word of words; track word.id) {
 <div class="translation-area-wrapper mx-auto mt-2">
   <app-suspend *ngIf="loading"></app-suspend>
-  <div class="translation-area" *ngIf="words.length">
+  <div class="translation-result-area" *ngIf="words.length">
     <div #translationRef class="flex gap-x-2 translation-to-egy-text w-fit select-text" [attr.data-id]="word.id">
       <span class="w-fit" [innerHTML]="sanitizeSymbol(word.Egyptian+ word.Symbol)">
         {{ word?.Egyptian }}

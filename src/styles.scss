@@ -49,7 +49,7 @@
   }
 
   .info-arabic-text {
-    @apply mx-auto w-fit half-colored text-white after:bg-orange-500 after:opacity-20 after:h-1/2
+    @apply mx-auto w-fit half-colored text-white after:bg-[#966635]/60  after:h-1/2
   }
 
   .translation-to-egy-text {
@@ -61,15 +61,18 @@
   }
 
   .translation-area-wrapper {
-    @apply w-3/4 relative
+    @apply w-3/4 relative 
   }
 
   .translation-area {
     @apply bg-inputBackground border-none rounded-lg outline-none p-4 text-2xl text-white w-full resize-none
   }
 
+  .translation-result-area {
+    @apply bg-inputBackground border border-[#a69670] rounded-lg outline-none p-4 text-2xl text-white w-full resize-none  shadow-inner  
+  }
   .options-wrapper {
-    @apply hidden md:flex absolute bottom-2 right-0
+    @apply absolute bottom-2 right-0
   }
 
   .admin-trans-result {
