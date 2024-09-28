@@ -42,10 +42,12 @@
     <textarea [(ngModel)]="translationText" (ngModelChange)="onChange($event)"
       class="translation-area placeholder:text-right h-[150px]" placeholder="اكتب هنا ..."></textarea>
     <div class="options-wrapper">
-      <button (click)="addText('رجل')" class="options-btn">رجل</button>
       <button (click)="addText('شمس')" class="options-btn">شمس</button>
-      <button (click)="addText('يوم')" class="options-btn">يوم</button>
-      <button (click)="addText('ست')" class="options-btn">ست</button>
+      <button (click)="addText('صباح الخير')" class="options-btn">صباح الخير</button>
+      <button (click)="addText('عدالة')" class="options-btn">عدالة</button>
+      <button (click)="addText('قلب')" class="options-btn">قلب</button>
+      <button (click)="addText('جميل')" class="options-btn">جميل</button>
+
     </div>
   </div>
   <!-- end user input -->
