@@ -8,12 +8,12 @@
           class="relative flex items-center text-3xl text-white"
         >
           <span class="block">مصري:</span>
-          <input [(ngModel)]="obj.Egyptian" class="admin-trans-result" />
+          <input [(ngModel)]="obj.egyptian" class="admin-trans-result" />
         </label>
         <label class="text-white text-3xl flex items-center gap-x-4">
           رمز:
           <span
-            [innerHTML]="sanitizeSymbol(obj.Symbol)"
+            [innerHTML]="sanitizeSymbol(obj.symbol)"
             class="text-main"
           ></span>
           <input
@@ -25,12 +25,12 @@
 
         <label class="text-white text-3xl flex items-center gap-x-4">
           ترجمات:
-          <input [(ngModel)]="obj.Arabic" class="admin-trans-result" />
+          <input [(ngModel)]="obj.arabic" class="admin-trans-result" />
         </label>
 
         <label class="text-white text-3xl flex items-center gap-x-4">
           انجليزي:
-          <input [(ngModel)]="obj.English" class="admin-trans-result" />
+          <input [(ngModel)]="obj.english" class="admin-trans-result" />
         </label>
                 
         <div class="mx-auto w-fit flex items-center gap-x-4">

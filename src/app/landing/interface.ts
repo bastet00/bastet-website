@@ -4,27 +4,27 @@ export interface Language {
 }
 
 export interface ArabicWord {
-  Word: string;
+  word: string;
 }
 export type EnglishWord = ArabicWord;
 
 export interface EgyptianWord {
-  Word: string;
-  Symbol: string;
+  word: string;
+  symbol: string;
 }
 
 export interface TranslationRes {
   id: string;
-  Arabic: ArabicWord[];
-  Egyptian: EgyptianWord[];
-  English: EnglishWord[];
+  arabic: ArabicWord[];
+  egyptian: EgyptianWord[];
+  english: EnglishWord[];
 }
 
 export interface TranslationResToView {
   id: string;
-  Arabic: string;
-  Egyptian: string;
-  English?: string;
-  Symbol: string;
+  arabic: string;
+  egyptian: string;
+  english?: string;
+  symbol: string;
   hexSym?: string;
 }

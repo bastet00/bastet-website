@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 
 interface WordSuggestionCreationDto {
-  Arabic: { Word: string }[];
-  Egyptian: { Word: string; Symbol: string }[];
-  English: { Word: string }[];
+  arabic: { word: string }[];
+  egyptian: { word: string; symbol: string }[];
+  english: { word: string }[];
 }
 @Injectable({
   providedIn: 'root',

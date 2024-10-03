@@ -22,13 +22,13 @@
   <app-suspend *ngIf="loading"></app-suspend>
   <div class="translation-result-area" *ngIf="words.length">
     <div #translationRef class="flex gap-x-2 translation-to-egy-text w-fit select-text" [attr.data-id]="word.id">
-      <span class="w-fit" [innerHTML]="sanitizeSymbol(word.Egyptian+ word.Symbol)">
-        {{ word?.Egyptian }}
-        {{ word?.Symbol }}
+      <span class="w-fit" [innerHTML]="sanitizeSymbol(word.egyptian+ word.symbol)">
+        {{ word?.egyptian }}
+        {{ word?.symbol }}
       </span>
     </div>
 
-    <p class="w-fit">{{ word.Arabic }}</p>
+    <p class="w-fit">{{ word.arabic }}</p>
 
     <div class="relative flex items-center gap-x-4 w-fit mr-auto">
       <span class="transition-all duration-500 ease-in-out text-lg bg-black/40 rounded-md p-1"

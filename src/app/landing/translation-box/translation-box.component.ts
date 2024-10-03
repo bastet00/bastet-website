@@ -47,9 +47,9 @@ export class TranslationBoxComponent implements OnInit {
         this.words = translation.map((word) => {
           return {
             id: word.id,
-            Arabic: word.Arabic.map((arabic) => arabic.Word).join(', '),
-            Egyptian: word.Egyptian[0].Word,
-            Symbol: this.transService.toSymbol(word.Egyptian[0].Symbol),
+            arabic: word.arabic.map((arabic) => arabic.word).join(', '),
+            egyptian: word.egyptian[0].word,
+            symbol: this.transService.toSymbol(word.egyptian[0].symbol),
           };
         });
       },

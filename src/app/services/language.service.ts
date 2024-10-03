@@ -8,8 +8,8 @@ import { BehaviorSubject } from 'rxjs';
 export class LanguageService {
   private localKey: string = 'Lang';
   private languageTrace: BehaviorSubject<Language[]> = new BehaviorSubject([
-    { text: 'هيروغليفي', query: 'Arabic' },
-    { text: 'عربي', query: 'Egyptian' },
+    { text: 'هيروغليفي', query: 'arabic' },
+    { text: 'عربي', query: 'egyptian' },
   ]);
   constructor() {
     this.LoadLanguage();
@@ -33,13 +33,14 @@ export class LanguageService {
     const currentLanguages = this.languageTrace.getValue();
     window.localStorage.setItem(
       this.localKey,
-      JSON.stringify(currentLanguages),
+      JSON.stringify(currentLanguages)
     );
     this.languageTrace.next(currentLanguages);
   }
 
   swapLanguages(): void {
     const current = this.languageTrace.getValue();
+    console.log('currenefewt', current);
     let stash = {} as Language;
     stash = current[0];
     current[0] = current[1];

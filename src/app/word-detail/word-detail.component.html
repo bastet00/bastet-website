@@ -3,14 +3,14 @@
   <p>ID: {{ word!.id }}</p>
   <h2>Arabic Words</h2>
   <ul>
-    <li *ngFor="let arabicWord of word?.Arabic">
-      {{ arabicWord.Word }}
+    <li *ngFor="let arabicWord of word?.arabic">
+      {{ arabicWord.word }}
     </li>
   </ul>
   <h2>Egyptian Words</h2>
   <ul>
-    <li *ngFor="let egyptianWord of word?.Egyptian">
-      {{ egyptianWord.Word }} - {{'&#x' + egyptianWord.Symbol + ';'}}
+    <li *ngFor="let egyptianWord of word?.egyptian">
+      {{ egyptianWord.word }} - {{'&#x' + egyptianWord.symbol + ';'}}
     </li>
   </ul>
 </div>

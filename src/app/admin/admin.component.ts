@@ -37,17 +37,17 @@ export class AdminComponent implements OnInit {
         this.data = []; // reset between calls
         res.forEach((obj) => {
           const id = obj.id;
-          const ar = obj.Arabic.map((index) => index.Word).join(' - ');
-          const en = obj.English.map((index) => index.Word).join(' - ');
-          const eg = obj.Egyptian[0].Word;
-          const sym = this.translationService.toSymbol(obj.Egyptian[0].Symbol);
-          const hexSym = obj.Egyptian[0].Symbol;
+          const ar = obj.arabic.map((index) => index.word).join(' - ');
+          const en = obj.english.map((index) => index.word).join(' - ');
+          const eg = obj.egyptian[0].word;
+          const sym = this.translationService.toSymbol(obj.egyptian[0].symbol);
+          const hexSym = obj.egyptian[0].symbol;
           this.data.push({
             id: id,
-            Arabic: ar,
-            Egyptian: eg,
-            Symbol: sym,
-            English: en,
+            arabic: ar,
+            egyptian: eg,
+            symbol: sym,
+            english: en,
             hexSym: hexSym,
           });
         });
@@ -67,7 +67,7 @@ export class AdminComponent implements OnInit {
     const inputElement = event.target as HTMLInputElement;
     const obj = this.data.find((obj) => obj.id === id);
     if (obj) {
-      obj.Symbol = inputElement.value;
+      obj.symbol = inputElement.value;
     }
   }
 

@@ -14,7 +14,7 @@ import { TranslationRes } from '../landing/interface';
   providedIn: 'root',
 })
 export class TranslationService {
-  private url = 'https://bastet-server-ef94bb4e91eb.herokuapp.com/search';
+  private url = 'https://bastet-server-ef94bb4e91eb.herokuapp.com/word/search';
   private dataSubject = new BehaviorSubject<TranslationRes[]>([]);
   private loadingSubject = new BehaviorSubject<boolean>(false);
   private emptyResSubject = new BehaviorSubject<boolean>(false);

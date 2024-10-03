@@ -8,7 +8,7 @@ import { TranslationRes, TranslationResToView } from '../../landing/interface';
   providedIn: 'root',
 })
 export class WordAdminService {
-  private url = 'https://bastet-server-ef94bb4e91eb.herokuapp.com/';
+  private url = 'https://bastet-server-ef94bb4e91eb.herokuapp.com/admin/word/';
   constructor() {}
 
   private key = localStorage.getItem(AUTH_KEY);
@@ -47,26 +47,26 @@ export class WordAdminService {
       return throwError(() => new Error('No auth key found'));
     }
 
-    target.Arabic = newObj.Arabic.split('-').map((word) => ({ Word: word }));
-    if (newObj.English) {
-      target.English = newObj.English.split('-').map((word) => ({
-        Word: word,
+    target.arabic = newObj.arabic.split('-').map((word) => ({ word: word }));
+    if (newObj.english) {
+      target.english = newObj.english.split('-').map((word) => ({
+        word: word,
       }));
     }
 
-    target.Arabic = newObj.Arabic.split('-').map((word) => ({
-      Word: word.trim(),
+    target.arabic = newObj.arabic.split('-').map((word) => ({
+      word: word.trim(),
     }));
-    target.Egyptian[0].Word = newObj.Egyptian;
+    target.egyptian[0].word = newObj.egyptian;
 
     const htmlEntityLength = 8;
 
-    if (newObj.Symbol.length === htmlEntityLength) {
+    if (newObj.symbol.length === htmlEntityLength) {
       if (newObj.hexSym) {
-        target.Egyptian[0].Symbol = this.hexToSymbol(newObj.hexSym);
+        target.egyptian[0].symbol = this.hexToSymbol(newObj.hexSym);
       }
     } else {
-      target.Egyptian[0].Symbol = newObj.Symbol;
+      target.egyptian[0].symbol = newObj.symbol;
     }
 
     return fromFetch(`${this.url}${newObj.id}`, {

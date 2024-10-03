@@ -1,7 +1,7 @@
 export interface Word {
   id: string;
-  Arabic: { Word: string }[];
-  Egyptian: { Word: string; Symbol: string }[];
+  arabic: { word: string }[];
+  egyptian: { word: string; symbol: string }[];
 }
 
 export type WordList = Word[];
