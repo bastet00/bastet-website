@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { WordAdminService } from './single-doc.service';
+import { WordAdminService } from './admin-word.service';
 
 describe('SingleDocService', () => {
   let service: WordAdminService;

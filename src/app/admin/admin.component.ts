@@ -2,12 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { LoginService } from '../services/login.service';
 import { Router } from '@angular/router';
 import { UserInputComponent } from '../landing/user-input/user-input.component';
-import { TranslationService } from '../services/translation.service';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { TranslationResToView } from '../landing/interface';
 import { FormsModule } from '@angular/forms';
-import { WordAdminService } from '../services/api/single-doc.service';
-import { firstValueFrom, lastValueFrom } from 'rxjs';
+import {
+  AdminWordViewList,
+  WordAdminService,
+} from '../services/api/admin-word.service';
+import { lastValueFrom } from 'rxjs';
+import { LANGUAGES } from '../dto/types/language.type';
 
 @Component({
   selector: 'app-admin',
@@ -17,44 +20,68 @@ import { firstValueFrom, lastValueFrom } from 'rxjs';
   styleUrl: './admin.component.scss',
 })
 export class AdminComponent implements OnInit {
+  adminTranslationLanguages = {
+    translateFrom: LANGUAGES.arabic,
+    translateTo: LANGUAGES.egyptian,
+  };
+  results: AdminWordViewList | undefined;
+  translationText: string = '';
   constructor(
     private loginService: LoginService,
     private router: Router,
-    private translationService: TranslationService,
     private senitizer: DomSanitizer,
-    private singleDocService: WordAdminService
+    private wordAdminService: WordAdminService
   ) {}
 
   data: TranslationResToView[] = [];
+  private handler: ReturnType<typeof setTimeout> | null = null;
 
   ngOnInit(): void {
     this.loginService.isTrusted$.subscribe((val) => {
       if (!val) {
         this.router.navigateByUrl('/');
       }
-
-      this.translationService.data$.subscribe((res) => {
-        this.data = []; // reset between calls
-        res.forEach((obj) => {
-          const id = obj.id;
-          const ar = obj.arabic.map((index) => index.word).join(' - ');
-          const en = obj.english.map((index) => index.word).join(' - ');
-          const eg = obj.egyptian[0].word;
-          const sym = this.translationService.toSymbol(obj.egyptian[0].symbol);
-          const hexSym = obj.egyptian[0].symbol;
-          this.data.push({
-            id: id,
-            arabic: ar,
-            egyptian: eg,
-            symbol: sym,
-            english: en,
-            hexSym: hexSym,
-          });
-        });
-      });
     });
   }
 
+  onTextInputChange(options: { delay?: number } = { delay: 300 }) {
+    if (!this.translationText) {
+      return;
+    }
+    const { delay } = options;
+
+    if (this.handler) {
+      clearTimeout(this.handler);
+    }
+    if (this.translationText.trim() !== '') {
+      this.handler = setTimeout(() => {
+        this.wordAdminService
+          .getWords(
+            this.translationText,
+            this.adminTranslationLanguages.translateFrom.query
+          )
+          .subscribe((results) => (this.results = results));
+      }, delay);
+    } else {
+      this.results = undefined;
+    }
+  }
+
+  addText(text: string) {
+    this.translationText = text;
+    this.onTextInputChange({ delay: 0 });
+  }
+
+  onLanguageSwitch() {
+    if (this.adminTranslationLanguages.translateFrom === LANGUAGES.arabic) {
+      this.adminTranslationLanguages.translateFrom = LANGUAGES.egyptian;
+      this.adminTranslationLanguages.translateTo = LANGUAGES.arabic;
+    } else {
+      this.adminTranslationLanguages.translateFrom = LANGUAGES.arabic;
+      this.adminTranslationLanguages.translateTo = LANGUAGES.egyptian;
+    }
+    this.onTextInputChange();
+  }
   sanitizeSymbol(symbol: string): SafeHtml {
     return this.senitizer.bypassSecurityTrustHtml(symbol);
   }
@@ -72,7 +99,7 @@ export class AdminComponent implements OnInit {
   }
 
   async delete(id: string) {
-    const res = await lastValueFrom(this.singleDocService.delete(id));
+    const res = await lastValueFrom(this.wordAdminService.delete(id));
     if (res.ok) {
       this.clearDisplayedDocs(id);
       alert('تم الحذف بنجاح');
@@ -82,11 +109,10 @@ export class AdminComponent implements OnInit {
   }
 
   async put(newObj: TranslationResToView) {
-    const res = await firstValueFrom(this.translationService.data$);
-    const target = res.find((obj) => obj.id === newObj.id);
+    const target = this.results!.items.find((obj) => obj.id === newObj.id);
     if (target) {
       const putRes = await lastValueFrom(
-        this.singleDocService.put(target, newObj)
+        this.wordAdminService.put(target, newObj)
       );
       if (putRes.ok) {
         alert('تم التحديث بنجاح');

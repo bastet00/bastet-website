@@ -1,46 +1,93 @@
 <div class="min-h-[100dvh] bg-black relative top-0">
   <div class="absolute left-1/2 -translate-x-1/2 w-full bg-black">
-    <app-user-input></app-user-input>
-    @for (obj of data; track obj.id) {
-      <div class="container flex flex-col gap-y-4" id="{{ obj.id }}">
-        <label
-          for="Egyptian"
-          class="relative flex items-center text-3xl text-white"
-        >
-          <span class="block">مصري:</span>
-          <input [(ngModel)]="obj.egyptian" class="admin-trans-result" />
-        </label>
-        <label class="text-white text-3xl flex items-center gap-x-4">
-          رمز:
-          <span
-            [innerHTML]="sanitizeSymbol(obj.symbol)"
-            class="text-main"
-          ></span>
-          <input
-            (input)="updateSymbol($event, obj.id)"
-            class="admin-trans-result max-w-40"
-            placeholder="اضف رمز اخر"
-          />
-        </label>
+    <br>
+    <br>
+    <br>
+    <div class="text-white  flex items-center justify-center gap-x-10 mt-10 ml-5">
 
-        <label class="text-white text-3xl flex items-center gap-x-4">
-          ترجمات:
-          <input [(ngModel)]="obj.arabic" class="admin-trans-result" />
-        </label>
+      <p class="text-right w-12">{{ adminTranslationLanguages.translateFrom.name }}</p>
+      <svg (click)="onLanguageSwitch()" class="cursor-pointer text-center flex items-center" width="28" height="28"
+        viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M22.5312 11.8125L26.9062 7.4375L22.5312 3.0625M5.46875 24.9375L1.09375 20.5625L5.46875 16.1875"
+          stroke="#F4931E" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+        <path
+          d="M1.09375 20.5625H14C16.4163 20.5625 18.375 18.6038 18.375 16.1875C18.375 13.7712 16.4163 11.8125 14 11.8125"
+          stroke="#F4931E" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M14 16.1875C11.5837 16.1875 9.625 14.2288 9.625 11.8125C9.625 9.39624 11.5837 7.4375 14 7.4375H26.9062"
+          stroke="#F4931E" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+      <p class="text-left w-12">{{ adminTranslationLanguages.translateTo.name }}</p>
+    </div>
 
-        <label class="text-white text-3xl flex items-center gap-x-4">
-          انجليزي:
-          <input [(ngModel)]="obj.english" class="admin-trans-result" />
-        </label>
-                
-        <div class="mx-auto w-fit flex items-center gap-x-4">
-          <button class="admin-trans-btn" (click)="delete(obj.id)">حذف</button>
-          <button class="admin-trans-btn" (click)="put(obj)">
-            تأكيد التعديل
-          </button>
+    <div class="flex flex-col items-center relative mt-20 md:mt-10">
+
+      <div class="translation-area-wrapper">
+        <div class="absolute right-[-10%] top-[-45%] w-fit ">
+        </div>
+        <textarea [(ngModel)]="translationText" (ngModelChange)="onTextInputChange()"
+          class="translation-area placeholder:text-right h-[150px]" placeholder="اكتب هنا ..."></textarea>
+        <div class="options-wrapper">
+          <button (click)="addText('ا')" class="options-btn">ا</button>
+          <button (click)="addText('إ')" class="options-btn">إ</button>
+          <button (click)="addText('ي')" class="options-btn">ي</button>
+          <button (click)="addText('و')" class="options-btn">و</button>
+          <button (click)="addText('ب')" class="options-btn">ب</button>
+          <button (click)="addText('پ')" class="options-btn">پ</button>
+          <button (click)="addText('ع')" class="options-btn">ع</button>
+          <button (click)="addText('ت')" class="options-btn">ت</button>
+          <button (click)="addText('ث')" class="options-btn">ث</button>
+          <button (click)="addText('م')" class="options-btn">م</button>
+          <button (click)="addText('ف')" class="options-btn">ف</button>
+          <button (click)="addText('ن')" class="options-btn">ن</button>
+          <button (click)="addText('ر')" class="options-btn">ر</button>
+          <button (click)="addText('ه')" class="options-btn">ه</button>
+          <button (click)="addText('ح')" class="options-btn">ح</button>
+          <button (click)="addText('س')" class="options-btn">س</button>
+          <button (click)="addText('ش')" class="options-btn">ش</button>
+          <button (click)="addText('ل')" class="options-btn">ل</button>
+          <button (click)="addText('خ')" class="options-btn">خ</button>
+          <button (click)="addText('غ')" class="options-btn">غ</button>
+          <button (click)="addText('ز')" class="options-btn">ز</button>
+          <button (click)="addText('ق')" class="options-btn">ق</button>
+          <button (click)="addText('ك')" class="options-btn">ك</button>
+          <button (click)="addText('چ')" class="options-btn">چ</button>
+          <button (click)="addText('د')" class="options-btn">د</button>
+          <button (click)="addText('ج')" class="options-btn">ج</button>
         </div>
       </div>
-      <br />
-    }
+    </div>
   </div>
+  <br />
+
+  @for (obj of results?.itemsForView; track obj.id) {
+  <div class="container flex flex-col gap-y-4" id="{{ obj.id }}">
+    <label for="Egyptian" class="relative flex items-center text-3xl text-white">
+      <span class="block">مصري:</span>
+      <input [(ngModel)]="obj.egyptian" class="admin-trans-result" />
+    </label>
+    <label class="text-white text-3xl flex items-center gap-x-4">
+      رمز:
+      <span [innerHTML]="sanitizeSymbol(obj.symbol)" class="text-main"></span>
+      <input (input)="updateSymbol($event, obj.id)" class="admin-trans-result max-w-40" placeholder="اضف رمز اخر" />
+    </label>
+
+    <label class="text-white text-3xl flex items-center gap-x-4">
+      ترجمات:
+      <input [(ngModel)]="obj.arabic" class="admin-trans-result" />
+    </label>
+
+    <label class="text-white text-3xl flex items-center gap-x-4">
+      انجليزي:
+      <input [(ngModel)]="obj.english" class="admin-trans-result" />
+    </label>
+
+    <div class="mx-auto w-fit flex items-center gap-x-4">
+      <button class="admin-trans-btn" (click)="delete(obj.id)">حذف</button>
+      <button class="admin-trans-btn" (click)="put(obj)">
+        تأكيد التعديل
+      </button>
+    </div>
+  </div>
+  <br />
+  }
 </div>

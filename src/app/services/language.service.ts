@@ -40,7 +40,6 @@ export class LanguageService {
 
   swapLanguages(): void {
     const current = this.languageTrace.getValue();
-    console.log('currenefewt', current);
     let stash = {} as Language;
     stash = current[0];
     current[0] = current[1];
