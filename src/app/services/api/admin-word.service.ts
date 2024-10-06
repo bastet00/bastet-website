@@ -31,13 +31,17 @@ export class WordAdminService {
 
   private key = localStorage.getItem(AUTH_KEY);
 
-  getWords(word: string, lang: string): Observable<AdminWordViewList> {
+  getWords(
+    word: string,
+    lang: string,
+    options: { page: number; perPage: number } = { page: 1, perPage: 25 }
+  ): Observable<AdminWordViewList> {
     if (!this.key) {
       return throwError(() => new Error('No auth key found'));
     }
     return this.http
       .get<AdminWordListApiResponse>(this.url, {
-        params: { lang, word },
+        params: { lang, word, ...options },
         headers: { Authorization: this.key },
       })
       .pipe(

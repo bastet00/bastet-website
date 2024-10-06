@@ -1,5 +1,5 @@
 <div class="min-h-[100dvh] bg-black relative top-0">
-  <div class="absolute left-1/2 -translate-x-1/2 w-full bg-black">
+  <div class="absolute left-1/2 -translate-x-1/2 w-full ">
     <br>
     <br>
     <br>
@@ -57,7 +57,24 @@
       </div>
     </div>
   </div>
-  <br />
+  @if (results?.itemsForView){
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+
+  <br>
+  <br>
+  <br>
+
+  <hr class="w-1/2 h-1 mx-auto my-4 bg-gray-200 border-0 rounded md:my-10 dark:bg-lineColor" />
 
   @for (obj of results?.itemsForView; track obj.id) {
   <div class="container flex flex-col gap-y-4" id="{{ obj.id }}">
@@ -90,4 +107,19 @@
   </div>
   <br />
   }
+  <div>
+    <mat-form-field>
+      <mat-label>Page Index</mat-label>
+      <input matInput placeholder="click enter" [(ngModel)]="userInputPage" type="number"
+        #inputElement (keydown.enter)="enterPageIndex($event)">
+    </mat-form-field>
+    <mat-paginator (page)="onPageChange($event)" [showFirstLastButtons]="true" [length]="count" [pageSize]="perPage"
+      [pageIndex]="page" [pageSizeOptions]="pageSizeOptions" aria-label="Select page">
+    </mat-paginator>
+  </div>
+
+
+
+  }
+
 </div>

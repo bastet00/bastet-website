@@ -11,12 +11,29 @@ import {
 } from '../services/api/admin-word.service';
 import { lastValueFrom } from 'rxjs';
 import { LANGUAGES } from '../dto/types/language.type';
+import {
+  MatPaginatorIntl,
+  MatPaginatorModule,
+  PageEvent,
+} from '@angular/material/paginator';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MyCustomPaginatorIntl } from './pagination.service';
 
 @Component({
   selector: 'app-admin',
   standalone: true,
-  imports: [UserInputComponent, FormsModule],
+  imports: [
+    UserInputComponent,
+    FormsModule,
+    MatPaginatorModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+  ],
   templateUrl: './admin.component.html',
+  providers: [{ provide: MatPaginatorIntl, useClass: MyCustomPaginatorIntl }],
+
   styleUrl: './admin.component.scss',
 })
 export class AdminComponent implements OnInit {
@@ -26,15 +43,19 @@ export class AdminComponent implements OnInit {
   };
   results: AdminWordViewList | undefined;
   translationText: string = '';
+  data: TranslationResToView[] = [];
+  private handler: ReturnType<typeof setTimeout> | null = null;
+  page: number = 1;
+  count: number = 0;
+  perPage = 25;
+  pageSizeOptions = [5, 10, 25, 50, 100, 200, 500];
+  userInputPage = this.page;
   constructor(
     private loginService: LoginService,
     private router: Router,
     private senitizer: DomSanitizer,
     private wordAdminService: WordAdminService
   ) {}
-
-  data: TranslationResToView[] = [];
-  private handler: ReturnType<typeof setTimeout> | null = null;
 
   ngOnInit(): void {
     this.loginService.isTrusted$.subscribe((val) => {
@@ -44,6 +65,11 @@ export class AdminComponent implements OnInit {
     });
   }
 
+  enterPageIndex(event: Event) {
+    console.log(event);
+    this.page = this.userInputPage;
+    this.onTextInputChange({ delay: 0 });
+  }
   onTextInputChange(options: { delay?: number } = { delay: 300 }) {
     if (!this.translationText) {
       return;
@@ -58,15 +84,24 @@ export class AdminComponent implements OnInit {
         this.wordAdminService
           .getWords(
             this.translationText,
-            this.adminTranslationLanguages.translateFrom.query
+            this.adminTranslationLanguages.translateFrom.query,
+            { page: this.page, perPage: this.perPage }
           )
-          .subscribe((results) => (this.results = results));
+          .subscribe((results) => {
+            this.results = results;
+            this.count = results.count;
+          });
       }, delay);
     } else {
       this.results = undefined;
     }
   }
-
+  onPageChange(event: PageEvent) {
+    this.page = event.pageIndex;
+    this.count = event.length;
+    this.perPage = event.pageSize;
+    this.onTextInputChange({ delay: 0 });
+  }
   addText(text: string) {
     this.translationText = text;
     this.onTextInputChange({ delay: 0 });
