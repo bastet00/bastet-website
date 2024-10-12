@@ -1,6 +1,7 @@
 import {
   Component,
   ElementRef,
+  Input,
   OnInit,
   QueryList,
   ViewChildren,
@@ -32,16 +33,19 @@ export class TranslationBoxComponent implements OnInit {
   showAddingSuggestionSuccess = false;
   constructor(
     private transService: TranslationService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
   ) {}
 
   @ViewChildren('translationRef') transRefs!: QueryList<ElementRef>;
+  @Input() data: TranslationResToView = {} as TranslationResToView;
 
   helperText: string = '';
   hoverToElement: string | null = null;
   emptyRes = false;
 
   ngOnInit(): void {
+    console.log(this.data);
+
     this.transService.data$.subscribe({
       next: (translation: TranslationRes[]) => {
         this.words = translation.map((word) => {
@@ -71,7 +75,7 @@ export class TranslationBoxComponent implements OnInit {
     this.hoverToElement = id;
 
     const ele = this.transRefs.find(
-      (ref) => ref.nativeElement.getAttribute('data-id') === id
+      (ref) => ref.nativeElement.getAttribute('data-id') === id,
     )?.nativeElement as HTMLDivElement;
 
     let toCopy = '';
