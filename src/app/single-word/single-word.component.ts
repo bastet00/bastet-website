@@ -4,17 +4,12 @@ import { ActivatedRoute } from '@angular/router';
 import { TranslationService } from '../services/translation.service';
 import { Word } from '../dto/word.dto';
 import { LandingBackgroundComponent } from '../landing-background/landing-background.component';
-import { LandingComponent } from '../landing/landing.component';
 import { ArabicWord, TranslationResToView } from '../landing/interface';
 
 @Component({
   selector: 'app-single-word',
   standalone: true,
-  imports: [
-    TranslationBoxComponent,
-    LandingBackgroundComponent,
-    LandingComponent,
-  ],
+  imports: [TranslationBoxComponent, LandingBackgroundComponent],
   templateUrl: './single-word.component.html',
   styleUrl: './single-word.component.scss',
 })
