@@ -5,11 +5,19 @@ import { TranslationService } from '../services/translation.service';
 import { Word } from '../dto/word.dto';
 import { LandingBackgroundComponent } from '../landing-background/landing-background.component';
 import { ArabicWord, TranslationResToView } from '../landing/interface';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';
+import { SuspendComponent } from '../suspend/suspend.component';
 
 @Component({
   selector: 'app-single-word',
   standalone: true,
-  imports: [TranslationBoxComponent, LandingBackgroundComponent],
+  imports: [
+    TranslationBoxComponent,
+    LandingBackgroundComponent,
+    CommonModule,
+    SuspendComponent,
+  ],
   templateUrl: './single-word.component.html',
   styleUrl: './single-word.component.scss',
 })
@@ -17,10 +25,11 @@ export class SingleWordComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private translationService: TranslationService,
+    private sanitizer: DomSanitizer,
   ) {}
 
   singleWord: Word = {} as Word;
-  mapSingleWordToView = {} as TranslationResToView;
+  singleWordToView = {} as TranslationResToView;
 
   ngOnInit(): void {
     const param = this.route.snapshot.paramMap.get('id') as string;
@@ -33,12 +42,16 @@ export class SingleWordComponent implements OnInit {
 
   async getWord(id: string) {
     this.singleWord = await this.translationService.getOne(id);
-    this.mapSingleWordToView.symbol = this.translationService.toSymbol(
+    this.singleWordToView.symbol = this.translationService.toSymbol(
       this.singleWord.egyptian[0].symbol,
     );
-    this.mapSingleWordToView.egyptian = this.singleWord.egyptian[0].word;
-    this.mapSingleWordToView.id = this.singleWord.id;
-    this.mapSingleWordToView.arabic = this.jsonToView(this.singleWord.arabic);
-    this.mapSingleWordToView.english = this.jsonToView(this.singleWord.english);
+    this.singleWordToView.egyptian = this.singleWord.egyptian[0].word;
+    this.singleWordToView.id = this.singleWord.id;
+    this.singleWordToView.arabic = this.jsonToView(this.singleWord.arabic);
+    this.singleWordToView.english = this.jsonToView(this.singleWord.english);
+  }
+
+  sanitizeSymbol(symbol: string): SafeHtml {
+    return this.sanitizer.bypassSecurityTrustHtml(symbol);
   }
 }
