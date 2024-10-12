@@ -1,7 +1,6 @@
 import {
   Component,
   ElementRef,
-  Input,
   OnInit,
   QueryList,
   ViewChildren,
@@ -37,15 +36,12 @@ export class TranslationBoxComponent implements OnInit {
   ) {}
 
   @ViewChildren('translationRef') transRefs!: QueryList<ElementRef>;
-  @Input() data: TranslationResToView = {} as TranslationResToView;
 
   helperText: string = '';
   hoverToElement: string | null = null;
   emptyRes = false;
 
   ngOnInit(): void {
-    console.log(this.data);
-
     this.transService.data$.subscribe({
       next: (translation: TranslationRes[]) => {
         this.words = translation.map((word) => {
