@@ -36,19 +36,24 @@ export class SingleWordComponent implements OnInit {
     this.getWord(param);
   }
 
-  jsonToView(obj: ArabicWord[]): string {
+  arrToView(obj: ArabicWord[]): string {
     return obj.map((words) => words.word).join(' , ');
   }
 
   async getWord(id: string) {
     this.singleWord = await this.translationService.getOne(id);
+
     this.singleWordToView.symbol = this.translationService.toSymbol(
       this.singleWord.egyptian[0].symbol,
     );
     this.singleWordToView.egyptian = this.singleWord.egyptian[0].word;
     this.singleWordToView.id = this.singleWord.id;
-    this.singleWordToView.arabic = this.jsonToView(this.singleWord.arabic);
-    this.singleWordToView.english = this.jsonToView(this.singleWord.english);
+    this.singleWordToView.arabic = this.arrToView(this.singleWord.arabic);
+    this.singleWordToView.english = this.arrToView(this.singleWord.english);
+    this.singleWordToView.hieroglyphics =
+      this.singleWord.egyptian[0].hieroglyphics.join(' , ');
+    this.singleWordToView.transliteration =
+      this.singleWord.egyptian[0].transliteration;
   }
 
   sanitizeSymbol(symbol: string): SafeHtml {
