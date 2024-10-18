@@ -16,11 +16,18 @@ import { CommonModule } from '@angular/common';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { SuspendComponent } from '../../suspend/suspend.component';
 import { NotificationComponent } from '../../notification/notification.component';
+import { RouterOutlet, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-translation-box',
   standalone: true,
-  imports: [CommonModule, SuspendComponent, NotificationComponent],
+  imports: [
+    CommonModule,
+    SuspendComponent,
+    NotificationComponent,
+    RouterLink,
+    RouterOutlet,
+  ],
   templateUrl: './translation-box.component.html',
   styleUrl: './translation-box.component.scss',
 })
@@ -32,7 +39,7 @@ export class TranslationBoxComponent implements OnInit {
   showAddingSuggestionSuccess = false;
   constructor(
     private transService: TranslationService,
-    private sanitizer: DomSanitizer,
+    private sanitizer: DomSanitizer
   ) {}
 
   @ViewChildren('translationRef') transRefs!: QueryList<ElementRef>;
@@ -71,7 +78,7 @@ export class TranslationBoxComponent implements OnInit {
     this.hoverToElement = id;
 
     const ele = this.transRefs.find(
-      (ref) => ref.nativeElement.getAttribute('data-id') === id,
+      (ref) => ref.nativeElement.getAttribute('data-id') === id
     )?.nativeElement as HTMLDivElement;
 
     let toCopy = '';

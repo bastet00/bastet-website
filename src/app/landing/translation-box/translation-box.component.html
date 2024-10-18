@@ -27,7 +27,9 @@
         [attr.data-id]="word.id"
       >
         <span
-          class="w-fit"
+          onclick="navigateToWord(word.id)"
+          routerLink="word/{{ word.id }}"
+          class="w-fit hover:cursor-pointer"
           [innerHTML]="sanitizeSymbol(word.egyptian + word.symbol)"
         >
           {{ word?.egyptian }}
