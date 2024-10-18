@@ -6,6 +6,7 @@ export interface Language {
 export interface ArabicWord {
   word: string;
 }
+
 export type EnglishWord = ArabicWord;
 
 export interface EgyptianWord {
@@ -27,4 +28,6 @@ export interface TranslationResToView {
   english?: string;
   symbol: string;
   hexSym?: string;
+  hieroglyphics?: string;
+  transliteration?: string;
 }

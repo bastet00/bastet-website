@@ -1,17 +1,8 @@
-<div>
-  <div class="relative">
-    <!-- overlay  -->
-    <div class="absolute w-full h-full overlay"></div>
-    <!-- bg image  -->
-    <img src="/landing-page-image.png" alt="landing-image"
-      class="absolute inset-0 w-full h-full object-cover object-center back-section-image" />
-    <div class="container relative mx-auto text-center py-10">
-      <!-- Bastet header  -->
-      <app-static></app-static>
-      <!-- user box  -->
-      <app-user-input></app-user-input>
-      <app-translation-box></app-translation-box>
-
-    </div>
+<app-landing-background>
+  <div class="container relative mx-auto text-center py-10">
+    <!--  Bastet header -->
+    <app-static></app-static>
+    <app-user-input></app-user-input>
+    <app-translation-box></app-translation-box>
   </div>
-</div>
+</app-landing-background>

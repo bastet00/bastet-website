@@ -2,19 +2,22 @@ import { Injectable } from '@angular/core';
 import {
   BehaviorSubject,
   catchError,
+  firstValueFrom,
   Observable,
   of,
   switchMap,
   tap,
+  throwError,
 } from 'rxjs';
 import { fromFetch } from 'rxjs/fetch';
 import { TranslationRes } from '../landing/interface';
+import { Word } from '../dto/word.dto';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TranslationService {
-  private url = 'https://bastet-server-ef94bb4e91eb.herokuapp.com/word/search';
+  private url = 'https://bastet-server-ef94bb4e91eb.herokuapp.com/word';
   private dataSubject = new BehaviorSubject<TranslationRes[]>([]);
   private loadingSubject = new BehaviorSubject<boolean>(false);
   private emptyResSubject = new BehaviorSubject<boolean>(false);
@@ -34,7 +37,7 @@ export class TranslationService {
     const controller = new AbortController();
     const signal = controller.signal;
     this.loadingSubject.next(true);
-    return fromFetch(`${this.url}?lang=${from}&word=${word}`, {
+    return fromFetch(`${this.url}/search?lang=${from}&word=${word}`, {
       signal,
       headers: {
         'Content-Type': 'application/json',
@@ -68,10 +71,27 @@ export class TranslationService {
       catchError((err) => {
         console.error('Error during translation:', err);
         return of([]);
-      })
+      }),
     );
   }
+
   setNull() {
     this.dataSubject.next([]);
+  }
+
+  async getOne(id: string): Promise<Word> {
+    const call = fromFetch(`${this.url}/${id}`).pipe(
+      switchMap(async (response) => {
+        if (response.ok) {
+          return await response.json();
+        }
+        throw throwError(() => new Error());
+      }),
+      catchError(() => {
+        throw new Error('failed to fetch resource');
+      }),
+    );
+
+    return firstValueFrom(call);
   }
 }

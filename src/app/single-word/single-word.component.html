@@ -1,0 +1,42 @@
+<app-landing-background [fullHieght]="'min-h-dvh'">
+  <div class="mt-20">
+    <app-suspend *ngIf="!singleWord.id"></app-suspend>
+  </div>
+  <div class="mt-20 mx-auto translation-area-wrapper" *ngIf="singleWord.id">
+    <div class="translation-result-area">
+      <span
+        class="w-fit translation-to-egy-text text-6xl"
+        [innerHTML]="
+          sanitizeSymbol(singleWordToView.egyptian + singleWordToView.symbol)
+        "
+      >
+        {{ singleWordToView.egyptian }}
+        {{ singleWordToView.symbol }}
+      </span>
+    </div>
+
+    <!-- both translation columns -->
+    <div class="grid grid-cols-[1fr_1fr] gap-4 mt-4">
+      <div class="translation-result-area">
+        <p>عربي:</p>
+        <p>{{ singleWordToView.arabic }}</p>
+      </div>
+
+      <div class="translation-result-area">
+        <p>:English</p>
+        <p>{{ singleWordToView.english }}</p>
+      </div>
+    </div>
+    <!---->
+
+    <div class="translation-result-area mt-4">
+      <p>القيمه الصوتيه الانجليزيه:</p>
+      <p>{{ singleWordToView.transliteration }}</p>
+    </div>
+
+    <div class="translation-result-area mt-4">
+      <p>:Symbol Encode</p>
+      <p>{{ singleWordToView.hieroglyphics }}</p>
+    </div>
+  </div>
+</app-landing-background>
