@@ -16,11 +16,17 @@ import { CommonModule } from '@angular/common';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { SuspendComponent } from '../../suspend/suspend.component';
 import { NotificationComponent } from '../../notification/notification.component';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-translation-box',
   standalone: true,
-  imports: [CommonModule, SuspendComponent, NotificationComponent],
+  imports: [
+    CommonModule,
+    SuspendComponent,
+    NotificationComponent,
+    RouterModule,
+  ],
   templateUrl: './translation-box.component.html',
   styleUrl: './translation-box.component.scss',
 })

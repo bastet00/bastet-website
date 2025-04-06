@@ -26,13 +26,10 @@
         class="flex gap-x-2 translation-to-egy-text w-fit select-text"
         [attr.data-id]="word.id"
       >
-        <span
-          class="w-fit"
-          [innerHTML]="sanitizeSymbol(word.egyptian + word.symbol)"
-        >
-          {{ word?.egyptian }}
-          {{ word?.symbol }}
-        </span>
+        <a routerLink="word/{{word.id}}" class="w-fit " [innerHTML]="sanitizeSymbol(word.egyptian + word.symbol)" >
+          {{ word?.egyptian }} {{ word?.symbol }}
+        </a>
+
       </div>
 
       <p class="w-fit">{{ word.arabic }}</p>
