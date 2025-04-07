@@ -6,7 +6,7 @@ import { Word } from '../dto/word.dto';
 import { LandingBackgroundComponent } from '../landing-background/landing-background.component';
 import { ArabicWord, TranslationResToView } from '../landing/interface';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { SuspendComponent } from '../suspend/suspend.component';
 import { LucideAngularModule, ArrowRight } from 'lucide-angular';
 
@@ -31,6 +31,7 @@ export class SingleWordComponent implements OnInit {
     private route: ActivatedRoute,
     private translationService: TranslationService,
     private sanitizer: DomSanitizer,
+    private location: Location,
   ) {}
 
   singleWord: Word = {} as Word;
@@ -39,6 +40,10 @@ export class SingleWordComponent implements OnInit {
   ngOnInit(): void {
     const param = this.route.snapshot.paramMap.get('id') as string;
     this.getWord(param);
+  }
+
+  navigateBack() {
+    this.location.back();
   }
 
   arrToView(obj: ArabicWord[]): string {

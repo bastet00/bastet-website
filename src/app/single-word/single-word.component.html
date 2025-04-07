@@ -5,7 +5,7 @@
   </div>
 
   <div class="mt-20 mx-auto translation-area-wrapper" *ngIf="singleWord.id">
-    <a routerLink="/" class="block bg-[#31271980] p-2 w-fit rounded-full mb-10 ">
+    <a (click)="navigateBack()" class="cursor-pointer block bg-[#31271980] p-2 w-fit rounded-full mb-10 ">
       <lucide-icon [img]="ArrowRight" color="#A69670" class="my-icon"></lucide-icon>
     </a>
 
