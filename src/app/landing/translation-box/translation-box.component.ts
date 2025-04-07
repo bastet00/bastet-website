@@ -16,7 +16,7 @@ import { CommonModule } from '@angular/common';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { SuspendComponent } from '../../suspend/suspend.component';
 import { NotificationComponent } from '../../notification/notification.component';
-import { RouterOutlet, RouterLink } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-translation-box',
@@ -25,8 +25,7 @@ import { RouterOutlet, RouterLink } from '@angular/router';
     CommonModule,
     SuspendComponent,
     NotificationComponent,
-    RouterLink,
-    RouterOutlet,
+    RouterModule,
   ],
   templateUrl: './translation-box.component.html',
   styleUrl: './translation-box.component.scss',
@@ -39,7 +38,8 @@ export class TranslationBoxComponent implements OnInit {
   showAddingSuggestionSuccess = false;
   constructor(
     private transService: TranslationService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private router: Router,
   ) {}
 
   @ViewChildren('translationRef') transRefs!: QueryList<ElementRef>;
@@ -74,11 +74,17 @@ export class TranslationBoxComponent implements OnInit {
     });
   }
 
+  delayNavigate(word: TranslationResToView) {
+    setTimeout(() => {
+      this.router.navigateByUrl(`word/${word.id}`);
+    }, 200);
+  }
+
   toClipboard(id: string) {
     this.hoverToElement = id;
 
     const ele = this.transRefs.find(
-      (ref) => ref.nativeElement.getAttribute('data-id') === id
+      (ref) => ref.nativeElement.getAttribute('data-id') === id,
     )?.nativeElement as HTMLDivElement;
 
     let toCopy = '';

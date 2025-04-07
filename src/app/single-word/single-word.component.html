@@ -1,42 +1,53 @@
 <app-landing-background [fullHieght]="'min-h-dvh'">
+
   <div class="mt-20">
     <app-suspend *ngIf="!singleWord.id"></app-suspend>
   </div>
+
   <div class="mt-20 mx-auto translation-area-wrapper" *ngIf="singleWord.id">
-    <div class="translation-result-area">
-      <span
-        class="w-fit translation-to-egy-text text-6xl"
-        [innerHTML]="
-          sanitizeSymbol(singleWordToView.egyptian + singleWordToView.symbol)
-        "
+    <a routerLink="/" class="block bg-[#31271980] p-2 w-fit rounded-full mb-10 ">
+      <lucide-icon [img]="ArrowRight" color="#A69670" class="my-icon"></lucide-icon>
+    </a>
+
+    <div class="translation-result-area flex flex-col gap-y-5">
+      <!-- header  -->
+      <h2 class="translation-to-egy-text w-fit mx-auto text-3xl"
+        [innerHTML]= "sanitizeSymbol(singleWordToView.egyptian + singleWordToView.symbol)"
       >
-        {{ singleWordToView.egyptian }}
-        {{ singleWordToView.symbol }}
-      </span>
-    </div>
+        {{singleWordToView.egyptian}} {{singleWordToView.symbol}}
+      </h2>
 
-    <!-- both translation columns -->
-    <div class="grid grid-cols-[1fr_1fr] gap-4 mt-4">
-      <div class="translation-result-area">
-        <p>عربي:</p>
-        <p>{{ singleWordToView.arabic }}</p>
+      <!-- blocks -->
+
+      <div class="flex items-start flex-col">
+        <p class="text-main">عربي:</p>
+        <p >{{singleWordToView.arabic}}</p>
+      </div>
+      <div class="flex items-start flex-col">
+        <p class="text-main">انجليزي:</p>
+        <p >{{singleWordToView.english}}</p>
       </div>
 
-      <div class="translation-result-area">
-        <p>:English</p>
-        <p>{{ singleWordToView.english }}</p>
+      <div class="flex items-start flex-col">
+        <p class="text-main">القيمه الصوتيه الانجليزيه:</p>
+        <p >{{singleWordToView.transliteration}}</p>
       </div>
-    </div>
-    <!---->
 
-    <div class="translation-result-area mt-4">
-      <p>القيمه الصوتيه الانجليزيه:</p>
-      <p>{{ singleWordToView.transliteration }}</p>
-    </div>
+      <div class="flex items-start flex-col">
+        <p class="text-main">الهيروغليفيه:</p>
+        <p [innerHTML]="sanitizeSymbol(singleWordToView.symbol)" >{{singleWordToView.symbol}}</p>
+      </div>
 
-    <div class="translation-result-area mt-4">
-      <p>:Symbol Encode</p>
-      <p>{{ singleWordToView.hieroglyphics }}</p>
+      <div class="flex items-start flex-col">
+        <p  class="text-main">علامات جاردنير:</p>
+        <p>{{singleWordToView.hieroglyphics}}</p>
+      </div>
+
+      <div class="flex items-start flex-col">
+        <p>المصادر:</p>
+        <p class="text-main">i don't have source</p>
+      </div>
+      <!-- end blocks -->
     </div>
   </div>
 </app-landing-background>
