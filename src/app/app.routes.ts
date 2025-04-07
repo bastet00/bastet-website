@@ -11,8 +11,8 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'admin', component: AdminComponent },
   { path: 'privacy-policy', component: PrivacyPolicyComponent },
+  { path: 'privacy', component: PrivacyPolicyComponent },
   { path: 'word/:id', component: SingleWordComponent },
-
   { path: '**', redirectTo: '' },
 ];
 

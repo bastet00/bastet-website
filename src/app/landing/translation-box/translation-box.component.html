@@ -26,6 +26,7 @@
         class="flex gap-x-2 translation-to-egy-text w-fit select-text"
         [attr.data-id]="word.id"
       >
+
         <a (click)="delayNavigate(word)" class="w-fit cursor-pointer" [innerHTML]="sanitizeSymbol(word.egyptian + word.symbol)" >
           {{ word?.egyptian }} {{ word?.symbol }}
         </a>
@@ -33,6 +34,21 @@
       </div>
 
       <p class="w-fit">{{ word.arabic }}</p>
+
+
+        <span
+          onclick="navigateToWord(word.id)"
+          routerLink="word/{{ word.id }}"
+          class="w-fit hover:cursor-pointer"
+          [innerHTML]="sanitizeSymbol(word.egyptian + word.symbol)"
+        >
+          {{ word?.egyptian }}
+          {{ word?.symbol }}
+        </span>
+      </div>
+
+      <p class="w-fit">{{ word.arabic }}</p>
+
 
       <div class="relative flex items-center gap-x-4 w-fit mr-auto">
         <span

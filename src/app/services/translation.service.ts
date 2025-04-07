@@ -57,11 +57,8 @@ export class TranslationService {
 
       tap((translation: TranslationRes[]) => {
         if (translation.length === 0) {
-          console.log('emptyResSubject.next(true)', translation);
-
           this.emptyResSubject.next(true);
         } else {
-          console.log('emptyResSubject.next(false)', translation);
           this.emptyResSubject.next(false);
         }
 

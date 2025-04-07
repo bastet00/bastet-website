@@ -43,7 +43,6 @@ export class AdminComponent implements OnInit {
   };
   results: AdminWordViewList | undefined;
   translationText: string = '';
-  data: TranslationResToView[] = [];
   private handler: ReturnType<typeof setTimeout> | null = null;
   page: number = 1;
   count: number = 0;
@@ -65,8 +64,7 @@ export class AdminComponent implements OnInit {
     });
   }
 
-  enterPageIndex(event: Event) {
-    console.log(event);
+  enterPageIndex(_event: Event) {
     this.page = this.userInputPage;
     this.onTextInputChange({ delay: 0 });
   }
@@ -122,12 +120,15 @@ export class AdminComponent implements OnInit {
   }
 
   clearDisplayedDocs(id: string) {
-    this.data = this.data.filter((obj) => obj.id !== id);
+    this.results!.itemsForView = this.results!.itemsForView.filter(
+      (obj) => obj.id !== id
+    );
   }
 
   updateSymbol(event: Event, id: string) {
+    const data = this.results!.itemsForView;
     const inputElement = event.target as HTMLInputElement;
-    const obj = this.data.find((obj) => obj.id === id);
+    const obj = data.find((obj) => obj.id === id);
     if (obj) {
       obj.symbol = inputElement.value;
     }

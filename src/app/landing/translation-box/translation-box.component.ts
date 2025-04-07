@@ -18,6 +18,7 @@ import { SuspendComponent } from '../../suspend/suspend.component';
 import { NotificationComponent } from '../../notification/notification.component';
 import { Router, RouterModule } from '@angular/router';
 
+
 @Component({
   selector: 'app-translation-box',
   standalone: true,
