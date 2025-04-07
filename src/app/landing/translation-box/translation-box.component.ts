@@ -16,7 +16,7 @@ import { CommonModule } from '@angular/common';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { SuspendComponent } from '../../suspend/suspend.component';
 import { NotificationComponent } from '../../notification/notification.component';
-import { Router, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-translation-box',
@@ -39,7 +39,6 @@ export class TranslationBoxComponent implements OnInit {
   constructor(
     private transService: TranslationService,
     private sanitizer: DomSanitizer,
-    private router: Router,
   ) {}
 
   @ViewChildren('translationRef') transRefs!: QueryList<ElementRef>;
@@ -72,12 +71,6 @@ export class TranslationBoxComponent implements OnInit {
         this.emptyRes = emptyRes;
       },
     });
-  }
-
-  delayNavigate(word: TranslationResToView) {
-    setTimeout(() => {
-      this.router.navigateByUrl(`word/${word.id}`);
-    }, 200);
   }
 
   toClipboard(id: string) {
