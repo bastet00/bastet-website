@@ -8,6 +8,7 @@ export interface Word {
     hieroglyphics: string[];
   }[];
   english: { word: string }[];
+  resources: string[];
 }
 
 export type WordList = Word[];

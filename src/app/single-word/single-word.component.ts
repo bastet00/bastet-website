@@ -8,7 +8,7 @@ import { ArabicWord, TranslationResToView } from '../landing/interface';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { CommonModule, Location } from '@angular/common';
 import { SuspendComponent } from '../suspend/suspend.component';
-import { LucideAngularModule, ArrowRight } from 'lucide-angular';
+import { LucideAngularModule, ArrowRight, CheckIcon } from 'lucide-angular';
 
 @Component({
   selector: 'app-single-word',
@@ -26,6 +26,7 @@ import { LucideAngularModule, ArrowRight } from 'lucide-angular';
 })
 export class SingleWordComponent implements OnInit {
   readonly ArrowRight = ArrowRight;
+  readonly checkIcon = CheckIcon;
 
   constructor(
     private route: ActivatedRoute,
@@ -40,6 +41,24 @@ export class SingleWordComponent implements OnInit {
   ngOnInit(): void {
     const param = this.route.snapshot.paramMap.get('id') as string;
     this.getWord(param);
+  }
+
+  toClipboard(key: keyof TranslationResToView, copiedEle: HTMLElement) {
+    copiedEle.style.display = 'block';
+    copiedEle.classList.add('animate-ping');
+    let toCopy = this.singleWordToView[key] as string;
+    if (key === 'symbol') {
+      // convert from html entity to string representation
+      toCopy = toCopy.replace(/[^0-9a-z-A-Z ]/g, '').replace(/ +/, ' ');
+      toCopy = String.fromCodePoint(+toCopy);
+    }
+
+    setTimeout(() => {
+      copiedEle.classList.remove('animate-ping');
+      copiedEle.style.display = 'none';
+    }, 500);
+
+    navigator.clipboard.writeText(toCopy);
   }
 
   navigateBack() {
@@ -64,6 +83,8 @@ export class SingleWordComponent implements OnInit {
       this.singleWord.egyptian[0].hieroglyphics.join(' , ');
     this.singleWordToView.transliteration =
       this.singleWord.egyptian[0].transliteration;
+
+    this.singleWordToView.resources = this.singleWord.resources.join(' ');
   }
 
   sanitizeSymbol(symbol: string): SafeHtml {
