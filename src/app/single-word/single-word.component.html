@@ -92,7 +92,7 @@
       <div class="flex items-start flex-col">
         <p class="text-main">الهيروغليفيه:</p>
         <div class="flex items-center gap-x-4">
-          <p [innerHTML]="sanitizeSymbol(singleWordToView.symbol)"></p>
+          <p [innerHTML]="sanitizeSymbol(singleWordToView.hieroglyphicSigns || '')"></p>
           <svg
             class="cursor-pointer"
             (click)="toClipboard('symbol', symbolCopiedRef)"

@@ -6,6 +6,7 @@ export interface Word {
     symbol: string;
     transliteration: string;
     hieroglyphics: string[];
+    hieroglyphicSigns: string[];
   }[];
   english: { word: string }[];
   resources: string[];

@@ -71,7 +71,6 @@ export class SingleWordComponent implements OnInit {
 
   async getWord(id: string) {
     this.singleWord = await this.translationService.getOne(id);
-
     this.singleWordToView.symbol = this.translationService.toSymbol(
       this.singleWord.egyptian[0].symbol,
     );
@@ -85,6 +84,10 @@ export class SingleWordComponent implements OnInit {
       this.singleWord.egyptian[0].transliteration;
 
     this.singleWordToView.resources = this.singleWord.resources.join(' ');
+    this.singleWordToView.hieroglyphicSigns =
+      this.singleWord.egyptian[0].hieroglyphicSigns.join(' ');
+    // this.singleWordToView.hieroglyphics =
+    //   this.singleWord.egyptian[0].hieroglyphicSigns.join(' ');
   }
 
   sanitizeSymbol(symbol: string): SafeHtml {
