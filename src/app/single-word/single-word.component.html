@@ -95,7 +95,7 @@
           <p [innerHTML]="sanitizeSymbol(singleWordToView.hieroglyphicSigns || '')"></p>
           <svg
             class="cursor-pointer"
-            (click)="toClipboard('symbol', symbolCopiedRef)"
+            (click)="toClipboard('hieroglyphicSigns', symbolCopiedRef)"
             width="20"
             height="20"
             viewBox="0 0 20 20"
