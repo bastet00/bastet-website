@@ -5,6 +5,7 @@ import { HomeComponent } from './home/home.component';
 import { AdminComponent } from './admin/admin.component';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 import { SingleWordComponent } from './single-word/single-word.component';
+import { RedirectAndroidPageComponent } from './redirect/redirect-andorid-page.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -13,6 +14,7 @@ export const routes: Routes = [
   { path: 'privacy-policy', component: PrivacyPolicyComponent },
   { path: 'privacy', component: PrivacyPolicyComponent },
   { path: 'word/:id', component: SingleWordComponent },
+  { path: 'android', component: RedirectAndroidPageComponent },
 
   { path: '**', redirectTo: '' },
 ];
