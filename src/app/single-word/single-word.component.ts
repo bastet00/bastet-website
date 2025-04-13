@@ -86,8 +86,6 @@ export class SingleWordComponent implements OnInit {
     this.singleWordToView.resources = this.singleWord.resources.join(' ');
     this.singleWordToView.hieroglyphicSigns =
       this.singleWord.egyptian[0].hieroglyphicSigns.join(' ');
-    // this.singleWordToView.hieroglyphics =
-    //   this.singleWord.egyptian[0].hieroglyphicSigns.join(' ');
   }
 
   sanitizeSymbol(symbol: string): SafeHtml {
