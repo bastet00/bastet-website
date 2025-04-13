@@ -19,12 +19,9 @@
         <p class="text-main">عربي:</p>
         <div class="flex items-center gap-x-4">
           <p>{{singleWordToView.arabic}}</p>
-          <span
-            class="cursor-pointer"
-            (click)="toClipboard('arabic', arabicCopiedRef)"
-          >
+          <button (click)="toClipboard('arabic', arabicCopiedRef)">
             <img src="/copy.svg"/>
-          </span>
+          </button>
           <div class="hidden" #arabicCopiedRef>
             <lucide-icon [img]="checkIcon" color="#F6831C" class="my-icon"></lucide-icon>
           </div>
@@ -34,12 +31,9 @@
         <p class="text-main">الانجليزيه:</p>
         <div class="flex items-center gap-x-4">
           <p>{{singleWordToView.english}}</p>
-          <span
-            class="cursor-pointer"
-            (click)="toClipboard('english',englishCopiedRef)"
-          >
+          <button (click)="toClipboard('english',englishCopiedRef)">
             <img src="/copy.svg"/>
-          </span>
+          </button>
 
           <div class="hidden" #englishCopiedRef>
             <lucide-icon [img]="checkIcon" color="#F6831C" class="my-icon"></lucide-icon>
@@ -50,12 +44,9 @@
         <p class="text-main">القيمه الصوتيه الانجليزيه:</p>
         <div class="flex items-center gap-x-4">
           <p>{{singleWordToView.transliteration}}</p>
-          <span
-            class="cursor-pointer"
-            (click)="toClipboard('transliteration',transliterationCopiedRef)"
-          >
+          <button (click)="toClipboard('transliteration',transliterationCopiedRef)">
             <img src="/copy.svg"/>
-          </span>
+          </button>
           <div class="hidden" #transliterationCopiedRef>
             <lucide-icon [img]="checkIcon" color="#F6831C" class="my-icon"></lucide-icon>
           </div>
@@ -66,12 +57,9 @@
         <p class="text-main">الهيروغليفيه:</p>
         <div class="flex items-center gap-x-4">
           <p [innerHTML]="sanitizeSymbol(singleWordToView.hieroglyphicSigns || '')"></p>
-          <span
-            class="cursor-pointer"
-            (click)="toClipboard('hieroglyphicSigns', symbolCopiedRef)"
-          >
+          <button (click)="toClipboard('hieroglyphicSigns', symbolCopiedRef)">
             <img src="/copy.svg"/>
-          </span>
+          </button>
           <div class="hidden" #symbolCopiedRef>
             <lucide-icon [img]="checkIcon" color="#F6831C" class="my-icon"></lucide-icon>
           </div>
@@ -83,12 +71,9 @@
         <p class="text-main">علامات جاردنير:</p>
         <div class="flex items-center gap-x-4">
           <p>{{singleWordToView.hieroglyphics}}</p>
-          <span
-            class="cursor-pointer"
-            (click)="toClipboard('hieroglyphics',hieroglyphicsCopiedRef)"
-          >
+          <button (click)="toClipboard('hieroglyphics',hieroglyphicsCopiedRef)">
             <img src="/copy.svg"/>
-          </span>
+          </button>
           <div class="hidden" #hieroglyphicsCopiedRef>
             <lucide-icon [img]="checkIcon" color="#F6831C" class="my-icon"></lucide-icon>
           </div>
@@ -99,12 +84,9 @@
         <p class="text-main">المصادر:</p>
         <div class="flex items-center gap-x-4">
           <p>{{singleWordToView.resources}}</p>
-          <span
-            class="cursor-pointer"
-            (click)="toClipboard('resources',resourcesCopiedRef)"
-          >
+          <button (click)="toClipboard('resources',resourcesCopiedRef)">
             <img src="/copy.svg"/>
-          </span>
+          </button>
           <div class="hidden" #resourcesCopiedRef>
             <lucide-icon [img]="checkIcon" color="#F6831C" class="my-icon"></lucide-icon>
           </div>
