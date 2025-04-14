@@ -36,7 +36,7 @@ import { MyCustomPaginatorIntl } from './pagination.service';
 
   styleUrl: './admin.component.scss',
 })
-export class AdminComponent implements OnInit {
+export class AdminUpdateWordComponent implements OnInit {
   adminTranslationLanguages = {
     translateFrom: LANGUAGES.arabic,
     translateTo: LANGUAGES.egyptian,
