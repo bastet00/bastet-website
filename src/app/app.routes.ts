@@ -7,13 +7,14 @@ import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.componen
 import { SingleWordComponent } from './single-word/single-word.component';
 import { RedirectAndroidPageComponent } from './redirect/redirect-andorid-page.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { AdminAddWordComponent } from './admin-add-word/admin-add-word.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'admin', component: DashboardComponent },
   { path: 'admin/update-word', component: AdminUpdateWordComponent },
-  { path: 'admin/add-word', component: AdminUpdateWordComponent },
+  { path: 'admin/add-word', component: AdminAddWordComponent },
   { path: 'privacy-policy', component: PrivacyPolicyComponent },
   { path: 'privacy', component: PrivacyPolicyComponent },
   { path: 'word/:id', component: SingleWordComponent },
