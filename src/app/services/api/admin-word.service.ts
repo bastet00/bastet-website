@@ -15,11 +15,18 @@ export interface AdminWordListApiResponse {
   items: Word[];
 }
 
-interface AddWordFormValues {
-  hiero: string;
-  symbol: string;
-  arabic: string;
-  comment: string;
+export interface AddWordFormValues {
+  english?: { word: string }[] | undefined;
+  resources: string[];
+  egyptian: {
+    word: string;
+    symbol: string;
+    transliteration: string;
+    hieroglyphics: string[];
+  }[];
+  arabic: {
+    word: string;
+  }[];
 }
 
 export interface AdminWordViewList extends AdminWordListApiResponse {
@@ -152,20 +159,14 @@ export class WordAdminService {
   }
 
   post(word: AddWordFormValues) {
-    const payload = {
-      resources: ['Bastet 2025'],
-      arabic: word.arabic.split(',').map((w) => {
-        return { word: w };
-      }),
-      egyptian: [{ word: word.hiero, symbol: word.symbol }],
-    };
+    console.log(word);
     return fromFetch('http://localhost:3000/word/dev', {
       method: 'POST',
       headers: {
         Authorization: this.key,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(payload),
+      body: JSON.stringify(word),
     });
   }
 }
