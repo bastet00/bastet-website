@@ -15,6 +15,13 @@ export interface AdminWordListApiResponse {
   items: Word[];
 }
 
+interface AddWordFormValues {
+  hiero: string;
+  symbol: string;
+  arabic: string;
+  comment: string;
+}
+
 export interface AdminWordViewList extends AdminWordListApiResponse {
   itemsForView: TranslationResToView[];
 }
@@ -29,7 +36,7 @@ export class WordAdminService {
     private transService: TranslationService,
   ) {}
 
-  private key = localStorage.getItem(AUTH_KEY);
+  private key = localStorage.getItem(AUTH_KEY) as string;
 
   getWords(
     word: string,
@@ -142,5 +149,23 @@ export class WordAdminService {
         return throwError(() => new Error(error));
       }),
     );
+  }
+
+  post(word: AddWordFormValues) {
+    const payload = {
+      resources: ['Bastet 2025'],
+      arabic: word.arabic.split(',').map((w) => {
+        return { word: w };
+      }),
+      egyptian: [{ word: word.hiero, symbol: word.symbol }],
+    };
+    return fromFetch('http://localhost:3000/word/dev', {
+      method: 'POST',
+      headers: {
+        Authorization: this.key,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    });
   }
 }
