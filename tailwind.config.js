@@ -6,6 +6,7 @@ module.exports = {
       colors: {
         main: "#f6831c",
         secondary: "#E7B133",
+        third: "#614223",
         titleColor: "#f4931e",
         navBackground: "#312719",
         inputBackground: "#302718",
@@ -13,7 +14,5 @@ module.exports = {
       },
     },
   },
-  plugins: [
-    require('@tailwindcss/aspect-ratio'),
-  ],
+  plugins: [require("@tailwindcss/aspect-ratio")],
 };
