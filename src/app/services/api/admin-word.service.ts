@@ -159,8 +159,7 @@ export class WordAdminService {
   }
 
   post(word: AddWordFormValues) {
-    console.log(word);
-    return fromFetch('http://localhost:3000/word/dev', {
+    return fromFetch(this.url, {
       method: 'POST',
       headers: {
         Authorization: this.key,
