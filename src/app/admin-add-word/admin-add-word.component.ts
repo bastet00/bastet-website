@@ -7,11 +7,12 @@ import {
   AddWordFormValues,
   WordAdminService,
 } from '../services/api/admin-word.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-admin-add-word',
   standalone: true,
-  imports: [LandingBackgroundComponent, ReactiveFormsModule],
+  imports: [LandingBackgroundComponent, ReactiveFormsModule, CommonModule],
   templateUrl: './admin-add-word.component.html',
   styleUrl: './admin-add-word.component.scss',
 })
@@ -21,7 +22,9 @@ export class AdminAddWordComponent {
     private router: Router,
     private wordService: WordAdminService,
   ) {}
+
   isSubmitted = false;
+  isValidWord = false;
 
   wordForm = new FormBuilder().group({
     hiero: ['', Validators.required],
@@ -60,9 +63,9 @@ export class AdminAddWordComponent {
       }),
 
       ...(this.wordForm.value.english && {
-        english: (this.wordForm.value.english as string).split(',').map((w) => {
-          return { word: w };
-        }),
+        english: (this.wordForm.value.english as string)
+          .split(',')
+          .map((w) => ({ word: w })),
       }),
     };
   }
@@ -72,13 +75,14 @@ export class AdminAddWordComponent {
 
     if (!this.wordForm.invalid) {
       const word = this.formToWordObj();
-      console.log(word);
-
       this.wordService.post(word).subscribe((res) => {
         if (res.ok) {
-          console.log('Handle created doc');
-        } else {
-          console.log('Handle error while createing doc');
+          this.isValidWord = true;
+          this.isSubmitted = false;
+          this.wordForm.reset();
+          setTimeout(() => {
+            this.isValidWord = false;
+          }, 1500);
         }
       });
     }
