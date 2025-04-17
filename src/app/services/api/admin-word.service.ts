@@ -15,6 +15,20 @@ export interface AdminWordListApiResponse {
   items: Word[];
 }
 
+export interface AddWordFormValues {
+  english?: { word: string }[] | undefined;
+  resources: string[];
+  egyptian: {
+    word: string;
+    symbol: string;
+    transliteration: string;
+    hieroglyphics: string[];
+  }[];
+  arabic: {
+    word: string;
+  }[];
+}
+
 export interface AdminWordViewList extends AdminWordListApiResponse {
   itemsForView: TranslationResToView[];
 }
@@ -26,15 +40,15 @@ export class WordAdminService {
   private url = 'https://bastet-server-ef94bb4e91eb.herokuapp.com/admin/word/';
   constructor(
     private http: HttpClient,
-    private transService: TranslationService
+    private transService: TranslationService,
   ) {}
 
-  private key = localStorage.getItem(AUTH_KEY);
+  private key = localStorage.getItem(AUTH_KEY) as string;
 
   getWords(
     word: string,
     lang: string,
-    options: { page: number; perPage: number } = { page: 1, perPage: 25 }
+    options: { page: number; perPage: number } = { page: 1, perPage: 25 },
   ): Observable<AdminWordViewList> {
     if (!this.key) {
       return throwError(() => new Error('No auth key found'));
@@ -65,7 +79,7 @@ export class WordAdminService {
             }),
             items: results.items,
           };
-        })
+        }),
       );
   }
   delete(id: string): Observable<Response> {
@@ -85,7 +99,7 @@ export class WordAdminService {
       }),
       catchError((error) => {
         return throwError(() => new Error(error));
-      })
+      }),
     );
   }
 
@@ -96,7 +110,7 @@ export class WordAdminService {
 
   put(
     target: TranslationRes,
-    newObj: TranslationResToView
+    newObj: TranslationResToView,
   ): Observable<Response> {
     if (!this.key) {
       return throwError(() => new Error('No auth key found'));
@@ -140,7 +154,18 @@ export class WordAdminService {
       }),
       catchError((error) => {
         return throwError(() => new Error(error));
-      })
+      }),
     );
+  }
+
+  post(word: AddWordFormValues) {
+    return fromFetch(this.url, {
+      method: 'POST',
+      headers: {
+        Authorization: this.key,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(word),
+    });
   }
 }

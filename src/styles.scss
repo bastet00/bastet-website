@@ -8,9 +8,15 @@
   src: url(FontsFree-Net-STC-Forward-Regular-1.ttf);
 }
 
+
+input.invalid {
+  border: 1px solid #ef4444;
+}
+
+
 .reset-tw,
 .reset-tw * {
-    all: revert !important;
+  all: revert !important;
 }
 
 .overlay::after {
@@ -49,19 +55,19 @@
   }
 
   .info-arabic-text {
-    @apply mx-auto w-fit half-colored text-white after:bg-[#966635]/60  after:h-1/2
+    @apply mx-auto w-fit half-colored text-white after:bg-[#966635]/60 after:h-1/2
   }
 
   .translation-to-egy-text {
-    @apply half-colored text-secondary after:bg-[#275EA5] after:h-1/6
+    @apply half-colored text-secondary after:bg-[#275EA5] after:h-1/5
   }
 
   .container {
-    @apply w-4/5 mx-auto
+    @apply mx-auto
   }
 
   .translation-area-wrapper {
-    @apply w-3/4 relative 
+    @apply w-3/4 relative
   }
 
   .translation-area {
@@ -69,8 +75,9 @@
   }
 
   .translation-result-area {
-    @apply bg-inputBackground border border-[#a69670] rounded-lg outline-none p-4 text-2xl text-white w-full resize-none  shadow-inner  
+    @apply bg-inputBackground border border-[#a69670] rounded-lg outline-none p-4 text-2xl text-white w-full resize-none shadow-inner
   }
+
   .options-wrapper {
     @apply absolute bottom-2 right-0
   }

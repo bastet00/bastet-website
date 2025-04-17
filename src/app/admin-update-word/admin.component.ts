@@ -36,7 +36,7 @@ import { MyCustomPaginatorIntl } from './pagination.service';
 
   styleUrl: './admin.component.scss',
 })
-export class AdminComponent implements OnInit {
+export class AdminUpdateWordComponent implements OnInit {
   adminTranslationLanguages = {
     translateFrom: LANGUAGES.arabic,
     translateTo: LANGUAGES.egyptian,
@@ -53,7 +53,7 @@ export class AdminComponent implements OnInit {
     private loginService: LoginService,
     private router: Router,
     private senitizer: DomSanitizer,
-    private wordAdminService: WordAdminService
+    private wordAdminService: WordAdminService,
   ) {}
 
   ngOnInit(): void {
@@ -83,7 +83,7 @@ export class AdminComponent implements OnInit {
           .getWords(
             this.translationText,
             this.adminTranslationLanguages.translateFrom.query,
-            { page: this.page, perPage: this.perPage }
+            { page: this.page, perPage: this.perPage },
           )
           .subscribe((results) => {
             this.results = results;
@@ -121,7 +121,7 @@ export class AdminComponent implements OnInit {
 
   clearDisplayedDocs(id: string) {
     this.results!.itemsForView = this.results!.itemsForView.filter(
-      (obj) => obj.id !== id
+      (obj) => obj.id !== id,
     );
   }
 
@@ -148,7 +148,7 @@ export class AdminComponent implements OnInit {
     const target = this.results!.items.find((obj) => obj.id === newObj.id);
     if (target) {
       const putRes = await lastValueFrom(
-        this.wordAdminService.put(target, newObj)
+        this.wordAdminService.put(target, newObj),
       );
       if (putRes.ok) {
         alert('تم التحديث بنجاح');

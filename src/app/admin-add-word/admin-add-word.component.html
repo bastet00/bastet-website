@@ -1,0 +1,177 @@
+<app-landing-background [fullHieght]="'min-h-dvh'">
+  <div class="relative">
+    <p
+      class="mx-auto w-fit text-3xl my-10 text-white translation-to-egy-text after:bg-third"
+    >
+      اضف كلمه
+    </p>
+
+    <div class="holder text-white px-2">
+      <div class="flex flex-col md:flex-row md:gap-x-8">
+        <form
+          [formGroup]="wordForm"
+          (submit)="submitWord()"
+          class="font-bold text-lg flex-1 flex flex-col gap-y-6"
+        >
+          <div class="grid md:grid-cols-3 gap-y-10">
+            <label
+              for="hiero"
+              class="grid grid-cols-[6rem_1fr] items-center gap-x-4 w-full gap-y-10 md:col-span-2"
+            >
+              <span>مصري</span>
+              <input
+                formControlName="hiero"
+                id="hiero"
+                class="bg-inputBackground p-4 rounded-md w-full focus:outline-none"
+                [class.invalid]="
+                  wordForm.get('hiero')?.invalid &&
+                  (wordForm.get('hiero')?.dirty ||
+                    wordForm.get('hiero')?.touched ||
+                    isSubmitted)
+                "
+              />
+            </label>
+
+            <label
+              for="symbol"
+              class="grid grid-cols-[6rem_1fr] items-center gap-x-4 w-full md:col-span-1"
+            >
+              <span>رمز</span>
+              <input
+                formControlName="symbol"
+                id="symbol"
+                class="bg-inputBackground p-4 rounded-md w-full focus:outline-none"
+                [class.invalid]="
+                  wordForm.get('symbol')?.invalid &&
+                  (wordForm.get('symbol')?.dirty ||
+                    wordForm.get('symbol')?.touched ||
+                    isSubmitted)
+                "
+              />
+            </label>
+          </div>
+
+          <label
+            for="transliteration"
+            class="grid grid-cols-[6rem_1fr] items-center gap-x-4 w-full"
+          >
+            <span>القيمه الصوتيه</span>
+            <input
+              formControlName="transliteration"
+              id="transliteration"
+              class="bg-inputBackground p-4 rounded-md w-full focus:outline-none"
+              [class.invalid]="
+                wordForm.get('transliteration')?.invalid &&
+                (wordForm.get('transliteration')?.dirty ||
+                  wordForm.get('transliteration')?.touched ||
+                  isSubmitted)
+              "
+            />
+          </label>
+
+          <label
+            for="gardiner"
+            class="grid grid-cols-[6rem_1fr] items-center gap-x-4 w-full"
+          >
+            <span>جاردنر</span>
+            <input
+              formControlName="gardiner"
+              id="gardiner"
+              dir="ltr"
+              class="bg-inputBackground p-4 rounded-md w-full focus:outline-none"
+              [class.invalid]="
+                wordForm.get('gardiner')?.invalid &&
+                (wordForm.get('gardiner')?.dirty ||
+                  wordForm.get('gardiner')?.touched ||
+                  isSubmitted)
+              "
+            />
+          </label>
+
+          <label
+            for="arabic"
+            class="grid grid-cols-[6rem_1fr] items-start gap-x-4 w-full"
+          >
+            <div class="flex flex-col gap-y-1">
+              <span>عربي</span>
+              <span class="text-sm font-normal leading-tight">
+                منفصله باستخدام ,
+              </span>
+            </div>
+            <input
+              formControlName="arabic"
+              id="arabic"
+              class="bg-inputBackground p-4 rounded-md w-full focus:outline-none"
+              [class.invalid]="
+                wordForm.get('arabic')?.invalid &&
+                (wordForm.get('arabic')?.dirty ||
+                  wordForm.get('arabic')?.touched ||
+                  isSubmitted)
+              "
+            />
+          </label>
+
+          <label
+            for="english"
+            class="grid grid-cols-[6rem_1fr] items-start gap-x-4 w-full"
+          >
+            <div class="flex flex-col gap-y-1">
+              <span>انجليزي</span>
+              <span class="text-sm font-normal leading-tight">
+                منفصله باستخدام ,
+              </span>
+            </div>
+            <input
+              formControlName="english"
+              placeholder="اختياري"
+              id="english"
+              dir="ltr"
+              class="bg-inputBackground p-4 rounded-md w-full focus:outline-none placeholder:text-white/50 placeholder:text-end"
+              [class.invalid]="
+                wordForm.get('english')?.invalid &&
+                (wordForm.get('english')?.dirty ||
+                  wordForm.get('english')?.touched ||
+                  isSubmitted)
+              "
+            />
+          </label>
+
+          <label
+            for="resources"
+            class="grid grid-cols-[6rem_1fr] items-center gap-x-4 w-full"
+          >
+            <span>المصدر</span>
+            <input
+              formControlName="resources"
+              id="resources"
+              class="bg-inputBackground p-4 rounded-md w-full focus:outline-none"
+              [class.invalid]="
+                wordForm.get('resources')?.invalid &&
+                (wordForm.get('resources')?.dirty ||
+                  wordForm.get('resources')?.touched ||
+                  isSubmitted)
+              "
+            />
+          </label>
+
+          <button
+            [ngClass]="
+              isValidWord
+                ? 'bg-green-900 border-2 border-white'
+                : 'bg-[#252422] border-2 border-third'
+            "
+            class="p-4 rounded-3xl transition-all duration-500"
+          >
+            {{ isValidWord ? "تمت الاضافه بنجاح" : "اضافه" }}
+          </button>
+        </form>
+        <div class="hidden xl:block w-1/3 min-h-full">
+          <iframe
+            src="https://www.youtube.com/embed/PrusdhS2lmo"
+            class="w-full h-full rounded-lg shadow-md border border-gray-700"
+          ></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+</app-landing-background>
