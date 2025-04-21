@@ -1,39 +1,68 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, QueryList, ViewChildren } from '@angular/core';
 import { LoginService } from '../services/login.service';
 import { Router } from '@angular/router';
 import { LandingBackgroundComponent } from '../landing-background/landing-background.component';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormArray,
+  FormBuilder,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import {
   AddWordFormValues,
   WordAdminService,
 } from '../services/api/admin-word.service';
 import { CommonModule } from '@angular/common';
+import { CategoryService } from '../services/category.service';
+import { ArrowDown, CircleX, LucideAngularModule } from 'lucide-angular';
 
 @Component({
   selector: 'app-admin-add-word',
   standalone: true,
-  imports: [LandingBackgroundComponent, ReactiveFormsModule, CommonModule],
+  imports: [
+    LandingBackgroundComponent,
+    ReactiveFormsModule,
+    CommonModule,
+    LucideAngularModule,
+  ],
   templateUrl: './admin-add-word.component.html',
   styleUrl: './admin-add-word.component.scss',
 })
 export class AdminAddWordComponent {
+  readonly arrowDown = ArrowDown;
+  readonly circleX = CircleX;
+
+  @ViewChildren('categoryBtn') categoryHolder!: QueryList<
+    ElementRef<HTMLDivElement>
+  >;
   constructor(
     private loginService: LoginService,
     private router: Router,
     private wordService: WordAdminService,
+    private categoryService: CategoryService,
   ) {}
 
   isSubmitted = false;
   isValidWord = false;
+  categoryList: string[] = [];
+  categoryStash: string[] = [];
+  dropdownMenuState = false;
 
-  wordForm = new FormBuilder().group({
+  fb = new FormBuilder();
+
+  toggleDropdown() {
+    this.dropdownMenuState = !this.dropdownMenuState;
+  }
+
+  wordForm = this.fb.group({
     hiero: ['', Validators.required],
     resources: ['', Validators.required],
     symbol: ['', Validators.required],
     transliteration: ['', Validators.required],
     gardiner: ['', Validators.required],
     arabic: ['', Validators.required],
-    english: '', // optional
+    english: '',
+    category: this.fb.array([]),
   });
 
   ngOnInit(): void {
@@ -42,6 +71,14 @@ export class AdminAddWordComponent {
         this.router.navigateByUrl('/');
       }
     });
+
+    this.categoryService.getCategories().subscribe((value) => {
+      this.categoryList = value.category;
+    });
+  }
+
+  get category(): FormArray {
+    return this.wordForm.get('category') as FormArray;
   }
 
   formToWordObj(): AddWordFormValues {
@@ -67,7 +104,20 @@ export class AdminAddWordComponent {
           .split(',')
           .map((w) => ({ word: w })),
       }),
+
+      ...(this.wordForm.value.category && {
+        category: this.wordForm.value.category,
+      }),
     };
+  }
+
+  resetFormAfterValidSubmit() {
+    this.categoryStash = [];
+    this.isValidWord = true;
+    this.isSubmitted = false;
+    this.dropdownMenuState = false;
+    this.wordForm.reset();
+    this.wordForm.setControl('category', this.fb.array([]));
   }
 
   submitWord() {
@@ -75,16 +125,46 @@ export class AdminAddWordComponent {
 
     if (!this.wordForm.invalid) {
       const word = this.formToWordObj();
+      this.resetFormAfterValidSubmit();
+
       this.wordService.post(word).subscribe((res) => {
         if (res.ok) {
-          this.isValidWord = true;
-          this.isSubmitted = false;
-          this.wordForm.reset();
           setTimeout(() => {
             this.isValidWord = false;
           }, 1500);
         }
       });
     }
+  }
+
+  onCategoryClicked(categoryClicked: string) {
+    if (this.categoryStash.includes(categoryClicked)) {
+      this.removeCategory(categoryClicked);
+    } else {
+      this.addCategory(categoryClicked);
+    }
+  }
+
+  addCategory(category: string) {
+    if (!this.categoryStash.includes(category)) {
+      this.categoryStash.push(category);
+    }
+
+    this.syncCategoryFormArray();
+  }
+
+  syncCategoryFormArray() {
+    const categoryAsArray = this.fb.array([]);
+    this.categoryStash.forEach((value) => {
+      if (value) {
+        categoryAsArray.push(this.fb.control(value));
+      }
+    });
+    this.wordForm.setControl('category', categoryAsArray);
+  }
+
+  removeCategory(category: string) {
+    this.categoryStash = this.categoryStash.filter((item) => item !== category);
+    this.syncCategoryFormArray();
   }
 }
