@@ -3,7 +3,7 @@ import { catchError, Observable, of, switchMap } from 'rxjs';
 import { fromFetch } from 'rxjs/fetch';
 
 interface Category {
-  categories: string[];
+  category: string[];
 }
 
 @Injectable({
@@ -11,7 +11,7 @@ interface Category {
 })
 export class CategoryService {
   constructor() {}
-  url = 'http://localhost:3000/api/category';
+  url = 'https://bastet-server-ef94bb4e91eb.herokuapp.com/api/category/';
 
   getCategories(): Observable<Category> {
     return fromFetch(`${this.url}`).pipe(

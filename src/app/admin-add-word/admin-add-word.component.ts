@@ -73,7 +73,7 @@ export class AdminAddWordComponent {
     });
 
     this.categoryService.getCategories().subscribe((value) => {
-      this.categoryList = value.categories;
+      this.categoryList = value.category;
     });
   }
 
