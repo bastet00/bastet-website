@@ -32,4 +32,5 @@ export interface TranslationResToView {
   transliteration?: string;
   resources?: string;
   hieroglyphicSigns?: string;
+  category?: string;
 }

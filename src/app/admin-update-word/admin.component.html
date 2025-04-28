@@ -122,6 +122,45 @@
           <input [(ngModel)]="obj.english" class="admin-trans-result" />
         </label>
 
+        <div class="text-white text-3xl flex items-center gap-x-4">
+          <span>التصنيفات:</span>
+        </div>
+        <div>{{ obj.category }}</div>
+
+        <div
+          id="category"
+          class="bg-inputBackground p-4 relative rounded-md w-full select-none"
+        >
+          <div
+            class="w-full flex justify-between items-center cursor-pointer"
+            (click)="toggleDropdown()"
+          >
+            <lucide-icon
+              [img]="arrowDown"
+              color="#F6831C"
+              class="my-icon"
+            ></lucide-icon>
+          </div>
+
+          <div
+            *ngIf="dropdownMenuState"
+            class="absolute left-0 top-full z-10 w-full bg-third mt-2 rounded-md"
+          >
+            <div
+              *ngFor="let categ of categoryList"
+              (click)="onCategoryClicked(categ)"
+              class="px-4 py-2 hover:bg-navBackground cursor-pointer"
+              #categoryBtn
+              [ngClass]="{
+                'text-green-500': categoryStash.includes(categ),
+                'text-white': !categoryStash.includes(categ),
+              }"
+            >
+              {{ categ }}
+            </div>
+          </div>
+        </div>
+
         <div class="mx-auto w-fit flex items-center gap-x-4">
           <button class="admin-trans-btn" (click)="delete(obj.id)">حذف</button>
           <button class="admin-trans-btn" (click)="put(obj)">

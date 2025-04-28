@@ -19,6 +19,9 @@ import {
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MyCustomPaginatorIntl } from './pagination.service';
+import { ArrowDown, LucideAngularModule } from 'lucide-angular';
+import { CommonModule } from '@angular/common';
+import { CategoryService } from '../services/category.service';
 
 @Component({
   selector: 'app-admin',
@@ -30,6 +33,8 @@ import { MyCustomPaginatorIntl } from './pagination.service';
     FormsModule,
     MatFormFieldModule,
     MatInputModule,
+    LucideAngularModule,
+    CommonModule,
   ],
   templateUrl: './admin.component.html',
   providers: [{ provide: MatPaginatorIntl, useClass: MyCustomPaginatorIntl }],
@@ -37,6 +42,11 @@ import { MyCustomPaginatorIntl } from './pagination.service';
   styleUrl: './admin.component.scss',
 })
 export class AdminUpdateWordComponent implements OnInit {
+  readonly arrowDown = ArrowDown;
+
+  categoryStash: string[] = [];
+  categoryList: string[] = [];
+
   adminTranslationLanguages = {
     translateFrom: LANGUAGES.arabic,
     translateTo: LANGUAGES.egyptian,
@@ -48,12 +58,14 @@ export class AdminUpdateWordComponent implements OnInit {
   count: number = 0;
   perPage = 25;
   pageSizeOptions = [5, 10, 25, 50, 100, 200, 500];
+  dropdownMenuState = false;
   userInputPage = this.page;
   constructor(
     private loginService: LoginService,
     private router: Router,
     private senitizer: DomSanitizer,
     private wordAdminService: WordAdminService,
+    private categoryService: CategoryService,
   ) {}
 
   ngOnInit(): void {
@@ -62,6 +74,24 @@ export class AdminUpdateWordComponent implements OnInit {
         this.router.navigateByUrl('/');
       }
     });
+
+    this.categoryService.getCategories().subscribe((value) => {
+      this.categoryList = value.category;
+    });
+  }
+
+  onCategoryClicked(category: string) {
+    if (!this.categoryStash.includes(category)) {
+      this.categoryStash.push(category);
+    } else {
+      this.categoryStash = this.categoryStash.filter(
+        (item) => item !== category,
+      );
+    }
+  }
+
+  toggleDropdown() {
+    this.dropdownMenuState = !this.dropdownMenuState;
   }
 
   enterPageIndex(_event: Event) {
