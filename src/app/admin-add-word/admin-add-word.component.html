@@ -198,14 +198,14 @@
           </label>
 
           <button
-            [ngClass]="
-              isValidWord
-                ? 'bg-green-900 border-2 border-white'
-                : 'bg-[#252422] border-2 border-third'
-            "
+            [ngClass]="{
+              'bg-green-900 border-2 border-white': isValidWord,
+              'bg-[#252422] border-2 border-third': !isValidWord,
+              'bg-red-900 border-white': !isValidWord && invalidFormSubmit,
+            }"
             class="p-4 rounded-3xl transition-all duration-500"
           >
-            {{ isValidWord ? 'تمت الاضافه بنجاح' : 'اضافه' }}
+            {{ alertMessage }}
           </button>
         </form>
         <!-- <div class="hidden xl:block w-1/3 min-h-full"> -->

@@ -47,13 +47,22 @@ export class AdminAddWordComponent {
   categoryList: string[] = [];
   categoryStash: string[] = [];
   dropdownMenuState = false;
-
+  invalidFormSubmit = false;
   fb = new FormBuilder();
 
   toggleDropdown() {
     this.dropdownMenuState = !this.dropdownMenuState;
   }
 
+  get alertMessage(): string {
+    if (this.isValidWord) {
+      return 'تمت الاضافه بنجاح';
+    } else if (this.invalidFormSubmit) {
+      return 'حدث خطأ اثناء الاضافه';
+    } else {
+      return 'اضافه';
+    }
+  }
   wordForm = this.fb.group({
     hiero: ['', Validators.required],
     resources: ['', Validators.required],
@@ -118,6 +127,7 @@ export class AdminAddWordComponent {
     this.dropdownMenuState = false;
     this.wordForm.reset();
     this.wordForm.setControl('category', this.fb.array([]));
+    this.invalidFormSubmit = false;
   }
 
   submitWord() {
@@ -125,13 +135,15 @@ export class AdminAddWordComponent {
 
     if (!this.wordForm.invalid) {
       const word = this.formToWordObj();
-      this.resetFormAfterValidSubmit();
 
       this.wordService.post(word).subscribe((res) => {
         if (res.ok) {
+          this.resetFormAfterValidSubmit();
           setTimeout(() => {
             this.isValidWord = false;
           }, 1500);
+        } else {
+          this.invalidFormSubmit = true;
         }
       });
     }

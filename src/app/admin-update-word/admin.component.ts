@@ -145,6 +145,8 @@ export class AdminUpdateWordComponent implements OnInit {
   }
 
   async put(newObj: TranslationResToView) {
+    console.log(newObj);
+
     const target = this.results!.items.find((obj) => obj.id === newObj.id);
     if (target) {
       const putRes = await lastValueFrom(
