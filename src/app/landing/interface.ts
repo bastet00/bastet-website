@@ -19,6 +19,7 @@ export interface TranslationRes {
   arabic: ArabicWord[];
   egyptian: EgyptianWord[];
   english: EnglishWord[];
+  category?: string[];
 }
 
 export interface TranslationResToView {
@@ -32,4 +33,5 @@ export interface TranslationResToView {
   transliteration?: string;
   resources?: string;
   hieroglyphicSigns?: string;
+  category?: string;
 }

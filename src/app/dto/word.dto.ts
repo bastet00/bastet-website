@@ -10,6 +10,7 @@ export interface Word {
   }[];
   english: { word: string }[];
   resources: string[];
+  category?: string[];
 }
 
 export type WordList = Word[];

@@ -19,6 +19,9 @@ import {
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MyCustomPaginatorIntl } from './pagination.service';
+import { ArrowDown, LucideAngularModule } from 'lucide-angular';
+import { CommonModule } from '@angular/common';
+import { CategoryService } from '../services/category.service';
 
 @Component({
   selector: 'app-admin',
@@ -30,6 +33,8 @@ import { MyCustomPaginatorIntl } from './pagination.service';
     FormsModule,
     MatFormFieldModule,
     MatInputModule,
+    LucideAngularModule,
+    CommonModule,
   ],
   templateUrl: './admin.component.html',
   providers: [{ provide: MatPaginatorIntl, useClass: MyCustomPaginatorIntl }],
@@ -37,6 +42,11 @@ import { MyCustomPaginatorIntl } from './pagination.service';
   styleUrl: './admin.component.scss',
 })
 export class AdminUpdateWordComponent implements OnInit {
+  readonly arrowDown = ArrowDown;
+
+  categoryStash: string[] = [];
+  categoryList: string[] = [];
+
   adminTranslationLanguages = {
     translateFrom: LANGUAGES.arabic,
     translateTo: LANGUAGES.egyptian,
@@ -49,11 +59,13 @@ export class AdminUpdateWordComponent implements OnInit {
   perPage = 25;
   pageSizeOptions = [5, 10, 25, 50, 100, 200, 500];
   userInputPage = this.page;
+  dropDownState = {} as { [key: string]: boolean };
   constructor(
     private loginService: LoginService,
     private router: Router,
     private senitizer: DomSanitizer,
     private wordAdminService: WordAdminService,
+    private categoryService: CategoryService,
   ) {}
 
   ngOnInit(): void {
@@ -62,12 +74,32 @@ export class AdminUpdateWordComponent implements OnInit {
         this.router.navigateByUrl('/');
       }
     });
+
+    this.categoryService.getCategories().subscribe((value) => {
+      this.categoryList = value.category;
+    });
+  }
+
+  toggleDropdown(objId: string) {
+    this.dropDownState[objId] = !this.dropDownState[objId];
+  }
+
+  onCategoryClicked(category: string) {
+    if (this.categoryStash.includes(category)) {
+      this.categoryStash = this.categoryStash.filter(
+        (item) => item !== category,
+      );
+    } else {
+      this.categoryStash.push(category);
+    }
+    console.log(this.categoryStash);
   }
 
   enterPageIndex(_event: Event) {
     this.page = this.userInputPage;
     this.onTextInputChange({ delay: 0 });
   }
+
   onTextInputChange(options: { delay?: number } = { delay: 300 }) {
     if (!this.translationText) {
       return;
@@ -100,6 +132,7 @@ export class AdminUpdateWordComponent implements OnInit {
     this.perPage = event.pageSize;
     this.onTextInputChange({ delay: 0 });
   }
+
   addText(text: string) {
     this.translationText = text;
     this.onTextInputChange({ delay: 0 });
@@ -115,6 +148,7 @@ export class AdminUpdateWordComponent implements OnInit {
     }
     this.onTextInputChange();
   }
+
   sanitizeSymbol(symbol: string): SafeHtml {
     return this.senitizer.bypassSecurityTrustHtml(symbol);
   }
@@ -146,12 +180,15 @@ export class AdminUpdateWordComponent implements OnInit {
 
   async put(newObj: TranslationResToView) {
     const target = this.results!.items.find((obj) => obj.id === newObj.id);
+    target!.category = this.categoryStash;
     if (target) {
       const putRes = await lastValueFrom(
         this.wordAdminService.put(target, newObj),
       );
       if (putRes.ok) {
         alert('تم التحديث بنجاح');
+        this.categoryStash = [];
+        this.dropDownState = {};
       } else {
         alert('حدث خطأ ما');
       }
