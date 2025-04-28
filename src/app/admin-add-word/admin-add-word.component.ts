@@ -135,7 +135,6 @@ export class AdminAddWordComponent {
 
     if (!this.wordForm.invalid) {
       const word = this.formToWordObj();
-
       this.wordService.post(word).subscribe((res) => {
         if (res.ok) {
           this.resetFormAfterValidSubmit();
