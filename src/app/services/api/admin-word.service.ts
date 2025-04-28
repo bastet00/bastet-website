@@ -1,5 +1,13 @@
 import { Injectable } from '@angular/core';
-import { catchError, map, Observable, of, switchMap, throwError } from 'rxjs';
+import {
+  catchError,
+  map,
+  Observable,
+  of,
+  switchMap,
+  tap,
+  throwError,
+} from 'rxjs';
 import { fromFetch } from 'rxjs/fetch';
 import { AUTH_KEY } from '../login.service';
 import { TranslationRes, TranslationResToView } from '../../landing/interface';
@@ -70,11 +78,16 @@ export class WordAdminService {
                 id: word.id,
                 arabic: word.arabic.map((arabic) => arabic.word).join(' - '),
                 egyptian: word.egyptian[0].word,
-                english: word.english
-                  .map((english) => english.word)
-                  .join(' - '),
+                ...(word.english && {
+                  english: word.english
+                    .map((english) => english.word)
+                    .join(' - '),
+                }),
                 symbol: this.transService.toSymbol(word.egyptian[0].symbol),
                 hexSym: word.egyptian[0].symbol,
+                ...(word.category && {
+                  category: word.category!.join(' , '),
+                }),
               } as TranslationResToView;
             }),
             items: results.items,
@@ -138,7 +151,7 @@ export class WordAdminService {
       target.egyptian[0].symbol = newObj.symbol;
     }
 
-    return fromFetch(`${this.url}${newObj.id}`, {
+    return fromFetch(`${this.url}/${newObj.id}`, {
       method: 'PUT',
       headers: {
         Authorization: this.key,
