@@ -138,7 +138,7 @@ export class WordAdminService {
       target.egyptian[0].symbol = newObj.symbol;
     }
 
-    return fromFetch(`${this.url}${newObj.id}`, {
+    return fromFetch(`${this.url}/${newObj.id}`, {
       method: 'PUT',
       headers: {
         Authorization: this.key,
