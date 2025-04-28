@@ -45,7 +45,7 @@ export interface AdminWordViewList extends AdminWordListApiResponse {
   providedIn: 'root',
 })
 export class WordAdminService {
-  private url = 'http://localhost:3000/admin/word';
+  private url = 'https://bastet-server-ef94bb4e91eb.herokuapp.com/admin/word';
   constructor(
     private http: HttpClient,
     private transService: TranslationService,
@@ -88,7 +88,9 @@ export class WordAdminService {
                 }),
                 symbol: this.transService.toSymbol(word.egyptian[0].symbol),
                 hexSym: word.egyptian[0].symbol,
-                category: word.category?.join(''),
+                ...(word.category && {
+                  category: word.category!.join(' , '),
+                }),
               } as TranslationResToView;
             }),
             items: results.items,

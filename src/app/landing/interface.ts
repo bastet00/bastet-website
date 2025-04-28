@@ -19,6 +19,7 @@ export interface TranslationRes {
   arabic: ArabicWord[];
   egyptian: EgyptianWord[];
   english: EnglishWord[];
+  category?: string[];
 }
 
 export interface TranslationResToView {

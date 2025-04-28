@@ -122,41 +122,43 @@
           <input [(ngModel)]="obj.english" class="admin-trans-result" />
         </label>
 
-        <div class="text-white text-3xl flex items-center gap-x-4">
-          <span>التصنيفات:</span>
-        </div>
-        <div>{{ obj.category }}</div>
-
-        <div
-          id="category"
-          class="bg-inputBackground p-4 relative rounded-md w-full select-none"
-        >
-          <div
-            class="w-full flex justify-between items-center cursor-pointer"
-            (click)="toggleDropdown()"
-          >
-            <lucide-icon
-              [img]="arrowDown"
-              color="#F6831C"
-              class="my-icon"
-            ></lucide-icon>
+        <div class="text-white text-3xl flex flex-col gap-x-4">
+          <div class="flex flex-col gap-y-1">
+            <span>التصنيفات: {{ obj.category }}</span>
           </div>
-
           <div
-            *ngIf="dropdownMenuState"
-            class="absolute left-0 top-full z-10 w-full bg-third mt-2 rounded-md"
+            id="category"
+            class="bg-inputBackground p-4 relative rounded-md w-full select-none"
           >
+            <!-- Dropdown Trigger -->
             <div
-              *ngFor="let categ of categoryList"
-              (click)="onCategoryClicked(categ)"
-              class="px-4 py-2 hover:bg-navBackground cursor-pointer"
-              #categoryBtn
-              [ngClass]="{
-                'text-green-500': categoryStash.includes(categ),
-                'text-white': !categoryStash.includes(categ),
-              }"
+              class="w-full flex justify-between items-center cursor-pointer"
+              (click)="toggleDropdown(obj.id)"
             >
-              {{ categ }}
+              <lucide-icon
+                [img]="arrowDown"
+                color="#F6831C"
+                class="my-icon"
+              ></lucide-icon>
+            </div>
+
+            <!-- Dropdown Menu -->
+            <div
+              *ngIf="dropDownState[obj.id]"
+              class="w-full bg-third mt-2 rounded-md"
+            >
+              <div
+                *ngFor="let categ of categoryList"
+                (click)="onCategoryClicked(categ)"
+                class="px-4 py-2 hover:bg-navBackground cursor-pointer"
+                #categoryBtn
+                [ngClass]="{
+                  'text-green-500': categoryStash.includes(categ),
+                  'text-white': !categoryStash.includes(categ),
+                }"
+              >
+                {{ categ }}
+              </div>
             </div>
           </div>
         </div>

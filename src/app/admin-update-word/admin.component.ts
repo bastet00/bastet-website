@@ -58,8 +58,8 @@ export class AdminUpdateWordComponent implements OnInit {
   count: number = 0;
   perPage = 25;
   pageSizeOptions = [5, 10, 25, 50, 100, 200, 500];
-  dropdownMenuState = false;
   userInputPage = this.page;
+  dropDownState = {} as { [key: string]: boolean };
   constructor(
     private loginService: LoginService,
     private router: Router,
@@ -80,24 +80,26 @@ export class AdminUpdateWordComponent implements OnInit {
     });
   }
 
+  toggleDropdown(objId: string) {
+    this.dropDownState[objId] = !this.dropDownState[objId];
+  }
+
   onCategoryClicked(category: string) {
-    if (!this.categoryStash.includes(category)) {
-      this.categoryStash.push(category);
-    } else {
+    if (this.categoryStash.includes(category)) {
       this.categoryStash = this.categoryStash.filter(
         (item) => item !== category,
       );
+    } else {
+      this.categoryStash.push(category);
     }
-  }
-
-  toggleDropdown() {
-    this.dropdownMenuState = !this.dropdownMenuState;
+    console.log(this.categoryStash);
   }
 
   enterPageIndex(_event: Event) {
     this.page = this.userInputPage;
     this.onTextInputChange({ delay: 0 });
   }
+
   onTextInputChange(options: { delay?: number } = { delay: 300 }) {
     if (!this.translationText) {
       return;
@@ -130,6 +132,7 @@ export class AdminUpdateWordComponent implements OnInit {
     this.perPage = event.pageSize;
     this.onTextInputChange({ delay: 0 });
   }
+
   addText(text: string) {
     this.translationText = text;
     this.onTextInputChange({ delay: 0 });
@@ -145,6 +148,7 @@ export class AdminUpdateWordComponent implements OnInit {
     }
     this.onTextInputChange();
   }
+
   sanitizeSymbol(symbol: string): SafeHtml {
     return this.senitizer.bypassSecurityTrustHtml(symbol);
   }
@@ -175,15 +179,16 @@ export class AdminUpdateWordComponent implements OnInit {
   }
 
   async put(newObj: TranslationResToView) {
-    console.log(newObj);
-
     const target = this.results!.items.find((obj) => obj.id === newObj.id);
+    target!.category = this.categoryStash;
     if (target) {
       const putRes = await lastValueFrom(
         this.wordAdminService.put(target, newObj),
       );
       if (putRes.ok) {
         alert('تم التحديث بنجاح');
+        this.categoryStash = [];
+        this.dropDownState = {};
       } else {
         alert('حدث خطأ ما');
       }
