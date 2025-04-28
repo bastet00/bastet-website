@@ -67,9 +67,6 @@ export class WordAdminService {
         headers: { Authorization: this.key },
       })
       .pipe(
-        tap((results) => {
-          console.log(results);
-        }),
         map((results) => {
           return {
             count: results.count,

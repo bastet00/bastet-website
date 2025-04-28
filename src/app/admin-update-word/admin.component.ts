@@ -92,7 +92,6 @@ export class AdminUpdateWordComponent implements OnInit {
     } else {
       this.categoryStash.push(category);
     }
-    console.log(this.categoryStash);
   }
 
   enterPageIndex(_event: Event) {
