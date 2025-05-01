@@ -149,12 +149,19 @@
             >
               <div
                 *ngFor="let categ of categoryList"
-                (click)="onCategoryClicked(categ)"
+                (click)="onCategoryClicked(categ, obj.id)"
                 class="px-4 py-2 hover:bg-navBackground cursor-pointer"
                 #categoryBtn
                 [ngClass]="{
-                  'text-green-500': categoryStash.includes(categ),
-                  'text-white': !categoryStash.includes(categ),
+                  'text-green-500':
+                    (categoryStash[obj.id] &&
+                      categoryStash[obj.id].includes(categ)) ||
+                    false,
+                  'text-white':
+                    !(
+                      categoryStash[obj.id] &&
+                      categoryStash[obj.id].includes(categ)
+                    ) || false,
                 }"
               >
                 {{ categ }}

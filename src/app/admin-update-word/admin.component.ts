@@ -44,7 +44,7 @@ import { CategoryService } from '../services/category.service';
 export class AdminUpdateWordComponent implements OnInit {
   readonly arrowDown = ArrowDown;
 
-  categoryStash: string[] = [];
+  categoryStash: { [key: string]: string[] } = {};
   categoryList: string[] = [];
 
   adminTranslationLanguages = {
@@ -84,13 +84,16 @@ export class AdminUpdateWordComponent implements OnInit {
     this.dropDownState[objId] = !this.dropDownState[objId];
   }
 
-  onCategoryClicked(category: string) {
-    if (this.categoryStash.includes(category)) {
-      this.categoryStash = this.categoryStash.filter(
+  onCategoryClicked(category: string, id: string) {
+    if (!this.categoryStash[id]) {
+      this.categoryStash[id] = [];
+    }
+    if (this.categoryStash[id].includes(category)) {
+      this.categoryStash[id] = this.categoryStash[id].filter(
         (item) => item !== category,
       );
     } else {
-      this.categoryStash.push(category);
+      this.categoryStash[id].push(category);
     }
   }
 
@@ -179,14 +182,14 @@ export class AdminUpdateWordComponent implements OnInit {
 
   async put(newObj: TranslationResToView) {
     const target = this.results!.items.find((obj) => obj.id === newObj.id);
-    target!.category = this.categoryStash;
     if (target) {
+      target.category = this.categoryStash[newObj.id] || [];
       const putRes = await lastValueFrom(
         this.wordAdminService.put(target, newObj),
       );
       if (putRes.ok) {
         alert('تم التحديث بنجاح');
-        this.categoryStash = [];
+        this.categoryStash = {};
         this.dropDownState = {};
       } else {
         alert('حدث خطأ ما');
