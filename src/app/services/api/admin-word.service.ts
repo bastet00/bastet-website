@@ -45,7 +45,7 @@ export interface AdminWordViewList extends AdminWordListApiResponse {
   providedIn: 'root',
 })
 export class WordAdminService {
-  private url = 'https://bastet-server-ef94bb4e91eb.herokuapp.com/admin/word/';
+  private url = 'https://bastet-server-ef94bb4e91eb.herokuapp.com/admin/word';
   constructor(
     private http: HttpClient,
     private transService: TranslationService,
@@ -100,7 +100,7 @@ export class WordAdminService {
       return throwError(() => new Error('No auth key found'));
     }
 
-    return fromFetch(`${this.url}${id}`, {
+    return fromFetch(`${this.url}/${id}`, {
       method: 'DELETE',
       headers: { Authorization: this.key },
     }).pipe(
