@@ -1,19 +1,12 @@
 import { Injectable } from '@angular/core';
-import {
-  catchError,
-  map,
-  Observable,
-  of,
-  switchMap,
-  tap,
-  throwError,
-} from 'rxjs';
+import { catchError, map, Observable, of, switchMap, throwError } from 'rxjs';
 import { fromFetch } from 'rxjs/fetch';
-import { AUTH_KEY } from '../login.service';
+import { AUTH_KEY } from './login.service';
 import { TranslationRes, TranslationResToView } from '../../landing/interface';
 import { HttpClient } from '@angular/common/http';
 import { Word } from '../../dto/word.dto';
-import { TranslationService } from '../translation.service';
+import { TranslationService } from './translation.service';
+import { environment } from '../../../environments/environment';
 
 export interface AdminWordListApiResponse {
   count: number;
@@ -45,7 +38,7 @@ export interface AdminWordViewList extends AdminWordListApiResponse {
   providedIn: 'root',
 })
 export class WordAdminService {
-  private url = 'https://bastet-server-ef94bb4e91eb.herokuapp.com/admin/word';
+  private url = `${environment.apiUrl}/admin/word`;
   constructor(
     private http: HttpClient,
     private transService: TranslationService,

@@ -1,5 +1,5 @@
 import { Component, ElementRef, QueryList, ViewChildren } from '@angular/core';
-import { LoginService } from '../services/login.service';
+import { LoginService } from '../services/api/login.service';
 import { Router } from '@angular/router';
 import { LandingBackgroundComponent } from '../landing-background/landing-background.component';
 import {
@@ -13,8 +13,9 @@ import {
   WordAdminService,
 } from '../services/api/admin-word.service';
 import { CommonModule } from '@angular/common';
-import { CategoryService } from '../services/category.service';
+import { CategoryService } from '../services/api/category.service';
 import { ArrowDown, CircleX, LucideAngularModule } from 'lucide-angular';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-admin-add-word',
@@ -75,6 +76,8 @@ export class AdminAddWordComponent {
   });
 
   ngOnInit(): void {
+    console.log('init');
+    console.log(environment.production);
     this.loginService.isTrusted$.subscribe((val) => {
       if (!val) {
         this.router.navigateByUrl('/');

@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, Observable, of, switchMap } from 'rxjs';
 import { fromFetch } from 'rxjs/fetch';
+import { environment } from '../../../environments/environment';
 
 export const AUTH_KEY = 'authCred';
 @Injectable({
   providedIn: 'root',
 })
 export class LoginService {
-  private url = `https://bastet-server-ef94bb4e91eb.herokuapp.com/login?password=`;
+  private url = `${environment.apiUrl}/login?password=`;
   private isTrustedSubjects: BehaviorSubject<boolean> = new BehaviorSubject(
     false,
   );
