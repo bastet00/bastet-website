@@ -20,7 +20,6 @@ export interface AddWordFormValues {
   english?: { word: string }[] | undefined;
   resources: string[];
   egyptian: {
-    word: string;
     symbol: string;
     transliteration: string;
     hieroglyphics: string[];

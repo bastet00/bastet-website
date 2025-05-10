@@ -64,7 +64,6 @@ export class AdminAddWordComponent {
     }
   }
   wordForm = this.fb.group({
-    hiero: ['', Validators.required],
     resources: ['', Validators.required],
     symbol: ['', Validators.required],
     transliteration: ['', Validators.required],
@@ -95,20 +94,21 @@ export class AdminAddWordComponent {
       resources: [this.wordForm.value.resources] as string[],
       egyptian: [
         {
-          word: this.wordForm.value.hiero as string,
           symbol: this.wordForm.value.symbol as string,
           transliteration: this.wordForm.value.transliteration as string,
-          hieroglyphics: this.wordForm.value.gardiner?.split(',') as string[],
+          hieroglyphics: this.wordForm.value.gardiner
+            ?.split(',')
+            .map((hieroglyphic) => hieroglyphic.trim()) as string[],
         },
       ],
       arabic: (this.wordForm.value.arabic as string).split(',').map((w) => {
-        return { word: w };
+        return { word: w.trim() };
       }),
 
       ...(this.wordForm.value.english && {
         english: (this.wordForm.value.english as string)
           .split(',')
-          .map((w) => ({ word: w })),
+          .map((w) => ({ word: w.trim() })),
       }),
 
       ...(this.wordForm.value.category && {

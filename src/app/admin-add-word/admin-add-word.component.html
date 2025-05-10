@@ -15,23 +15,22 @@
         >
           <div class="grid md:grid-cols-3 gap-y-10">
             <label
-              for="hiero"
+              for="transliteration"
               class="grid grid-cols-[6rem_1fr] items-center gap-x-4 w-full gap-y-10 md:col-span-2"
             >
-              <span>مصري</span>
+              <span>القيمه الصوتيه</span>
               <input
-                formControlName="hiero"
-                id="hiero"
+                formControlName="transliteration"
+                id="transliteration"
                 class="bg-inputBackground p-4 rounded-md w-full focus:outline-none"
                 [class.invalid]="
-                  wordForm.get('hiero')?.invalid &&
-                  (wordForm.get('hiero')?.dirty ||
-                    wordForm.get('hiero')?.touched ||
+                  wordForm.get('transliteration')?.invalid &&
+                  (wordForm.get('transliteration')?.dirty ||
+                    wordForm.get('transliteration')?.touched ||
                     isSubmitted)
                 "
               />
             </label>
-
             <label
               for="symbol"
               class="grid grid-cols-[6rem_1fr] items-center gap-x-4 w-full md:col-span-1"
@@ -50,24 +49,6 @@
               />
             </label>
           </div>
-
-          <label
-            for="transliteration"
-            class="grid grid-cols-[6rem_1fr] items-center gap-x-4 w-full"
-          >
-            <span>القيمه الصوتيه</span>
-            <input
-              formControlName="transliteration"
-              id="transliteration"
-              class="bg-inputBackground p-4 rounded-md w-full focus:outline-none"
-              [class.invalid]="
-                wordForm.get('transliteration')?.invalid &&
-                (wordForm.get('transliteration')?.dirty ||
-                  wordForm.get('transliteration')?.touched ||
-                  isSubmitted)
-              "
-            />
-          </label>
 
           <label
             for="gardiner"
