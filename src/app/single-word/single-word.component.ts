@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslationBoxComponent } from '../landing/translation-box/translation-box.component';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { TranslationService } from '../services/translation.service';
+import { TranslationService } from '../services/api/translation.service';
 import { Word } from '../dto/word.dto';
 import { LandingBackgroundComponent } from '../landing-background/landing-background.component';
 import { ArabicWord, TranslationResToView } from '../landing/interface';
