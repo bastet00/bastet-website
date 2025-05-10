@@ -92,10 +92,7 @@ export class AdminAddWordComponent {
 
   formToWordObj(): AddWordFormValues {
     return {
-      resources: [
-        this.wordForm.value.resources,
-        `Bastet ${new Date().getFullYear()}`,
-      ] as string[],
+      resources: [this.wordForm.value.resources] as string[],
       egyptian: [
         {
           word: this.wordForm.value.hiero as string,
