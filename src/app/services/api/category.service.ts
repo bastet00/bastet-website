@@ -12,7 +12,7 @@ interface Category {
 })
 export class CategoryService {
   constructor() {}
-  private url = `${environment.apiUrl}/api/category/`;
+  private url = `${environment.apiUrl}/api/v1/category/`;
 
   getCategories(): Observable<Category> {
     return fromFetch(`${this.url}`).pipe(
