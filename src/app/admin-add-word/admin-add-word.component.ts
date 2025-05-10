@@ -15,7 +15,6 @@ import {
 import { CommonModule } from '@angular/common';
 import { CategoryService } from '../services/api/category.service';
 import { ArrowDown, CircleX, LucideAngularModule } from 'lucide-angular';
-import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-admin-add-word',
@@ -76,8 +75,6 @@ export class AdminAddWordComponent {
   });
 
   ngOnInit(): void {
-    console.log('init');
-    console.log(environment.production);
     this.loginService.isTrusted$.subscribe((val) => {
       if (!val) {
         this.router.navigateByUrl('/');
