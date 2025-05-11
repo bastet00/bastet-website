@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { TranslationBoxComponent } from '../landing/translation-box/translation-box.component';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { TranslationService } from '../services/api/translation.service';
 import { Word } from '../dto/word.dto';
@@ -14,7 +13,6 @@ import { LucideAngularModule, ArrowRight, CheckIcon } from 'lucide-angular';
   selector: 'app-single-word',
   standalone: true,
   imports: [
-    TranslationBoxComponent,
     LandingBackgroundComponent,
     CommonModule,
     SuspendComponent,
