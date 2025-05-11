@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { LoginService } from '../services/login.service';
+import { LoginService } from '../services/api/login.service';
 import { Router, RouterModule } from '@angular/router';
 import { LandingBackgroundComponent } from '../landing-background/landing-background.component';
 

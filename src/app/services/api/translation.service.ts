@@ -10,14 +10,15 @@ import {
   throwError,
 } from 'rxjs';
 import { fromFetch } from 'rxjs/fetch';
-import { TranslationRes } from '../landing/interface';
-import { Word } from '../dto/word.dto';
+import { TranslationRes } from '../../landing/interface';
+import { Word } from '../../dto/word.dto';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TranslationService {
-  private url = 'https://bastet-server-ef94bb4e91eb.herokuapp.com/word';
+  private url = `${environment.apiUrl}/word`;
   private dataSubject = new BehaviorSubject<TranslationRes[]>([]);
   private loadingSubject = new BehaviorSubject<boolean>(false);
   private emptyResSubject = new BehaviorSubject<boolean>(false);

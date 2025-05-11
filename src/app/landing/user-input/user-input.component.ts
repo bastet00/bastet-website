@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { LanguageService } from '../../services/language.service';
 import { Language } from '../interface';
 import { CommonModule } from '@angular/common';
-import { TranslationService } from '../../services/translation.service';
+import { TranslationService } from '../../services/api/translation.service';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -17,7 +17,7 @@ export class UserInputComponent implements OnInit {
   translationText: string = '';
   constructor(
     private languageService: LanguageService,
-    private translationService: TranslationService
+    private translationService: TranslationService,
   ) {}
 
   languages: Language[] = [];

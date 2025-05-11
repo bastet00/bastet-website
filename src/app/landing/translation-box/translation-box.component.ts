@@ -5,7 +5,7 @@ import {
   QueryList,
   ViewChildren,
 } from '@angular/core';
-import { TranslationService } from '../../services/translation.service';
+import { TranslationService } from '../../services/api/translation.service';
 import {
   ArabicWord,
   EgyptianWord,

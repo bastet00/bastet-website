@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { catchError, Observable, of, switchMap } from 'rxjs';
 import { fromFetch } from 'rxjs/fetch';
+import { environment } from '../../../environments/environment';
 
 interface Category {
   category: string[];
@@ -11,7 +12,7 @@ interface Category {
 })
 export class CategoryService {
   constructor() {}
-  url = 'https://bastet-server-ef94bb4e91eb.herokuapp.com/api/category/';
+  private url = `${environment.apiUrl}/api/v1/category/`;
 
   getCategories(): Observable<Category> {
     return fromFetch(`${this.url}`).pipe(

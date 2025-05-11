@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LoginService } from '../services/login.service';
+import { LoginService } from '../services/api/login.service';
 import { Router } from '@angular/router';
 import { UserInputComponent } from '../landing/user-input/user-input.component';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
@@ -21,7 +21,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MyCustomPaginatorIntl } from './pagination.service';
 import { ArrowDown, LucideAngularModule } from 'lucide-angular';
 import { CommonModule } from '@angular/common';
-import { CategoryService } from '../services/category.service';
+import { CategoryService } from '../services/api/category.service';
 
 @Component({
   selector: 'app-admin',
