@@ -1,4 +1,10 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  Input,
+  ViewChildren,
+  QueryList,
+  ElementRef,
+} from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -21,10 +27,10 @@ interface Word {
 })
 export class TranslationResultComponent {
   @Input() word!: Word;
-  @Output() copyToClipboard = new EventEmitter<string>();
 
   hoverToElement: string | null = null;
   helperText = 'نسخ';
+  @ViewChildren('translationRef') transRefs!: QueryList<ElementRef>;
 
   constructor(private sanitizer: DomSanitizer) {}
 
@@ -40,12 +46,21 @@ export class TranslationResultComponent {
     this.hoverToElement = null;
   }
 
-  handleCopy(wordId: string): void {
-    this.copyToClipboard.emit(wordId);
+  handleCopy(id: string): void {
+    this.hoverToElement = id;
+
+    const ele = this.transRefs.find(
+      (ref) => ref.nativeElement.getAttribute('data-id') === id,
+    )?.nativeElement as HTMLDivElement;
+
+    let toCopy = '';
+    ele.childNodes.forEach((node) => (toCopy += node.textContent));
+    navigator.clipboard.writeText(toCopy);
     this.helperText = 'تم النسخ ✓';
+
     setTimeout(() => {
-      this.helperText = 'نسخ';
-    }, 2000);
+      this.hoverToElement = null;
+    }, 1000);
   }
 
   getCategoryViewValue(categoryValue: string): string {
