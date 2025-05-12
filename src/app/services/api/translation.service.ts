@@ -10,7 +10,7 @@ import {
   throwError,
 } from 'rxjs';
 import { fromFetch } from 'rxjs/fetch';
-import { TranslationRes } from '../../landing/interface';
+import { TranslationRes } from '../../pages/home/landing/interface';
 import { Word } from '../../dto/word.dto';
 import { environment } from '../../../environments/environment';
 
