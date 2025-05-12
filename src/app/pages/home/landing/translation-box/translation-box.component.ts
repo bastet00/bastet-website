@@ -1,4 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnInit,
+  QueryList,
+  ViewChildren,
+} from '@angular/core';
 import { TranslationService } from '../../../../services/api/translation.service';
 import {
   ArabicWord,
@@ -37,6 +43,8 @@ export class TranslationBoxComponent implements OnInit {
     private sanitizer: DomSanitizer,
   ) {}
 
+  @ViewChildren('translationRef') transRefs!: QueryList<ElementRef>;
+
   helperText: string = '';
   hoverToElement: string | null = null;
   emptyRes = false;
@@ -66,6 +74,23 @@ export class TranslationBoxComponent implements OnInit {
         this.emptyRes = emptyRes;
       },
     });
+  }
+
+  toClipboard(id: string) {
+    this.hoverToElement = id;
+
+    const ele = this.transRefs.find(
+      (ref) => ref.nativeElement.getAttribute('data-id') === id,
+    )?.nativeElement as HTMLDivElement;
+
+    let toCopy = '';
+    ele.childNodes.forEach((node) => (toCopy += node.textContent));
+    navigator.clipboard.writeText(toCopy);
+    this.helperText = 'تم النسخ ✓';
+
+    setTimeout(() => {
+      this.hoverToElement = null;
+    }, 1000);
   }
 
   onMouseHover(id: string, event: MouseEvent) {
