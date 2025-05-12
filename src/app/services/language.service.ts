@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Language } from '../landing/interface';
+import { Language } from '../pages/home/landing/interface';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
@@ -33,7 +33,7 @@ export class LanguageService {
     const currentLanguages = this.languageTrace.getValue();
     window.localStorage.setItem(
       this.localKey,
-      JSON.stringify(currentLanguages)
+      JSON.stringify(currentLanguages),
     );
     this.languageTrace.next(currentLanguages);
   }

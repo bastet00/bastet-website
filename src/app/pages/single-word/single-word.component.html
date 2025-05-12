@@ -1,0 +1,137 @@
+<app-landing-background [fullHieght]="'min-h-dvh'">
+  <div class="mt-20">
+    <app-suspend *ngIf="!singleWord.id"></app-suspend>
+  </div>
+
+  <div class="mt-20 mx-auto translation-area-wrapper" *ngIf="singleWord.id">
+    <a
+      (click)="navigateBack()"
+      class="cursor-pointer block bg-[#31271980] p-2 w-fit rounded-full mb-10"
+    >
+      <lucide-icon
+        [img]="ArrowRight"
+        color="#A69670"
+        class="my-icon"
+      ></lucide-icon>
+    </a>
+
+    <div class="translation-result-area flex flex-col gap-y-5">
+      <!-- header  -->
+      <h2
+        class="translation-to-egy-text w-fit mx-auto text-3xl"
+        [innerHTML]="
+          sanitizeSymbol(singleWordToView.egyptian + singleWordToView.symbol)
+        "
+      ></h2>
+
+      <!-- blocks -->
+
+      <div class="flex items-start flex-col">
+        <p class="text-main">عربي:</p>
+        <div class="flex items-center gap-x-4">
+          <p>{{ singleWordToView.arabic }}</p>
+          <button (click)="toClipboard('arabic', arabicCopiedRef)">
+            <img src="/copy.svg" />
+          </button>
+          <div class="hidden" #arabicCopiedRef>
+            <lucide-icon
+              [img]="checkIcon"
+              color="#F6831C"
+              class="my-icon"
+            ></lucide-icon>
+          </div>
+        </div>
+      </div>
+      <div class="flex items-start flex-col">
+        <p class="text-main">الانجليزيه:</p>
+        <div class="flex items-center gap-x-4">
+          <p>{{ singleWordToView.english }}</p>
+          <button (click)="toClipboard('english', englishCopiedRef)">
+            <img src="/copy.svg" />
+          </button>
+
+          <div class="hidden" #englishCopiedRef>
+            <lucide-icon
+              [img]="checkIcon"
+              color="#F6831C"
+              class="my-icon"
+            ></lucide-icon>
+          </div>
+        </div>
+      </div>
+      <div class="flex items-start flex-col">
+        <p class="text-main">القيمه الصوتيه الانجليزيه:</p>
+        <div class="flex items-center gap-x-4">
+          <p>{{ singleWordToView.transliteration }}</p>
+          <button
+            (click)="toClipboard('transliteration', transliterationCopiedRef)"
+          >
+            <img src="/copy.svg" />
+          </button>
+          <div class="hidden" #transliterationCopiedRef>
+            <lucide-icon
+              [img]="checkIcon"
+              color="#F6831C"
+              class="my-icon"
+            ></lucide-icon>
+          </div>
+        </div>
+      </div>
+      <div class="flex items-start flex-col">
+        <p class="text-main">الهيروغليفيه:</p>
+        <div class="flex items-center gap-x-4">
+          <p
+            [innerHTML]="
+              sanitizeSymbol(singleWordToView.hieroglyphicSigns || '')
+            "
+          ></p>
+          <button (click)="toClipboard('hieroglyphicSigns', symbolCopiedRef)">
+            <img src="/copy.svg" />
+          </button>
+          <div class="hidden" #symbolCopiedRef>
+            <lucide-icon
+              [img]="checkIcon"
+              color="#F6831C"
+              class="my-icon"
+            ></lucide-icon>
+          </div>
+        </div>
+      </div>
+      <div class="flex items-start flex-col">
+        <p class="text-main">علامات جاردنير:</p>
+        <div class="flex items-center gap-x-4">
+          <p>{{ singleWordToView.hieroglyphics }}</p>
+          <button
+            (click)="toClipboard('hieroglyphics', hieroglyphicsCopiedRef)"
+          >
+            <img src="/copy.svg" />
+          </button>
+          <div class="hidden" #hieroglyphicsCopiedRef>
+            <lucide-icon
+              [img]="checkIcon"
+              color="#F6831C"
+              class="my-icon"
+            ></lucide-icon>
+          </div>
+        </div>
+      </div>
+      <div class="flex items-start flex-col">
+        <p class="text-main">المصادر:</p>
+        <div class="flex items-center gap-x-4">
+          <p>{{ singleWordToView.resources }}</p>
+          <button (click)="toClipboard('resources', resourcesCopiedRef)">
+            <img src="/copy.svg" />
+          </button>
+          <div class="hidden" #resourcesCopiedRef>
+            <lucide-icon
+              [img]="checkIcon"
+              color="#F6831C"
+              class="my-icon"
+            ></lucide-icon>
+          </div>
+        </div>
+      </div>
+      <!-- end blocks -->
+    </div>
+  </div>
+</app-landing-background>

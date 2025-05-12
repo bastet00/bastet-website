@@ -1,0 +1,15 @@
+.translation-result-area {
+  @apply bg-inputBackground border border-[#a69670] rounded-lg outline-none p-4 text-2xl text-white w-full resize-none shadow-inner;
+}
+
+.copied {
+  @apply text-main scale-110;
+}
+
+.category-label {
+  @apply font-medium;
+}
+
+.category-value {
+  @apply text-gray-400;
+}

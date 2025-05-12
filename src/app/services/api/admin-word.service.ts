@@ -2,7 +2,10 @@ import { Injectable } from '@angular/core';
 import { catchError, map, Observable, of, switchMap, throwError } from 'rxjs';
 import { fromFetch } from 'rxjs/fetch';
 import { AUTH_KEY } from './login.service';
-import { TranslationRes, TranslationResToView } from '../../landing/interface';
+import {
+  TranslationRes,
+  TranslationResToView,
+} from '../../pages/home/landing/interface';
 import { HttpClient } from '@angular/common/http';
 import { Word } from '../../dto/word.dto';
 import { TranslationService } from './translation.service';

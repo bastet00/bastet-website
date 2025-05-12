@@ -1,0 +1,30 @@
+@if (emptyRes) {
+  <div class="translation-area-wrapper text-right mx-auto mt-2 md-10">
+    <div class="translation-result-area">
+      <p class="w-fit text-sm">
+        لسوء الحظ، قاموسنا لا يحتوي على هذه الكلمة. التحقق من الإملاء الخاص بك.
+        إذا كان كل شيء صحيحًا وتريد منا أن نضيف هذه الكلمة،
+        <span (click)="addWordSuggestion()" class="cursor-pointer text-main">
+          انقر هنا.
+        </span>
+      </p>
+    </div>
+  </div>
+  <app-notification
+    [showAlert]="showAddingSuggestionSuccess"
+    type="success"
+    message=" لقد تم تقديم هذه الكلمة للمراجعة، شكرا لك"
+  ></app-notification>
+}
+
+@for (word of words; track word.id) {
+  <div class="translation-area-wrapper mx-auto mt-2">
+    <app-suspend *ngIf="loading"></app-suspend>
+    <app-translation-result
+      *ngIf="words.length"
+      [word]="word"
+      (copyToClipboard)="toClipboard($event)"
+    ></app-translation-result>
+  </div>
+  <br />
+}
