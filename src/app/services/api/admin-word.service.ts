@@ -81,7 +81,7 @@ export class WordAdminService {
                 symbol: this.transService.toSymbol(word.egyptian[0].symbol),
                 hexSym: word.egyptian[0].symbol,
                 ...(word.category && {
-                  category: word.category!.join(' , '),
+                  category: word.category,
                 }),
               } as TranslationResToView;
             }),

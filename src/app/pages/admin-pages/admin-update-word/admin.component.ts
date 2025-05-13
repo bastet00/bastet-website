@@ -102,6 +102,11 @@ export class AdminUpdateWordComponent implements OnInit {
     this.onTextInputChange({ delay: 0 });
   }
 
+  prePushCategoryStash() {
+    this.results?.itemsForView.map((item) => {
+      this.categoryStash[item.id] = item.category || [];
+    });
+  }
   onTextInputChange(options: { delay?: number } = { delay: 300 }) {
     if (!this.translationText) {
       return;
@@ -122,6 +127,9 @@ export class AdminUpdateWordComponent implements OnInit {
           .subscribe((results) => {
             this.results = results;
             this.count = results.count;
+            this.results.itemsForView.map((item) => {
+              this.categoryStash[item.id] = item.category || [];
+            });
           });
       }, delay);
     } else {
@@ -201,7 +209,7 @@ export class AdminUpdateWordComponent implements OnInit {
       if (putRes.ok) {
         alert('تم التحديث بنجاح');
         this.updateCategoryView(target.id);
-        this.categoryStash = {};
+        this.categoryStash[target.id] = target.category;
         this.dropDownState = {};
       } else {
         alert('حدث خطأ ما');
