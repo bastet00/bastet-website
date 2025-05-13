@@ -102,11 +102,6 @@ export class AdminUpdateWordComponent implements OnInit {
     this.onTextInputChange({ delay: 0 });
   }
 
-  prePushCategoryStash() {
-    this.results?.itemsForView.map((item) => {
-      this.categoryStash[item.id] = item.category || [];
-    });
-  }
   onTextInputChange(options: { delay?: number } = { delay: 300 }) {
     if (!this.translationText) {
       return;
