@@ -5,7 +5,7 @@
     [attr.data-id]="word.id"
   >
     <a
-      routerLink="word/{{ word.id }}"
+      [routerLink]="['/word', word.id]"
       class="w-fit cursor-pointer"
       [innerHTML]="sanitizeSymbol(word.egyptian + word.symbol)"
     ></a>
