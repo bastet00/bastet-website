@@ -180,6 +180,17 @@ export class AdminUpdateWordComponent implements OnInit {
     }
   }
 
+  updateCategoryView(id: string) {
+    if (this.results) {
+      this.results = {
+        ...this.results,
+        itemsForView: this.results?.itemsForView.map((item) =>
+          item.id === id ? { ...item, category: this.categoryStash[id] } : item,
+        ),
+      };
+    }
+  }
+
   async put(newObj: TranslationResToView) {
     const target = this.results!.items.find((obj) => obj.id === newObj.id);
     if (target) {
@@ -189,6 +200,7 @@ export class AdminUpdateWordComponent implements OnInit {
       );
       if (putRes.ok) {
         alert('تم التحديث بنجاح');
+        this.updateCategoryView(target.id);
         this.categoryStash = {};
         this.dropDownState = {};
       } else {
