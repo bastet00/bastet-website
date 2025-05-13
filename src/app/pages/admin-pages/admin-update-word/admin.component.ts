@@ -203,8 +203,8 @@ export class AdminUpdateWordComponent implements OnInit {
       );
       if (putRes.ok) {
         alert('تم التحديث بنجاح');
-        this.updateCategoryView(target.id);
         this.categoryStash[target.id] = target.category;
+        this.updateCategoryView(target.id);
         this.dropDownState = {};
       } else {
         alert('حدث خطأ ما');
