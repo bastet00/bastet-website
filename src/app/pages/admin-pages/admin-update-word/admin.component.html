@@ -124,7 +124,7 @@
 
         <div class="text-white text-3xl flex flex-col gap-x-4">
           <div class="flex flex-col gap-y-1">
-            <span>التصنيفات: {{ obj.category }}</span>
+            <span>التصنيفات: {{ categoryStash[obj.id].join(' - ') }}</span>
           </div>
           <div
             id="category"
@@ -153,15 +153,8 @@
                 class="px-4 py-2 hover:bg-navBackground cursor-pointer"
                 #categoryBtn
                 [ngClass]="{
-                  'text-green-500':
-                    (categoryStash[obj.id] &&
-                      categoryStash[obj.id].includes(categ)) ||
-                    false,
-                  'text-white':
-                    !(
-                      categoryStash[obj.id] &&
-                      categoryStash[obj.id].includes(categ)
-                    ) || false,
+                  'text-green-500': categoryStash[obj.id].includes(categ),
+                  'text-white': !categoryStash[obj.id].includes(categ),
                 }"
               >
                 {{ categ }}
