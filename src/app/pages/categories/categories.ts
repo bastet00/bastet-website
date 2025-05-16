@@ -19,7 +19,7 @@ export const CATEGORIES = [
   { value: 'jobs', viewValue: 'وظائف' },
   { value: 'adjective', viewValue: 'صفات' },
   { value: 'verb', viewValue: 'افعال' },
-  { value: 'words_in_egyptian_dialect', viewValue: 'كلمات باللهجة المصرية' },
+  { value: 'words_in_egyptian_dialect', viewValue: 'كلمات في العامية المصرية' },
   { value: 'prepositions', viewValue: 'حروف الجر' },
   { value: 'insects', viewValue: 'حشرات' },
   { value: 'measurements', viewValue: 'قياسات' },
