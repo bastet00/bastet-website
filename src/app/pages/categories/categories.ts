@@ -25,8 +25,7 @@ export const CATEGORIES = [
   { value: 'measurements', viewValue: 'قياسات' },
   { value: 'countries', viewValue: 'دول' },
   { value: 'egyptian_cities_provinces', viewValue: 'مدن و محافظات مصرية' },
-  { value: 'vegetables', viewValue: 'خضروات' },
-  { value: 'fruits', viewValue: 'فواكه' },
+  { value: 'fruits_vegetables', viewValue: 'فواكه و خضراوات' },
   { value: 'plants', viewValue: 'نباتات' },
   { value: 'cosmos', viewValue: 'الكون' },
 ];
