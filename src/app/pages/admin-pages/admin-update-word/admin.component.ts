@@ -22,6 +22,8 @@ import { MyCustomPaginatorIntl } from './pagination.service';
 import { ArrowDown, LucideAngularModule } from 'lucide-angular';
 import { CommonModule } from '@angular/common';
 import { CategoryService } from '../../../services/api/category.service';
+import { NotificationService } from '../../../components/notification/notification.service';
+import { NotificationComponent } from '../../../components/notification/notification.component';
 
 @Component({
   selector: 'app-admin',
@@ -35,6 +37,7 @@ import { CategoryService } from '../../../services/api/category.service';
     MatInputModule,
     LucideAngularModule,
     CommonModule,
+    NotificationComponent,
   ],
   templateUrl: './admin.component.html',
   providers: [{ provide: MatPaginatorIntl, useClass: MyCustomPaginatorIntl }],
@@ -66,6 +69,7 @@ export class AdminUpdateWordComponent implements OnInit {
     private senitizer: DomSanitizer,
     private wordAdminService: WordAdminService,
     private categoryService: CategoryService,
+    private notificationService: NotificationService,
   ) {}
 
   ngOnInit(): void {
@@ -177,9 +181,9 @@ export class AdminUpdateWordComponent implements OnInit {
     const res = await lastValueFrom(this.wordAdminService.delete(id));
     if (res.ok) {
       this.clearDisplayedDocs(id);
-      alert('تم الحذف بنجاح');
+      this.notificationService.success('تم الحذف بنجاح');
     } else {
-      alert('حدث خطأ ما');
+      this.notificationService.error('حدث خطأ ما');
     }
   }
 
@@ -202,12 +206,12 @@ export class AdminUpdateWordComponent implements OnInit {
         this.wordAdminService.put(target, newObj),
       );
       if (putRes.ok) {
-        alert('تم التحديث بنجاح');
+        this.notificationService.success('تم التحديث بنجاح');
         this.categoryStash[target.id] = target.category;
         this.updateCategoryView(target.id);
         this.dropDownState = {};
       } else {
-        alert('حدث خطأ ما');
+        this.notificationService.error('حدث خطأ ما');
       }
     }
   }

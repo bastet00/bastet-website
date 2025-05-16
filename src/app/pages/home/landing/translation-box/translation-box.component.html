@@ -10,12 +10,9 @@
       </p>
     </div>
   </div>
-  <app-notification
-    [showAlert]="showAddingSuggestionSuccess"
-    type="success"
-    message=" لقد تم تقديم هذه الكلمة للمراجعة، شكرا لك"
-  ></app-notification>
 }
+
+<app-notification></app-notification>
 
 @for (word of words; track word.id) {
   <div class="translation-area-wrapper mx-auto mt-2">

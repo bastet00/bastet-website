@@ -1,5 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { NotificationService } from './notification.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-notification',
@@ -8,10 +10,31 @@ import { Component, Input } from '@angular/core';
   templateUrl: './notification.component.html',
   styleUrl: './notification.component.scss',
 })
-export class NotificationComponent {
-  @Input() showAlert: boolean = false;
-  @Input() message: string = '';
-  @Input() type: NotificationType = 'success';
+export class NotificationComponent implements OnInit, OnDestroy {
+  showAlert = false;
+  message = '';
+  type: 'success' | 'warn' | 'error' = 'success';
+  private subscription: Subscription;
+
+  constructor(private notificationService: NotificationService) {
+    this.subscription = this.notificationService.notification$.subscribe(
+      (notification) => {
+        if (notification) {
+          this.showAlert = true;
+          this.message = notification.message;
+          this.type = notification.type;
+        } else {
+          this.showAlert = false;
+        }
+      },
+    );
+  }
+
+  ngOnInit() {}
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
 
   getAlertClasses() {
     switch (this.type) {

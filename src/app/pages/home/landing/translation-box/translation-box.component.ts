@@ -12,6 +12,7 @@ import { SuspendComponent } from '../../../../components/suspend/suspend.compone
 import { NotificationComponent } from '../../../../components/notification/notification.component';
 import { RouterModule } from '@angular/router';
 import { TranslationResultComponent } from '../../../../components/translation-result/translation-result.component';
+import { NotificationService } from '../../../../components/notification/notification.service';
 
 @Component({
   selector: 'app-translation-box',
@@ -35,6 +36,7 @@ export class TranslationBoxComponent implements OnInit {
   constructor(
     private transService: TranslationService,
     private sanitizer: DomSanitizer,
+    private notificationService: NotificationService,
   ) {}
 
   helperText: string = '';
@@ -80,11 +82,9 @@ export class TranslationBoxComponent implements OnInit {
   }
 
   addWordSuggestion() {
-    // TODO: replace with observable
-    this.showAddingSuggestionSuccess = true;
-    setTimeout(() => {
-      this.showAddingSuggestionSuccess = false;
-    }, 3000);
+    this.notificationService.success(
+      'لقد تم تقديم هذه الكلمة للمراجعة، شكرا لك',
+    );
   }
 
   sanitizeSymbol(symbol: string): SafeHtml {
