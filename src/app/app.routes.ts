@@ -9,6 +9,7 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { AdminAddWordComponent } from './pages/admin-pages/admin-add-word/admin-add-word.component';
 import { CategoriesComponent } from './pages/categories/categories.component';
 import { LoginComponent } from './pages/login/login.component';
+import { HieroglyphsKeyboardPrivacyPolicyComponent } from './pages/hieroglyphs-keyboard/privacy-policy/privacy-policy.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -18,6 +19,10 @@ export const routes: Routes = [
   { path: 'admin/add-word', component: AdminAddWordComponent },
   { path: 'privacy-policy', component: PrivacyPolicyComponent },
   { path: 'privacy', component: PrivacyPolicyComponent },
+  {
+    path: 'hieroglyphs-keyboard/privacy-policy',
+    component: HieroglyphsKeyboardPrivacyPolicyComponent,
+  },
   { path: 'word/:id', component: SingleWordComponent },
   { path: 'android', component: RedirectAndroidPageComponent },
   { path: 'categories', component: CategoriesComponent },
