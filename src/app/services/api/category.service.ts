@@ -4,7 +4,13 @@ import { fromFetch } from 'rxjs/fetch';
 import { environment } from '../../../environments/environment';
 
 interface Category {
-  category: string[];
+  id: string;
+  arabic: string;
+  english: string;
+}
+
+interface CategoryResponse {
+  category: Category[];
 }
 
 @Injectable({
@@ -14,7 +20,7 @@ export class CategoryService {
   constructor() {}
   private url = `${environment.apiUrl}/api/v1/category/`;
 
-  getCategories(): Observable<Category> {
+  getCategories(): Observable<CategoryResponse> {
     return fromFetch(`${this.url}`).pipe(
       switchMap(async (response) => {
         if (response.ok) {
@@ -25,7 +31,7 @@ export class CategoryService {
       }),
       catchError((err) => {
         console.error(err);
-        return of({} as Category);
+        return of({} as CategoryResponse);
       }),
     );
   }

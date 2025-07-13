@@ -80,7 +80,7 @@ export class AdminUpdateWordComponent implements OnInit {
     });
 
     this.categoryService.getCategories().subscribe((value) => {
-      this.categoryList = value.category;
+      this.categoryList = value.category.map((cat) => cat.id);
     });
   }
 
