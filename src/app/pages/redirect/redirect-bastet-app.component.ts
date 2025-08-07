@@ -4,17 +4,25 @@ import { Component, OnInit } from '@angular/core';
   selector: 'app-redirect',
   template: `
     <div
-      style="text-align: center; padding: 20px; font-family: Arial, sans-serif;"
+      style="text-align: center; padding: 20px; font-family: Arial, sans-serif; max-width: 500px; margin: 0 auto;"
     >
       <h2>Redirecting to App Store...</h2>
       <p>
-        If you are not redirected automatically, please click the link below:
+        If you are not redirected automatically, please click the button below:
       </p>
       <div id="redirect-link"></div>
+      <div style="margin-top: 20px;">
+        <button
+          id="manual-redirect"
+          style="background: #007AFF; color: white; border: none; padding: 12px 24px; border-radius: 8px; font-size: 16px; cursor: pointer;"
+        >
+          Download App
+        </button>
+      </div>
     </div>
   `,
 })
-export class RedirectAndroidPageComponent implements OnInit {
+export class RedirectBastetAppDownloadPageComponent implements OnInit {
   iosLink =
     'https://apps.apple.com/us/app/bastet-hieroglyph-translator/id6747642027';
   androidLink =
@@ -60,6 +68,14 @@ export class RedirectAndroidPageComponent implements OnInit {
     const linkElement = document.getElementById('redirect-link');
     if (linkElement) {
       linkElement.innerHTML = `<a href="${redirectUrl}" style="color: #007AFF; text-decoration: none; font-size: 18px;">Click here to download the app</a>`;
+    }
+
+    // Add manual redirect button functionality
+    const manualButton = document.getElementById('manual-redirect');
+    if (manualButton) {
+      manualButton.addEventListener('click', () => {
+        this.performRedirect(redirectUrl);
+      });
     }
 
     // Try multiple redirect methods for better compatibility

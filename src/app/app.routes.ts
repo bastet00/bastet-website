@@ -10,6 +10,7 @@ import { AdminAddWordComponent } from './pages/admin-pages/admin-add-word/admin-
 import { CategoriesComponent } from './pages/categories/categories.component';
 import { LoginComponent } from './pages/login/login.component';
 import { HieroglyphsKeyboardPrivacyPolicyComponent } from './pages/hieroglyphs-keyboard/privacy-policy/privacy-policy.component';
+import { RedirectBastetAppDownloadPageComponent } from './pages/redirect/redirect-bastet-app.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -25,6 +26,10 @@ export const routes: Routes = [
   },
   { path: 'word/:id', component: SingleWordComponent },
   { path: 'android', component: RedirectAndroidPageComponent },
+  {
+    path: 'app/bastet/download',
+    component: RedirectBastetAppDownloadPageComponent,
+  },
   { path: 'categories', component: CategoriesComponent },
   { path: '**', redirectTo: '' },
 ];
