@@ -28,4 +28,7 @@ export const CATEGORIES = [
   { value: 'fruits_vegetables', viewValue: 'فواكه و خضراوات' },
   { value: 'plants', viewValue: 'نباتات' },
   { value: 'cosmos', viewValue: 'الكون' },
+  { value: 'male_names', viewValue: 'أسماء ذكور' },
+  { value: 'female_names', viewValue: 'أسماء أناث' },
+  { value: 'kings_queens', viewValue: 'ملوك وملكات' },
 ];
