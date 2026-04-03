@@ -3,15 +3,17 @@
     <ul class="flex items-center gap-x-10 text-white">
       <li><a class="cursor-pointer" href="#translation">الترجمة</a></li>
       <li><a class="cursor-pointer" href="/categories">القاموس</a></li>
-      <li><a class="cursor-pointer" href="#team">عن الفريق</a></li>
       <li>
         <a
           class="cursor-pointer"
-          href="mailto:contact@bastet-app.com?subject=تواصل مع فريق&body={{
-            mailBody
-          }}"
-          >تواصل معنا</a
+          target="_blank"
+          href="https://blog.bastet-app.com/"
+          >المدونة</a
         >
+      </li>
+      <li><a class="cursor-pointer" href="#team">عن الفريق</a></li>
+      <li>
+        <a class="cursor-pointer" [href]="mailToHref">تواصل معنا</a>
       </li>
     </ul>
 

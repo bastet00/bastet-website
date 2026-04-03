@@ -14,9 +14,10 @@
 
 <app-notification></app-notification>
 
+<app-suspend *ngIf="loading"></app-suspend>
+
 @for (word of words; track word.id) {
   <div class="translation-area-wrapper mx-auto mt-2">
-    <app-suspend *ngIf="loading"></app-suspend>
     <app-translation-result
       *ngIf="words.length"
       [word]="word"

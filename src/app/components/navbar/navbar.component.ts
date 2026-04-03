@@ -8,12 +8,15 @@ import { Component } from '@angular/core';
   styleUrl: './navbar.component.scss',
 })
 export class NavbarComponent {
-  mailBody = `𓃠 للتواصل مع  باستيت %0A
-  %0A
-  الموضوع:%0A
-
-  %0A
-  الاسم:%0A
-  رقم الهاتف:%0A
-  `;
+  /** Full mailto URL — subject/body must be encodeURIComponent; raw newlines break href. */
+  readonly mailToHref =
+    'mailto:contact@bastet-app.com' +
+    '?subject=' +
+    encodeURIComponent('تواصل مع فريق') +
+    '&body=' +
+    encodeURIComponent(
+      ['𓃠 للتواصل مع باستيت', '', 'الموضوع:', '', 'الاسم:', 'رقم الهاتف:'].join(
+        '\n',
+      ),
+    );
 }
