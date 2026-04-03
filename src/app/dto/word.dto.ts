@@ -16,6 +16,7 @@ export interface WordCardDto {
   id: string;
   arabic: string;
   egyptian: string;
+  hieroglyphicSigns?: string;
   category?: string[];
 }
 export type WordList = Word[];
@@ -25,6 +26,7 @@ export function toWordCardDto(word: Word): WordCardDto {
     id: word.id,
     arabic: word.arabic.map((arabic) => arabic.word).join(', '),
     egyptian: word.egyptian[0].word,
+    hieroglyphicSigns: word.egyptian[0].hieroglyphicSigns?.join(' '),
     category: word.category,
   };
 }

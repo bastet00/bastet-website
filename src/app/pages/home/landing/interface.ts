@@ -11,6 +11,8 @@ export type EnglishWord = ArabicWord;
 
 export interface EgyptianWord {
   word: string;
+  hieroglyphics?: string[];
+  hieroglyphicSigns?: string[];
 }
 
 export interface TranslationRes {

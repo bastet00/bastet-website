@@ -46,6 +46,7 @@ export class TranslationBoxComponent implements OnInit {
             arabic: word.arabic.map((arabic) => arabic.word).join(', '),
             egyptian: word.egyptian[0].word,
             category: word.category,
+            hieroglyphicSigns: word.egyptian[0].hieroglyphicSigns?.join(' '),
           };
         });
       },

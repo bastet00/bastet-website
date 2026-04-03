@@ -9,11 +9,13 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { CATEGORIES } from '../../pages/categories/categories';
+import { NotificationService } from '../notification/notification.service';
 
 interface Word {
   id: string;
   egyptian: string;
   arabic: string;
+  hieroglyphicSigns?: string;
   category?: string[];
 }
 
@@ -27,27 +29,23 @@ interface Word {
 export class TranslationResultComponent {
   @Input() word!: Word;
 
-  hoverToElement: string | null = null;
-  helperText = 'نسخ';
   @ViewChildren('translationRef') transRefs!: QueryList<ElementRef>;
 
-  constructor(private sanitizer: DomSanitizer) {}
+  constructor(
+    private sanitizer: DomSanitizer,
+    private notificationService: NotificationService,
+  ) {}
 
   sanitizeSymbol(text: string): SafeHtml {
     return this.sanitizer.bypassSecurityTrustHtml(text);
   }
 
-  onMouseHover(wordId: string): void {
-    this.hoverToElement = wordId;
-  }
-
-  onMouseLeave(): void {
-    this.hoverToElement = null;
+  handleCopyHiero(): void {
+    navigator.clipboard.writeText(this.word.hieroglyphicSigns ?? '');
+    this.notificationService.success('تم نسخ الهيروغليفية ✓');
   }
 
   handleCopy(id: string): void {
-    this.hoverToElement = id;
-
     const ele = this.transRefs.find(
       (ref) => ref.nativeElement.getAttribute('data-id') === id,
     )?.nativeElement as HTMLDivElement;
@@ -55,11 +53,7 @@ export class TranslationResultComponent {
     let toCopy = '';
     ele.childNodes.forEach((node) => (toCopy += node.textContent));
     navigator.clipboard.writeText(toCopy);
-    this.helperText = 'تم النسخ ✓';
-
-    setTimeout(() => {
-      this.hoverToElement = null;
-    }, 1000);
+    this.notificationService.success('تم النسخ ✓');
   }
 
   getCategoryViewValue(categoryValue: string): string {
