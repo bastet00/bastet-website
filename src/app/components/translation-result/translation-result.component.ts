@@ -13,7 +13,6 @@ import { CATEGORIES } from '../../pages/categories/categories';
 interface Word {
   id: string;
   egyptian: string;
-  symbol: string;
   arabic: string;
   category?: string[];
 }

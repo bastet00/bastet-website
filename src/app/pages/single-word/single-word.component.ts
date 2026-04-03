@@ -44,12 +44,7 @@ export class SingleWordComponent implements OnInit {
   toClipboard(key: keyof TranslationResToView, copiedEle: HTMLElement) {
     copiedEle.style.display = 'block';
     copiedEle.classList.add('animate-ping');
-    let toCopy = this.singleWordToView[key] as string;
-    if (key === 'symbol') {
-      // convert from html entity to string representation
-      toCopy = toCopy.replace(/[^0-9a-z-A-Z ]/g, '').replace(/ +/, ' ');
-      toCopy = String.fromCodePoint(+toCopy);
-    }
+    const toCopy = this.singleWordToView[key] as string;
 
     setTimeout(() => {
       copiedEle.classList.remove('animate-ping');
@@ -69,9 +64,6 @@ export class SingleWordComponent implements OnInit {
 
   async getWord(id: string) {
     this.singleWord = await this.translationService.getOne(id);
-    this.singleWordToView.symbol = this.translationService.toSymbol(
-      this.singleWord.egyptian[0].symbol,
-    );
     this.singleWordToView.egyptian = this.singleWord.egyptian[0].word;
     this.singleWordToView.id = this.singleWord.id;
     this.singleWordToView.arabic = this.arrToView(this.singleWord.arabic);

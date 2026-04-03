@@ -1,11 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslationService } from '../../../../services/api/translation.service';
-import {
-  ArabicWord,
-  EgyptianWord,
-  TranslationRes,
-  TranslationResToView,
-} from '../interface';
+import { ArabicWord, TranslationRes, TranslationResToView } from '../interface';
 import { CommonModule } from '@angular/common';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { SuspendComponent } from '../../../../components/suspend/suspend.component';
@@ -28,7 +23,6 @@ import { NotificationService } from '../../../../components/notification/notific
   styleUrl: './translation-box.component.scss',
 })
 export class TranslationBoxComponent implements OnInit {
-  Egyptian = [] as EgyptianWord[];
   Arabic = [] as ArabicWord[];
   words = [] as TranslationResToView[];
   loading = true;
@@ -51,7 +45,6 @@ export class TranslationBoxComponent implements OnInit {
             id: word.id,
             arabic: word.arabic.map((arabic) => arabic.word).join(', '),
             egyptian: word.egyptian[0].word,
-            symbol: this.transService.toSymbol(word.egyptian[0].symbol),
             category: word.category,
           };
         });

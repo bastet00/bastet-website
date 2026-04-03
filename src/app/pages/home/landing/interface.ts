@@ -11,7 +11,6 @@ export type EnglishWord = ArabicWord;
 
 export interface EgyptianWord {
   word: string;
-  symbol: string;
 }
 
 export interface TranslationRes {
@@ -27,8 +26,6 @@ export interface TranslationResToView {
   arabic: string;
   egyptian: string;
   english?: string;
-  symbol: string;
-  hexSym?: string;
   hieroglyphics?: string;
   transliteration?: string;
   resources?: string;

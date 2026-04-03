@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { LoginService } from '../../../services/api/login.service';
 import { Router } from '@angular/router';
 import { UserInputComponent } from '../../home/landing/user-input/user-input.component';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { TranslationResToView } from '../../home/landing/interface';
 import { FormsModule } from '@angular/forms';
 import {
@@ -66,7 +65,6 @@ export class AdminUpdateWordComponent implements OnInit {
   constructor(
     private loginService: LoginService,
     private router: Router,
-    private senitizer: DomSanitizer,
     private wordAdminService: WordAdminService,
     private categoryService: CategoryService,
     private notificationService: NotificationService,
@@ -158,23 +156,10 @@ export class AdminUpdateWordComponent implements OnInit {
     this.onTextInputChange();
   }
 
-  sanitizeSymbol(symbol: string): SafeHtml {
-    return this.senitizer.bypassSecurityTrustHtml(symbol);
-  }
-
   clearDisplayedDocs(id: string) {
     this.results!.itemsForView = this.results!.itemsForView.filter(
       (obj) => obj.id !== id,
     );
-  }
-
-  updateSymbol(event: Event, id: string) {
-    const data = this.results!.itemsForView;
-    const inputElement = event.target as HTMLInputElement;
-    const obj = data.find((obj) => obj.id === id);
-    if (obj) {
-      obj.symbol = inputElement.value;
-    }
   }
 
   async delete(id: string) {

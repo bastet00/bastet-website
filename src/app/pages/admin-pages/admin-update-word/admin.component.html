@@ -101,19 +101,6 @@
           <input [(ngModel)]="obj.egyptian" class="admin-trans-result" />
         </label>
         <label class="text-white text-3xl flex items-center gap-x-4">
-          رمز:
-          <span
-            [innerHTML]="sanitizeSymbol(obj.symbol)"
-            class="text-main"
-          ></span>
-          <input
-            (input)="updateSymbol($event, obj.id)"
-            class="admin-trans-result max-w-40"
-            placeholder="اضف رمز اخر"
-          />
-        </label>
-
-        <label class="text-white text-3xl flex items-center gap-x-4">
           ترجمات:
           <input [(ngModel)]="obj.arabic" class="admin-trans-result" />
         </label>

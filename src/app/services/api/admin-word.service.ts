@@ -2,13 +2,9 @@ import { Injectable } from '@angular/core';
 import { catchError, map, Observable, of, switchMap, throwError } from 'rxjs';
 import { fromFetch } from 'rxjs/fetch';
 import { AUTH_KEY } from './login.service';
-import {
-  TranslationRes,
-  TranslationResToView,
-} from '../../pages/home/landing/interface';
+import { TranslationResToView } from '../../pages/home/landing/interface';
 import { HttpClient } from '@angular/common/http';
 import { Word } from '../../dto/word.dto';
-import { TranslationService } from './translation.service';
 import { environment } from '../../../environments/environment';
 
 export interface AdminWordListApiResponse {
@@ -23,7 +19,6 @@ export interface AddWordFormValues {
   english?: { word: string }[] | undefined;
   resources: string[];
   egyptian: {
-    symbol: string;
     transliteration: string;
     hieroglyphics: string[];
   }[];
@@ -41,10 +36,7 @@ export interface AdminWordViewList extends AdminWordListApiResponse {
 })
 export class WordAdminService {
   private url = `${environment.apiUrl}/admin/word`;
-  constructor(
-    private http: HttpClient,
-    private transService: TranslationService,
-  ) {}
+  constructor(private http: HttpClient) {}
 
   private key = localStorage.getItem(AUTH_KEY) as string;
 
@@ -78,8 +70,6 @@ export class WordAdminService {
                     .map((english) => english.word)
                     .join(' - '),
                 }),
-                symbol: this.transService.toSymbol(word.egyptian[0].symbol),
-                hexSym: word.egyptian[0].symbol,
                 ...(word.category && {
                   category: word.category,
                 }),
@@ -111,15 +101,7 @@ export class WordAdminService {
     );
   }
 
-  hexToSymbol(hex: string) {
-    const codePoint = parseInt(hex, 16);
-    return String.fromCodePoint(codePoint);
-  }
-
-  put(
-    target: TranslationRes,
-    newObj: TranslationResToView,
-  ): Observable<Response> {
+  put(target: Word, newObj: TranslationResToView): Observable<Response> {
     if (!this.key) {
       return throwError(() => new Error('No auth key found'));
     }
@@ -136,15 +118,11 @@ export class WordAdminService {
     }));
     target.egyptian[0].word = newObj.egyptian;
 
-    const htmlEntityLength = 8;
-
-    if (newObj.symbol.length === htmlEntityLength) {
-      if (newObj.hexSym) {
-        target.egyptian[0].symbol = this.hexToSymbol(newObj.hexSym);
-      }
-    } else {
-      target.egyptian[0].symbol = newObj.symbol;
-    }
+    const egyptianForApi = target.egyptian.map((e) => {
+      const { symbol: _omit, ...rest } = e as typeof e & { symbol?: string };
+      return rest;
+    });
+    const payload = { ...target, egyptian: egyptianForApi };
 
     return fromFetch(`${this.url}/${newObj.id}`, {
       method: 'PUT',
@@ -152,7 +130,7 @@ export class WordAdminService {
         Authorization: this.key,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(target),
+      body: JSON.stringify(payload),
     }).pipe(
       switchMap((response) => {
         if (response.ok) {

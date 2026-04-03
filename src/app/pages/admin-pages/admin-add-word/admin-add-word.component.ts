@@ -65,7 +65,6 @@ export class AdminAddWordComponent {
   }
   wordForm = this.fb.group({
     resources: ['', Validators.required],
-    symbol: ['', Validators.required],
     transliteration: ['', Validators.required],
     gardiner: ['', Validators.required],
     arabic: ['', Validators.required],
@@ -94,7 +93,6 @@ export class AdminAddWordComponent {
       resources: [this.wordForm.value.resources] as string[],
       egyptian: [
         {
-          symbol: this.wordForm.value.symbol as string,
           transliteration: this.wordForm.value.transliteration as string,
           hieroglyphics: this.wordForm.value.gardiner
             ?.split(',')
