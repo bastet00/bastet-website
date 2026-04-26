@@ -35,6 +35,7 @@ export class TranslationBoxComponent implements OnInit, OnDestroy {
   searchText = '';
 
   sentenceLine = '';
+  sentenceLineUsingArabicLetters = '';
   sentenceLoading = false;
   private sentenceRequestSeq = 0;
   private sentenceRequestSub: Subscription | null = null;
@@ -70,6 +71,7 @@ export class TranslationBoxComponent implements OnInit, OnDestroy {
   private clearSentenceState(): void {
     this.sentenceRequestSeq += 1;
     this.sentenceLine = '';
+    this.sentenceLineUsingArabicLetters = '';
     this.sentenceLoading = false;
     this.sentenceRequestSub?.unsubscribe();
     this.sentenceRequestSub = null;
@@ -171,6 +173,8 @@ export class TranslationBoxComponent implements OnInit, OnDestroy {
             return;
           }
           this.sentenceLine = res.translation ?? '';
+          this.sentenceLineUsingArabicLetters =
+            res.translationUsingArabicLetters ?? '';
           this.sentenceLoading = false;
         },
         error: () => {
@@ -178,6 +182,7 @@ export class TranslationBoxComponent implements OnInit, OnDestroy {
             return;
           }
           this.sentenceLine = '';
+          this.sentenceLineUsingArabicLetters = '';
           this.sentenceLoading = false;
         },
         complete: () => {
@@ -205,12 +210,12 @@ export class TranslationBoxComponent implements OnInit, OnDestroy {
     );
   }
 
-  copySentenceTranslation(event?: Event) {
+  copySentenceTranslation(text: string, event?: Event) {
     event?.stopPropagation();
-    if (!this.sentenceLine) {
+    if (!text) {
       return;
     }
-    void navigator.clipboard.writeText(this.sentenceLine);
+    void navigator.clipboard.writeText(text);
     this.notificationService.success('تم نسخ الترجمة ✓');
   }
 

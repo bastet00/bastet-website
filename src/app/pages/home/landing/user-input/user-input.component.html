@@ -93,11 +93,8 @@
       >
         <div
           *ngIf="hieroglyphicsText"
-          class="inline-flex max-w-full items-center gap-x-4"
+          class="flex max-w-full items-center gap-x-3"
         >
-          <span class="text-main min-w-0 break-words">{{
-            hieroglyphicsText
-          }}</span>
           <svg
             (click)="copyLiteralHieroglyphics($event)"
             (keydown.enter)="copyLiteralHieroglyphics($event)"
@@ -116,6 +113,16 @@
               fill="#F4931E"
             />
           </svg>
+          <span class="text-main min-w-0 break-all leading-snug">{{
+            hieroglyphicsText
+          }}</span>
+          <span
+            class="shrink-0 text-[10px] uppercase tracking-wide text-white/50"
+            dir="rtl"
+            title="ترجمة حرفية"
+          >
+            ترجمة حرفية
+          </span>
         </div>
         <span
           *ngIf="!hieroglyphicsText && !hieroglyphicsLoading"

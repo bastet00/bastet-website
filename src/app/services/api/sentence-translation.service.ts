@@ -65,6 +65,6 @@ export class SentenceTranslationService {
   }
 
   private emptyRes(): SentenceTranslationResponse {
-    return { translation: '' };
+    return { translation: '', translationUsingArabicLetters: '' };
   }
 }
