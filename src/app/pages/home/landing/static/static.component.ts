@@ -7,4 +7,8 @@ import { Component } from '@angular/core';
   templateUrl: './static.component.html',
   styleUrl: './static.component.scss',
 })
-export class StaticComponent {}
+export class StaticComponent {
+  /** Learn Hieroglyphs (Patreon) */
+  readonly patreonUrl =
+    'https://patreon.com/learnhiero?utm_medium=unknown&utm_source=join_link&utm_campaign=creatorshare_creator&utm_content=copyLink';
+}

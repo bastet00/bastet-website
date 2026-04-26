@@ -8,6 +8,7 @@ import { LiteralTranslationService } from '../../../../services/api/literal-tran
 import { FormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { NotificationService } from '../../../../components/notification/notification.service';
+import { LandingSearchTextService } from '../../../../services/landing-search-text.service';
 
 @Component({
   selector: 'app-user-input',
@@ -17,21 +18,19 @@ import { NotificationService } from '../../../../components/notification/notific
   styleUrl: './user-input.component.scss',
 })
 export class UserInputComponent implements OnInit, OnDestroy {
-  /** Learn Hieroglyphs project — supports Bastet. */
-  readonly patreonUrl =
-    'https://patreon.com/learnhiero?utm_medium=unknown&utm_source=join_link&utm_campaign=creatorshare_creator&utm_content=copyLink';
-
   translationText: string = '';
   /** Literal hieroglyphic string from the dictionary literal-translation API. */
   hieroglyphicsText: string = '';
   hieroglyphicsLoading: boolean = false;
   private literalRequestSeq = 0;
   private literalRequestSub: Subscription | null = null;
+  private wordRequestSub: Subscription | null = null;
   constructor(
     private languageService: LanguageService,
     private translationService: TranslationService,
     private literalTranslationService: LiteralTranslationService,
     private notificationService: NotificationService,
+    private landingSearchText: LandingSearchTextService,
   ) {}
 
   languages: Language[] = [];
@@ -54,11 +53,17 @@ export class UserInputComponent implements OnInit, OnDestroy {
     if (this.handler) {
       clearTimeout(this.handler);
     }
+    this.literalRequestSeq++;
+    this.translationService.cancelInFlightSearch();
+    this.literalTranslationService.cancelInFlight();
+    this.wordRequestSub?.unsubscribe();
     this.literalRequestSub?.unsubscribe();
   }
 
   onChange(event: unknown, options: { delay?: number } = { delay: 300 }): void {
     const { delay } = options;
+
+    this.landingSearchText.setText(this.translationText);
 
     if (this.handler) {
       clearTimeout(this.handler);
@@ -66,7 +71,8 @@ export class UserInputComponent implements OnInit, OnDestroy {
 
     if (this.translationText.trim() !== '') {
       this.handler = setTimeout(() => {
-        this.translationService
+        this.wordRequestSub?.unsubscribe();
+        this.wordRequestSub = this.translationService
           .translation(this.languages[0].query, this.translationText)
           .subscribe();
         this.fetchHieroglyphicsLiteral();
@@ -77,6 +83,8 @@ export class UserInputComponent implements OnInit, OnDestroy {
       this.hieroglyphicsLoading = false;
       this.literalRequestSub?.unsubscribe();
       this.literalRequestSub = null;
+      this.wordRequestSub?.unsubscribe();
+      this.wordRequestSub = null;
       this.translationService.setNull();
     }
   }
@@ -101,6 +109,11 @@ export class UserInputComponent implements OnInit, OnDestroy {
           }
           this.hieroglyphicsText = '';
           this.hieroglyphicsLoading = false;
+        },
+        complete: () => {
+          if (seq === this.literalRequestSeq) {
+            this.hieroglyphicsLoading = false;
+          }
         },
       });
   }

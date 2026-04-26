@@ -1,0 +1,10 @@
+/* `titleColor` at rest, `main` on hover (tailwind.config.js) */
+:host {
+  a.group ::ng-deep lucide-icon.icon-social svg {
+    transition: stroke 0.2s ease;
+  }
+
+  a.group:hover ::ng-deep lucide-icon.icon-social svg {
+    stroke: #f6831c;
+  }
+}

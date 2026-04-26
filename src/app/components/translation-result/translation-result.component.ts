@@ -45,6 +45,12 @@ export class TranslationResultComponent {
     this.notificationService.success('تم نسخ الهيروغليفية ✓');
   }
 
+  handleShare(id: string): void {
+    const url = `${window.location.origin}/word/${id}`;
+    navigator.clipboard.writeText(url);
+    this.notificationService.success('تم نسخ الرابط ✓');
+  }
+
   handleCopy(id: string): void {
     const ele = this.transRefs.find(
       (ref) => ref.nativeElement.getAttribute('data-id') === id,
