@@ -9,6 +9,10 @@ import { FormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { NotificationService } from '../../../../components/notification/notification.service';
 import { LandingSearchTextService } from '../../../../services/landing-search-text.service';
+import {
+  MAX_TRANSLATION_INPUT_LENGTH,
+  TRANSLATION_INPUT_OVER_LIMIT_MESSAGE,
+} from '../../../../constants/translation-input-limits';
 
 @Component({
   selector: 'app-user-input',
@@ -25,6 +29,8 @@ export class UserInputComponent implements OnInit, OnDestroy {
   private literalRequestSeq = 0;
   private literalRequestSub: Subscription | null = null;
   private wordRequestSub: Subscription | null = null;
+  /** Set while input length > max so we only toast once until back within limit. */
+  private isOverInputLimit = false;
   constructor(
     private languageService: LanguageService,
     private translationService: TranslationService,
@@ -71,6 +77,26 @@ export class UserInputComponent implements OnInit, OnDestroy {
 
     if (this.translationText.trim() !== '') {
       this.handler = setTimeout(() => {
+        const text = this.translationText;
+        if (text.length > MAX_TRANSLATION_INPUT_LENGTH) {
+          this.wordRequestSub?.unsubscribe();
+          this.wordRequestSub = null;
+          this.translationService.setNull();
+          this.literalRequestSeq += 1;
+          this.hieroglyphicsText = '';
+          this.hieroglyphicsLoading = false;
+          this.literalRequestSub?.unsubscribe();
+          this.literalRequestSub = null;
+          if (!this.isOverInputLimit) {
+            this.notificationService.error(
+              TRANSLATION_INPUT_OVER_LIMIT_MESSAGE,
+              6000,
+            );
+            this.isOverInputLimit = true;
+          }
+          return;
+        }
+        this.isOverInputLimit = false;
         this.wordRequestSub?.unsubscribe();
         this.wordRequestSub = this.translationService
           .translation(this.languages[0].query, this.translationText)
@@ -78,6 +104,7 @@ export class UserInputComponent implements OnInit, OnDestroy {
         this.fetchHieroglyphicsLiteral();
       }, delay);
     } else {
+      this.isOverInputLimit = false;
       this.literalRequestSeq += 1;
       this.hieroglyphicsText = '';
       this.hieroglyphicsLoading = false;

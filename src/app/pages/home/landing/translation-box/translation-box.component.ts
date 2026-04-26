@@ -12,6 +12,10 @@ import { NotificationComponent } from '../../../../components/notification/notif
 import { RouterModule } from '@angular/router';
 import { TranslationResultComponent } from '../../../../components/translation-result/translation-result.component';
 import { NotificationService } from '../../../../components/notification/notification.service';
+import {
+  isSingleWordText,
+  MAX_TRANSLATION_INPUT_LENGTH,
+} from '../../../../constants/translation-input-limits';
 
 @Component({
   selector: 'app-translation-box',
@@ -55,6 +59,22 @@ export class TranslationBoxComponent implements OnInit, OnDestroy {
   hoverToElement: string | null = null;
   emptyRes = false;
 
+  get isSentenceBlockVisible(): boolean {
+    const raw = this.searchText ?? '';
+    if (!raw.trim() || raw.length > MAX_TRANSLATION_INPUT_LENGTH) {
+      return false;
+    }
+    return !isSingleWordText(raw);
+  }
+
+  private clearSentenceState(): void {
+    this.sentenceRequestSeq += 1;
+    this.sentenceLine = '';
+    this.sentenceLoading = false;
+    this.sentenceRequestSub?.unsubscribe();
+    this.sentenceRequestSub = null;
+  }
+
   ngOnInit(): void {
     this.streamSub.add(
       this.landingText.text$.subscribe((t) => {
@@ -66,11 +86,15 @@ export class TranslationBoxComponent implements OnInit, OnDestroy {
         .pipe(debounceTime(300), distinctUntilChanged())
         .subscribe((text) => {
           if (!text || !text.trim()) {
-            this.sentenceRequestSeq += 1;
-            this.sentenceLine = '';
-            this.sentenceLoading = false;
-            this.sentenceRequestSub?.unsubscribe();
-            this.sentenceRequestSub = null;
+            this.clearSentenceState();
+            return;
+          }
+          if (text.length > MAX_TRANSLATION_INPUT_LENGTH) {
+            this.clearSentenceState();
+            return;
+          }
+          if (isSingleWordText(text)) {
+            this.clearSentenceState();
             return;
           }
           this.fetchSentenceTranslation(text);
@@ -79,9 +103,15 @@ export class TranslationBoxComponent implements OnInit, OnDestroy {
     this.streamSub.add(
       this.languageService.languages$.subscribe(() => {
         const t = this.searchText;
-        if (t?.trim()) {
-          this.fetchSentenceTranslation(t);
+        if (!t?.trim() || t.length > MAX_TRANSLATION_INPUT_LENGTH) {
+          this.clearSentenceState();
+          return;
         }
+        if (isSingleWordText(t)) {
+          this.clearSentenceState();
+          return;
+        }
+        this.fetchSentenceTranslation(t);
       }),
     );
     this.streamSub.add(
@@ -119,6 +149,13 @@ export class TranslationBoxComponent implements OnInit, OnDestroy {
   }
 
   private fetchSentenceTranslation(text: string): void {
+    if (
+      !text?.trim() ||
+      text.length > MAX_TRANSLATION_INPUT_LENGTH ||
+      isSingleWordText(text)
+    ) {
+      return;
+    }
     const q = this.languageService.getLanguages()[0]?.query;
     if (!q) {
       return;
