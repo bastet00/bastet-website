@@ -86,7 +86,7 @@ input.invalid {
   }
 
   .translation-area-wrapper {
-    @apply w-3/4 relative;
+    @apply relative w-full min-w-0 sm:w-3/4;
   }
 
   .translation-area {

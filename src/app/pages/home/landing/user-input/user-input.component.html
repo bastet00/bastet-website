@@ -141,6 +141,26 @@
       <button (click)="addText('جميل')" class="options-btn">جميل</button>
     </div>
   </div>
+  <div
+    *ngIf="translationText.trim()"
+    class="translation-area-wrapper mx-auto mt-2 max-w-full text-right md:mt-10"
+  >
+    <div class="translation-result-area w-full min-w-0 max-w-full">
+      <p
+        class="m-0 w-full min-w-0 max-w-full break-words text-right text-sm leading-relaxed text-white/90"
+      >
+        مشروع باستت قايم علي مجهودات فرديه. دعمك على باتريون يساعد تطويره،
+        وعضويته تشمل ترجمة أدق ودورات للغة وإجابة على الاستفسارات.
+        <a
+          [href]="patreonUrl"
+          class="text-main hover:underline"
+          target="_blank"
+          rel="noopener noreferrer"
+          >اضغط هنا</a
+        >.
+      </p>
+    </div>
+  </div>
   <!-- end user input -->
 </div>
 <br />

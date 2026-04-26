@@ -17,6 +17,10 @@ import { NotificationService } from '../../../../components/notification/notific
   styleUrl: './user-input.component.scss',
 })
 export class UserInputComponent implements OnInit, OnDestroy {
+  /** Learn Hieroglyphs project — supports Bastet. */
+  readonly patreonUrl =
+    'https://patreon.com/learnhiero?utm_medium=unknown&utm_source=join_link&utm_campaign=creatorshare_creator&utm_content=copyLink';
+
   translationText: string = '';
   /** Literal hieroglyphic string from the dictionary literal-translation API. */
   hieroglyphicsText: string = '';
