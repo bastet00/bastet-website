@@ -3,6 +3,8 @@ import {
   BehaviorSubject,
   catchError,
   firstValueFrom,
+  from,
+  map,
   Observable,
   of,
   switchMap,
@@ -13,6 +15,8 @@ import { fromFetch } from 'rxjs/fetch';
 import { TranslationRes } from '../../pages/home/landing/interface';
 import { Word } from '../../dto/word.dto';
 import { environment } from '../../../environments/environment';
+import { NotificationService } from '../../components/notification/notification.service';
+import { TRANSLATOR_RATE_LIMIT_MESSAGE } from '../../constants/translator-rate-limit.message';
 
 @Injectable({
   providedIn: 'root',
@@ -26,49 +30,68 @@ export class TranslationService {
   loading$ = this.loadingSubject.asObservable();
   emptyRes$ = this.emptyResSubject.asObservable();
 
-  constructor() {}
+  constructor(private notificationService: NotificationService) {}
 
-  translation(from: string, word: string): Observable<TranslationRes[]> {
+  translation(fromLang: string, word: string): Observable<TranslationRes[]> {
     const controller = new AbortController();
     const signal = controller.signal;
     this.loadingSubject.next(true);
-    return fromFetch(`${this.url}/search?lang=${from}&word=${word}`, {
+    return fromFetch(`${this.url}/search?lang=${fromLang}&word=${word}`, {
       signal,
       headers: {
         'Content-Type': 'application/json',
       },
     }).pipe(
-      switchMap((response): Promise<TranslationRes[]> => {
+      switchMap((response) => {
         this.loadingSubject.next(true);
 
         if (response.ok) {
           this.loadingSubject.next(false);
-          return response.json();
-        } else {
-          this.loadingSubject.next(false);
-          throw new Error('Failed to fetch translation');
+          return from(response.json() as Promise<TranslationRes[]>).pipe(
+            map(
+              (data: TranslationRes[]) =>
+                ({ kind: 'ok' as const, data }) as const,
+            ),
+          );
         }
+
+        this.loadingSubject.next(false);
+        if (response.status === 429) {
+          this.notificationService.error(TRANSLATOR_RATE_LIMIT_MESSAGE, 6000);
+          return of({
+            kind: 'rateLimited' as const,
+            data: [] as TranslationRes[],
+          });
+        }
+
+        return throwError(() => new Error('Failed to fetch translation'));
       }),
 
-      tap((translation: TranslationRes[]) => {
-        if (translation.length === 0) {
+      tap((payload) => {
+        this.dataSubject.next(payload.data);
+        if (payload.kind === 'rateLimited') {
+          this.emptyResSubject.next(false);
+        } else if (payload.data.length === 0) {
           this.emptyResSubject.next(true);
         } else {
           this.emptyResSubject.next(false);
         }
-
-        this.dataSubject.next(translation);
       }),
+
+      map((payload) => payload.data),
 
       catchError((err) => {
         console.error('Error during translation:', err);
-        return of([]);
+        this.dataSubject.next([]);
+        this.emptyResSubject.next(false);
+        return of([] as TranslationRes[]);
       }),
     );
   }
 
   setNull() {
     this.dataSubject.next([]);
+    this.emptyResSubject.next(false);
   }
 
   async getOne(id: string): Promise<Word> {
