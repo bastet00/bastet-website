@@ -23,6 +23,7 @@ import { CommonModule } from '@angular/common';
 import { CategoryService } from '../../../services/api/category.service';
 import { NotificationService } from '../../../components/notification/notification.service';
 import { NotificationComponent } from '../../../components/notification/notification.component';
+import { TranslocoModule, TranslocoService } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-admin',
@@ -37,6 +38,7 @@ import { NotificationComponent } from '../../../components/notification/notifica
     LucideAngularModule,
     CommonModule,
     NotificationComponent,
+    TranslocoModule,
   ],
   templateUrl: './admin.component.html',
   providers: [{ provide: MatPaginatorIntl, useClass: MyCustomPaginatorIntl }],
@@ -68,6 +70,7 @@ export class AdminUpdateWordComponent implements OnInit {
     private wordAdminService: WordAdminService,
     private categoryService: CategoryService,
     private notificationService: NotificationService,
+    private transloco: TranslocoService,
   ) {}
 
   ngOnInit(): void {
@@ -166,9 +169,13 @@ export class AdminUpdateWordComponent implements OnInit {
     const res = await lastValueFrom(this.wordAdminService.delete(id));
     if (res.ok) {
       this.clearDisplayedDocs(id);
-      this.notificationService.success('تم الحذف بنجاح');
+      this.notificationService.success(
+        this.transloco.translate('toasts.deleteOk'),
+      );
     } else {
-      this.notificationService.error('حدث خطأ ما');
+      this.notificationService.error(
+        this.transloco.translate('toasts.genericError'),
+      );
     }
   }
 
@@ -191,12 +198,16 @@ export class AdminUpdateWordComponent implements OnInit {
         this.wordAdminService.put(target, newObj),
       );
       if (putRes.ok) {
-        this.notificationService.success('تم التحديث بنجاح');
+        this.notificationService.success(
+          this.transloco.translate('toasts.updateOk'),
+        );
         this.categoryStash[target.id] = target.category;
         this.updateCategoryView(target.id);
         this.dropDownState = {};
       } else {
-        this.notificationService.error('حدث خطأ ما');
+        this.notificationService.error(
+          this.transloco.translate('toasts.genericError'),
+        );
       }
     }
   }

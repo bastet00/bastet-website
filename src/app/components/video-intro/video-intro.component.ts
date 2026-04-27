@@ -5,6 +5,7 @@ import {
   LucideAngularModule,
   Youtube,
 } from 'lucide-angular';
+import { TranslocoModule } from '@ngneat/transloco';
 
 /** Matches `titleColor` in tailwind.config.js for lucide [color] binding */
 const ICON_ACCENT = '#f4931e';
@@ -12,7 +13,7 @@ const ICON_ACCENT = '#f4931e';
 @Component({
   selector: 'app-video-intro',
   standalone: true,
-  imports: [LucideAngularModule],
+  imports: [LucideAngularModule, TranslocoModule],
   templateUrl: './video-intro.component.html',
   styleUrl: './video-intro.component.scss',
 })

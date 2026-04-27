@@ -9,19 +9,19 @@
       class="grid grid-cols-[6rem_1fr] items-start gap-x-4 w-full"
     >
       <div class="flex flex-col gap-y-1">
-        <span>التصنيفات</span>
+        <span>{{ 'categories.label' | transloco }}</span>
       </div>
       <!-- <div id="category" class="bg-inputBackground p-4 relative rounded-md w-full select-none">
                 </div> -->
       <mat-form-field>
-        <mat-label>اختر التصنيف</mat-label>
+        <mat-label>{{ 'categories.select' | transloco }}</mat-label>
         <mat-select
           [(value)]="selectedCategory"
           (selectionChange)="onCategoryChange()"
         >
           @for (category of categories; track category) {
             <mat-option [value]="category.value">{{
-              category.viewValue
+              'categories.' + category.value | transloco
             }}</mat-option>
           }
         </mat-select>
@@ -36,7 +36,12 @@
       </div>
 
       <div *ngIf="!loading" class="space-y-4">
-        <h1 class="text-2xl font-bold mb-4">كلمات في تصنيف:</h1>
+        <h1 class="text-2xl font-bold mb-4">
+          {{ 'categories.wordsInCategory' | transloco }}
+          <span *ngIf="selectedCategory" class="text-main text-xl">{{
+            'categories.' + selectedCategory | transloco
+          }}</span>
+        </h1>
 
         <div class="grid gap-4">
           <app-translation-result *ngFor="let word of words" [word]="word">
@@ -44,7 +49,7 @@
         </div>
 
         <div *ngIf="words.length === 0" class="text-center text-gray-500">
-          لا توجد كلمات في هذا التصنيف
+          {{ 'categories.noWords' | transloco }}
         </div>
       </div>
     </div>

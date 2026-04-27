@@ -8,8 +8,8 @@ import {
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { CATEGORIES } from '../../pages/categories/categories';
 import { NotificationService } from '../notification/notification.service';
+import { TranslocoModule, TranslocoService } from '@ngneat/transloco';
 
 interface Word {
   id: string;
@@ -24,7 +24,7 @@ interface Word {
   templateUrl: './translation-result.component.html',
   styleUrls: ['./translation-result.component.scss'],
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, TranslocoModule],
 })
 export class TranslationResultComponent {
   @Input() word!: Word;
@@ -34,6 +34,7 @@ export class TranslationResultComponent {
   constructor(
     private sanitizer: DomSanitizer,
     private notificationService: NotificationService,
+    private transloco: TranslocoService,
   ) {}
 
   sanitizeSymbol(text: string): SafeHtml {
@@ -42,13 +43,17 @@ export class TranslationResultComponent {
 
   handleCopyHiero(): void {
     navigator.clipboard.writeText(this.word.hieroglyphicSigns ?? '');
-    this.notificationService.success('تم نسخ الهيروغليفية ✓');
+    this.notificationService.success(
+      this.transloco.translate('toasts.hieroCopied'),
+    );
   }
 
   handleShare(id: string): void {
     const url = `${window.location.origin}/word/${id}`;
     navigator.clipboard.writeText(url);
-    this.notificationService.success('تم نسخ الرابط ✓');
+    this.notificationService.success(
+      this.transloco.translate('toasts.linkCopied'),
+    );
   }
 
   handleCopy(id: string): void {
@@ -59,11 +64,8 @@ export class TranslationResultComponent {
     let toCopy = '';
     ele.childNodes.forEach((node) => (toCopy += node.textContent));
     navigator.clipboard.writeText(toCopy);
-    this.notificationService.success('تم النسخ ✓');
-  }
-
-  getCategoryViewValue(categoryValue: string): string {
-    const category = CATEGORIES.find((cat) => cat.value === categoryValue);
-    return category ? category.viewValue : categoryValue;
+    this.notificationService.success(
+      this.transloco.translate('toasts.translationWordCopied'),
+    );
   }
 }

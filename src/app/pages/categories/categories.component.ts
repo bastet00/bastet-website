@@ -10,6 +10,7 @@ import { TranslationResultComponent } from '../../components/translation-result/
 import { CategoryService } from '../../services/category.service';
 import { toWordCardDto, WordCardDto } from '../../dto/word.dto';
 import { CommonModule } from '@angular/common';
+import { TranslocoModule } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-categories',
@@ -23,6 +24,7 @@ import { CommonModule } from '@angular/common';
     FormsModule,
     TranslationResultComponent,
     CommonModule,
+    TranslocoModule,
   ],
   templateUrl: './categories.component.html',
   styleUrl: './categories.component.scss',

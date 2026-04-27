@@ -1,0 +1,164 @@
+{
+  "langName": {
+    "arabic": "Arabic",
+    "egyptian": "Egyptian",
+    "english": "English"
+  },
+  "app": {
+    "htmlTitle": "Bastet",
+    "pageTitle": "Bastet — ancient Egyptian language translator"
+  },
+  "nav": {
+    "translation": "Translation",
+    "dictionary": "Dictionary",
+    "blog": "Blog",
+    "aboutTeam": "About the team",
+    "follow": "Follow us",
+    "langAr": "عربي",
+    "langEn": "en"
+  },
+  "static": {
+    "welcome": "Welcome to",
+    "patreonLine1": "Bastet is built on individual effort. Your support on Patreon helps it grow, and members get",
+    "patreonLine2": "more accurate translation, language courses, and answers to your questions.",
+    "patreonCta": "Click here",
+    "translateNow": "Translate any word you want, now"
+  },
+  "input": {
+    "placeholder": "Type here…",
+    "forQueryArabic": "Hieroglyphic",
+    "forQueryEgyptian": "English",
+    "literalBadge": "Word-for-word",
+    "suggestionSun": "Sun",
+    "suggestionGreeting": "Good morning",
+    "suggestionJustice": "Justice",
+    "suggestionHeart": "Heart",
+    "suggestionBeautiful": "Beautiful"
+  },
+  "translationBox": {
+    "resultHeading": "Translation:",
+    "copyHint": "Copy",
+    "latinScriptLabel": "Latin script",
+    "emptyDictionary": "Unfortunately our dictionary does not have this word. Check your spelling.",
+    "addWordPrompt": "If everything looks correct and you would like us to add this word,",
+    "addWordCta": "click here.",
+    "similarWords": "Related words:"
+  },
+  "translationResult": {
+    "category": "Category:"
+  },
+  "videoIntro": {
+    "watchIntro": "Watch the intro video now!",
+    "theTeam": "The team",
+    "teamP1a": "The ",
+    "brand": "Bastet",
+    "teamP1b": " team has built a new app and a new way to write ancient Egyptian by combining the Arabic alphabet with the hieroglyphic script",
+    "teamP2a": "The ",
+    "teamP2b": " team built this project as volunteers. You can reach the team from each member’s photo. Heartfelt thanks ",
+    "teamP2c": " to everyone who contributed to the project",
+    "followUs": "Follow us",
+    "connectPrefix": "Get in touch with us through",
+    "connectSuffix": "on social media",
+    "ariaInstagram": "Bastet on Instagram",
+    "ariaTiktok": "Bastet on TikTok",
+    "ariaFacebook": "Bastet on Facebook",
+    "ariaYoutube": "Bastet on YouTube"
+  },
+  "singleWord": {
+    "arabic": "Arabic:",
+    "english": "English:",
+    "phoneticEn": "Phonetic (English):",
+    "hieroglyphic": "Hieroglyphic:",
+    "gardiner": "Gardiner signs:",
+    "resources": "Resources:"
+  },
+  "categories": {
+    "gods": "Gods",
+    "numbers": "Numbers",
+    "family": "Family",
+    "animals": "Animals",
+    "colors": "Colors",
+    "food": "Food",
+    "body": "Body",
+    "symbols": "Symbols",
+    "greetings": "Greetings",
+    "time": "Time",
+    "nature": "Nature",
+    "emotions": "Emotions",
+    "clothes": "Clothes",
+    "music": "Music",
+    "home": "Home",
+    "stones": "Stones",
+    "temples": "Temples",
+    "jobs": "Jobs",
+    "adjective": "Adjectives",
+    "verb": "Verbs",
+    "words_in_egyptian_dialect": "Colloquial words",
+    "prepositions": "Prepositions",
+    "insects": "Insects",
+    "measurements": "Measurements",
+    "countries": "Countries",
+    "egyptian_cities_provinces": "Cities and governorates",
+    "fruits_vegetables": "Fruits and vegetables",
+    "plants": "Plants",
+    "cosmos": "Cosmos",
+    "female_names": "Women's names",
+    "male_names": "Men's names",
+    "kings_queens": "Kings and queens",
+    "pageTitle": "Categories",
+    "label": "Categories",
+    "select": "Choose a category",
+    "wordsInCategory": "Words in category:",
+    "noWords": "No words in this category"
+  },
+  "dashboard": {
+    "addWord": "Add a word",
+    "updateWord": "Edit a word"
+  },
+  "adminAdd": {
+    "title": "Add a word",
+    "transliteration": "Transcription",
+    "gardiner": "Gardiner",
+    "categories": "Categories",
+    "arabic": "Arabic",
+    "separateComma": "Separate with commas ( , )",
+    "english": "English",
+    "optionalPlaceholder": "optional",
+    "resources": "Source",
+    "btnDefault": "Add",
+    "btnSuccess": "Added successfully",
+    "btnError": "An error occurred while adding"
+  },
+  "adminUpdate": {
+    "placeholder": "Type here…",
+    "egyptian": "Egyptian:",
+    "translations": "Translations:",
+    "english": "English:",
+    "categories": "Categories:",
+    "delete": "Delete",
+    "confirm": "Save changes"
+  },
+  "notification": {
+    "suggestionThanks": "This word has been submitted for review. Thank you."
+  },
+  "toasts": {
+    "translationCopied": "Translation copied ✓",
+    "translationArLettersCopied": "Arabic-letter form copied",
+    "translationLatCopied": "Latin transliteration copied",
+    "hieroCopied": "Hieroglyphs copied ✓",
+    "hieroLiteralCopied": "Literal hieroglyphs copied ✓",
+    "translationWordCopied": "Copied ✓",
+    "linkCopied": "Link copied ✓",
+    "suggestionThanks": "This word has been submitted for review. Thank you.",
+    "translationLimit": "Translation is limited to 200 characters.",
+    "rateLimit": "You have exceeded the translator usage limit. Please wait and try again later.",
+    "deleteOk": "Deleted successfully",
+    "genericError": "Something went wrong",
+    "updateOk": "Updated successfully"
+  },
+  "aria": {
+    "copySentenceAr": "Copy Arabic-letter translation",
+    "copySentenceLat": "Copy Latin transliteration",
+    "copyLiteralHiero": "Copy literal hieroglyphs"
+  }
+}

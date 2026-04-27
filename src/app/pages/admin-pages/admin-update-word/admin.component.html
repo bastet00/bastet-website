@@ -5,7 +5,10 @@
       class="text-white flex items-center justify-center gap-x-10 mt-10 ml-5"
     >
       <p class="text-right w-12">
-        {{ adminTranslationLanguages.translateFrom.name }}
+        {{
+          'langName.' + adminTranslationLanguages.translateFrom.query
+            | transloco
+        }}
       </p>
       <svg
         (click)="onLanguageSwitch()"
@@ -42,7 +45,9 @@
         />
       </svg>
       <p class="text-left w-12">
-        {{ adminTranslationLanguages.translateTo.name }}
+        {{
+          'langName.' + adminTranslationLanguages.translateTo.query | transloco
+        }}
       </p>
     </div>
 
@@ -53,7 +58,7 @@
           [(ngModel)]="translationText"
           (ngModelChange)="onTextInputChange()"
           class="translation-area placeholder:text-right h-[150px]"
-          placeholder="اكتب هنا ..."
+          [attr.placeholder]="'adminUpdate.placeholder' | transloco"
         ></textarea>
         <div class="options-wrapper">
           <button (click)="addText('ا')" class="options-btn">ا</button>
@@ -97,22 +102,25 @@
           for="Egyptian"
           class="relative flex items-center text-3xl text-white"
         >
-          <span class="block">مصري:</span>
+          <span class="block">{{ 'adminUpdate.egyptian' | transloco }}</span>
           <input [(ngModel)]="obj.egyptian" class="admin-trans-result" />
         </label>
         <label class="text-white text-3xl flex items-center gap-x-4">
-          ترجمات:
+          {{ 'adminUpdate.translations' | transloco }}
           <input [(ngModel)]="obj.arabic" class="admin-trans-result" />
         </label>
 
         <label class="text-white text-3xl flex items-center gap-x-4">
-          انجليزي:
+          {{ 'adminUpdate.english' | transloco }}
           <input [(ngModel)]="obj.english" class="admin-trans-result" />
         </label>
 
         <div class="text-white text-3xl flex flex-col gap-x-4">
           <div class="flex flex-col gap-y-1">
-            <span>التصنيفات: {{ categoryStash[obj.id].join(' - ') }}</span>
+            <span
+              >{{ 'adminUpdate.categories' | transloco }}
+              {{ categoryStash[obj.id].join(' - ') }}</span
+            >
           </div>
           <div
             id="category"
@@ -145,16 +153,18 @@
                   'text-white': !categoryStash[obj.id].includes(categ),
                 }"
               >
-                {{ categ }}
+                {{ 'categories.' + categ | transloco }}
               </div>
             </div>
           </div>
         </div>
 
         <div class="mx-auto w-fit flex items-center gap-x-4">
-          <button class="admin-trans-btn" (click)="delete(obj.id)">حذف</button>
+          <button class="admin-trans-btn" (click)="delete(obj.id)">
+            {{ 'adminUpdate.delete' | transloco }}
+          </button>
           <button class="admin-trans-btn" (click)="put(obj)">
-            تأكيد التعديل
+            {{ 'adminUpdate.confirm' | transloco }}
           </button>
         </div>
       </div>

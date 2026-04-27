@@ -9,15 +9,13 @@ import { FormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { NotificationService } from '../../../../components/notification/notification.service';
 import { LandingSearchTextService } from '../../../../services/landing-search-text.service';
-import {
-  MAX_TRANSLATION_INPUT_LENGTH,
-  TRANSLATION_INPUT_OVER_LIMIT_MESSAGE,
-} from '../../../../constants/translation-input-limits';
+import { MAX_TRANSLATION_INPUT_LENGTH } from '../../../../constants/translation-input-limits';
+import { TranslocoModule, TranslocoService } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-user-input',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, TranslocoModule],
   templateUrl: './user-input.component.html',
   styleUrl: './user-input.component.scss',
 })
@@ -37,9 +35,19 @@ export class UserInputComponent implements OnInit, OnDestroy {
     private literalTranslationService: LiteralTranslationService,
     private notificationService: NotificationService,
     private landingSearchText: LandingSearchTextService,
+    private transloco: TranslocoService,
   ) {}
 
   languages: Language[] = [];
+
+  inputLangKey(l: Language | undefined): string {
+    if (!l) {
+      return 'input.forQueryArabic';
+    }
+    return l.query === 'egyptian'
+      ? 'input.forQueryEgyptian'
+      : 'input.forQueryArabic';
+  }
 
   ngOnInit(): void {
     this.languageService.languages$.subscribe((lang) => {
@@ -89,7 +97,7 @@ export class UserInputComponent implements OnInit, OnDestroy {
           this.literalRequestSub = null;
           if (!this.isOverInputLimit) {
             this.notificationService.error(
-              TRANSLATION_INPUT_OVER_LIMIT_MESSAGE,
+              this.transloco.translate('toasts.translationLimit'),
               6000,
             );
             this.isOverInputLimit = true;
@@ -156,6 +164,8 @@ export class UserInputComponent implements OnInit, OnDestroy {
       return;
     }
     void navigator.clipboard.writeText(this.hieroglyphicsText);
-    this.notificationService.success('تم نسخ الهيروغليفية ✓');
+    this.notificationService.success(
+      this.transloco.translate('toasts.hieroLiteralCopied'),
+    );
   }
 }

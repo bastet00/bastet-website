@@ -1,0 +1,164 @@
+{
+  "langName": {
+    "arabic": "العربية",
+    "egyptian": "الهيروغليفية",
+    "english": "الإنجليزية"
+  },
+  "app": {
+    "htmlTitle": "Bastet",
+    "pageTitle": "مترجم اللغة المصرية القديمة باستت"
+  },
+  "nav": {
+    "translation": "الترجمة",
+    "dictionary": "القاموس",
+    "blog": "المدونة",
+    "aboutTeam": "عن الفريق",
+    "follow": "تابعنا",
+    "langAr": "عربي",
+    "langEn": "en"
+  },
+  "static": {
+    "welcome": "مرحبا بك في",
+    "patreonLine1": "مشروع باستت قايم علي مجهودات فرديه. دعمك على باتريون يساعد تطويره، وعضويته",
+    "patreonLine2": "تشمل ترجمة أدق ودورات للغة وإجابة على الاستفسارات.",
+    "patreonCta": "اضغط هنا",
+    "translateNow": "ترجم اي كلمة تريدها الآن"
+  },
+  "input": {
+    "placeholder": "اكتب هنا ...",
+    "forQueryArabic": "هيروغليفي",
+    "forQueryEgyptian": "عربي او انجليزي",
+    "literalBadge": "ترجمة حرفية",
+    "suggestionSun": "شمس",
+    "suggestionGreeting": "صباح الخير",
+    "suggestionJustice": "عدالة",
+    "suggestionHeart": "قلب",
+    "suggestionBeautiful": "جميل"
+  },
+  "translationBox": {
+    "resultHeading": "الترجمة:",
+    "copyHint": "انسخ",
+    "latinScriptLabel": "بالحروف اللاتينية",
+    "emptyDictionary": "لسوء الحظ، قاموسنا لا يحتوي على هذه الكلمة. التحقق من الإملاء الخاص بك.",
+    "addWordPrompt": "إذا كان كل شيء صحيحًا وتريد منا أن نضيف هذه الكلمة،",
+    "addWordCta": "انقر هنا.",
+    "similarWords": "كلمات مشابهه:"
+  },
+  "translationResult": {
+    "category": "التصنيف:"
+  },
+  "videoIntro": {
+    "watchIntro": "شاهد الفيديو التعريفي الان !",
+    "theTeam": "الفريق",
+    "teamP1a": "فريق ",
+    "brand": "باستيت",
+    "teamP1b": " قام بتطوير تطبيق و طريقة جديدة لكتابة اللغة المصرية القديمة عن طريق دمج الابجدية العربية مع الخط الهيروغليفي",
+    "teamP2a": "فريق ",
+    "teamP2b": " قام بعمل المشروع بشكل تطوعي, يمكنكم الوصول لحسابتهم عن طريق الضغط علي صورة كل من اعضاء الفريق شكر من القلب",
+    "teamP2c": " لكل من ساهم في بناء المشروع",
+    "followUs": "تابعنا",
+    "connectPrefix": "تواصل معنا عبر",
+    "connectSuffix": "على منصات التواصل",
+    "ariaInstagram": "باستيت على إنستغرام",
+    "ariaTiktok": "باستيت على تيك توك",
+    "ariaFacebook": "باستيت على فيسبوك",
+    "ariaYoutube": "باستيت على يوتيوب"
+  },
+  "singleWord": {
+    "arabic": "عربي:",
+    "english": "الانجليزيه:",
+    "phoneticEn": "القيمه الصوتيه الانجليزيه:",
+    "hieroglyphic": "الهيروغليفيه:",
+    "gardiner": "علامات جاردنر:",
+    "resources": "المصادر:"
+  },
+  "categories": {
+    "gods": "آلهة",
+    "numbers": "أرقام",
+    "family": "عائلة",
+    "animals": "حيوانات",
+    "colors": "ألوان",
+    "food": "طعام",
+    "body": "جسم",
+    "symbols": "رموز",
+    "greetings": "تحيات",
+    "time": "وقت",
+    "nature": "طبيعة",
+    "emotions": "مشاعر",
+    "clothes": "ملابس",
+    "music": "موسيقى",
+    "home": "منزل",
+    "stones": "أحجار",
+    "temples": "معابد",
+    "jobs": "وظائف",
+    "adjective": "صفات",
+    "verb": "افعال",
+    "words_in_egyptian_dialect": "كلمات في العامية",
+    "prepositions": "حروف الجر",
+    "insects": "حشرات",
+    "measurements": "قياسات",
+    "countries": "دول",
+    "egyptian_cities_provinces": "مدن و محافظات",
+    "fruits_vegetables": "فواكه و خضراوات",
+    "plants": "نباتات",
+    "cosmos": "الكون",
+    "female_names": "أسماء أناث",
+    "male_names": "أسماء ذكور",
+    "kings_queens": "ملوك وملكات",
+    "pageTitle": "الفئات",
+    "label": "التصنيفات",
+    "select": "اختر التصنيف",
+    "wordsInCategory": "كلمات في تصنيف:",
+    "noWords": "لا توجد كلمات في هذا التصنيف"
+  },
+  "dashboard": {
+    "addWord": "اضافه كلمه",
+    "updateWord": "تعديل كلمه"
+  },
+  "adminAdd": {
+    "title": "اضف كلمه",
+    "transliteration": "القيمه الصوتيه",
+    "gardiner": "جاردنر",
+    "categories": "التصنيفات",
+    "arabic": "عربي",
+    "separateComma": "منفصله باستخدام ,",
+    "english": "انجليزي",
+    "optionalPlaceholder": "اختياري",
+    "resources": "المصدر",
+    "btnDefault": "اضافه",
+    "btnSuccess": "تمت الاضافه بنجاح",
+    "btnError": "حدث خطأ اثناء الاضافه"
+  },
+  "adminUpdate": {
+    "placeholder": "اكتب هنا ...",
+    "egyptian": "مصري:",
+    "translations": "ترجمات:",
+    "english": "انجليزي:",
+    "categories": "التصنيفات:",
+    "delete": "حذف",
+    "confirm": "تأكيد التعديل"
+  },
+  "notification": {
+    "suggestionThanks": "لقد تم تقديم هذه الكلمة للمراجعة، شكرا لك"
+  },
+  "toasts": {
+    "translationCopied": "تم نسخ الترجمة ✓",
+    "translationArLettersCopied": "تم نسخ الترجمة بالحروف العربية",
+    "translationLatCopied": "تم نسخ الترجمة بالحروف اللاتينية",
+    "hieroCopied": "تم نسخ الهيروغليفية ✓",
+    "hieroLiteralCopied": "تم نسخ الهيروغليفية الحرفية ✓",
+    "translationWordCopied": "تم النسخ ✓",
+    "linkCopied": "تم نسخ الرابط ✓",
+    "suggestionThanks": "لقد تم تقديم هذه الكلمة للمراجعة، شكرا لك",
+    "translationLimit": "الترجمة محدودة بـ ٢٠٠ حرف.",
+    "rateLimit": "تعديت الحد المسموح بيه لاستخدام المترجم, يرجي الانتظار واعادة المحاولة بعدين",
+    "deleteOk": "تم الحذف بنجاح",
+    "genericError": "حدث خطأ ما",
+    "updateOk": "تم التحديث بنجاح"
+  },
+  "aria": {
+    "copySentenceAr": "نسخ الترجمة بالحروف العربية",
+    "copySentenceLat": "نسخ الترجمة بالحروف اللاتينية",
+    "copyLiteralHiero": "نسخ الهيروغليفية الحرفية"
+  }
+}

@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { LoginService } from '../../services/api/login.service';
 import { Router, RouterModule } from '@angular/router';
 import { LandingBackgroundComponent } from '../../components/landing-background/landing-background.component';
+import { TranslocoModule } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [LandingBackgroundComponent, RouterModule],
+  imports: [LandingBackgroundComponent, RouterModule, TranslocoModule],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
 })

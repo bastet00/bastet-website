@@ -16,12 +16,14 @@ import {
   isSingleWordText,
   MAX_TRANSLATION_INPUT_LENGTH,
 } from '../../../../constants/translation-input-limits';
+import { TranslocoModule, TranslocoService } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-translation-box',
   standalone: true,
   imports: [
     CommonModule,
+    TranslocoModule,
     SuspendComponent,
     NotificationComponent,
     RouterModule,
@@ -54,6 +56,7 @@ export class TranslationBoxComponent implements OnInit, OnDestroy {
     private sentenceTranslationService: SentenceTranslationService,
     private landingText: LandingSearchTextService,
     private languageService: LanguageService,
+    private transloco: TranslocoService,
   ) {}
 
   helperText: string = '';
@@ -195,7 +198,7 @@ export class TranslationBoxComponent implements OnInit, OnDestroy {
 
   onMouseHover(id: string, event: MouseEvent) {
     this.hoverToElement = id;
-    this.helperText = 'انسخ';
+    this.helperText = this.transloco.translate('translationBox.copyHint');
     (event.currentTarget as SVGElement).classList.add('scale-125');
   }
 
@@ -206,17 +209,25 @@ export class TranslationBoxComponent implements OnInit, OnDestroy {
 
   addWordSuggestion() {
     this.notificationService.success(
-      'لقد تم تقديم هذه الكلمة للمراجعة، شكرا لك',
+      this.transloco.translate('notification.suggestionThanks'),
     );
   }
 
-  copySentenceTranslation(text: string, event?: Event) {
+  copySentenceTranslation(
+    text: string,
+    event: Event | undefined,
+    copyKind: 'ar' | 'lat' = 'lat',
+  ) {
     event?.stopPropagation();
     if (!text) {
       return;
     }
     void navigator.clipboard.writeText(text);
-    this.notificationService.success('تم نسخ الترجمة ✓');
+    const key =
+      copyKind === 'ar'
+        ? 'toasts.translationArLettersCopied'
+        : 'toasts.translationLatCopied';
+    this.notificationService.success(this.transloco.translate(key));
   }
 
   sanitizeSymbol(symbol: string): SafeHtml {

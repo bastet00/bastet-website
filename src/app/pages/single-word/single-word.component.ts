@@ -8,6 +8,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { CommonModule, Location } from '@angular/common';
 import { SuspendComponent } from '../../components/suspend/suspend.component';
 import { LucideAngularModule, ArrowRight, CheckIcon } from 'lucide-angular';
+import { TranslocoModule } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-single-word',
@@ -18,6 +19,7 @@ import { LucideAngularModule, ArrowRight, CheckIcon } from 'lucide-angular';
     SuspendComponent,
     LucideAngularModule,
     RouterModule,
+    TranslocoModule,
   ],
   templateUrl: './single-word.component.html',
   styleUrl: './single-word.component.scss',

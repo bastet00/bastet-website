@@ -1,5 +1,7 @@
 <div class="text-white flex items-center justify-center gap-x-10 mt-10 ml-5">
-  <p class="text-right w-12">{{ languages[1].text }}</p>
+  <p class="text-right whitespace-nowrap text-sm">
+    {{ inputLangKey(languages[1]) | transloco }}
+  </p>
   <svg
     (click)="onLanguageSwitch()"
     class="cursor-pointer text-center flex items-center"
@@ -34,7 +36,9 @@
       stroke-linejoin="round"
     />
   </svg>
-  <p class="text-left w-12">{{ languages[0].text }}</p>
+  <p class="text-left whitespace-nowrap text-sm">
+    {{ inputLangKey(languages[0]) | transloco }}
+  </p>
 </div>
 
 <div class="flex flex-col items-center relative mt-20 md:mt-10">
@@ -84,7 +88,7 @@
         [(ngModel)]="translationText"
         (ngModelChange)="onChange($event)"
         class="translation-area placeholder:text-right h-[150px] w-full pb-12"
-        placeholder="اكتب هنا ..."
+        [attr.placeholder]="'input.placeholder' | transloco"
       ></textarea>
       <div
         class="user-input-literal-hiero pointer-events-none absolute bottom-3 left-3 z-[1] max-w-[calc(100%-1.5rem)] text-left text-xl leading-snug break-words text-white/80"
@@ -105,7 +109,7 @@
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
             role="button"
-            [attr.aria-label]="'نسخ الهيروغليفية الحرفية'"
+            [attr.aria-label]="'aria.copyLiteralHiero' | transloco"
             tabindex="0"
           >
             <path
@@ -117,11 +121,11 @@
             hieroglyphicsText
           }}</span>
           <span
-            class="shrink-0 text-[10px] uppercase tracking-wide text-white/50"
+            class="shrink-0 whitespace-nowrap text-[10px] uppercase tracking-wide text-white/50"
             dir="rtl"
-            title="ترجمة حرفية"
+            [attr.title]="'input.literalBadge' | transloco"
           >
-            ترجمة حرفية
+            {{ 'input.literalBadge' | transloco }}
           </span>
         </div>
         <span
@@ -139,13 +143,21 @@
       </div>
     </div>
     <div class="options-wrapper">
-      <button (click)="addText('شمس')" class="options-btn">شمس</button>
-      <button (click)="addText('صباح الخير')" class="options-btn">
-        صباح الخير
+      <button (click)="addText('شمس')" class="options-btn">
+        {{ 'input.suggestionSun' | transloco }}
       </button>
-      <button (click)="addText('عدالة')" class="options-btn">عدالة</button>
-      <button (click)="addText('قلب')" class="options-btn">قلب</button>
-      <button (click)="addText('جميل')" class="options-btn">جميل</button>
+      <button (click)="addText('صباح الخير')" class="options-btn">
+        {{ 'input.suggestionGreeting' | transloco }}
+      </button>
+      <button (click)="addText('عدالة')" class="options-btn">
+        {{ 'input.suggestionJustice' | transloco }}
+      </button>
+      <button (click)="addText('قلب')" class="options-btn">
+        {{ 'input.suggestionHeart' | transloco }}
+      </button>
+      <button (click)="addText('جميل')" class="options-btn">
+        {{ 'input.suggestionBeautiful' | transloco }}
+      </button>
     </div>
   </div>
   <!-- end user input -->

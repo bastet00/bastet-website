@@ -38,11 +38,13 @@
     class="flex items-center gap-x-2 text-sm text-gray-400"
     *ngIf="word.category"
   >
-    <span class="category-label">التصنيف:</span>
+    <span class="category-label">{{
+      'translationResult.category' | transloco
+    }}</span>
     <span
       class="category-value px-1.5 py-0.5 rounded-full border border-gray-700 text-sm"
       *ngFor="let cat of word.category"
-      >{{ getCategoryViewValue(cat) }}</span
+      >{{ 'categories.' + cat | transloco }}</span
     >
   </div>
 

@@ -17,8 +17,8 @@ import { TranslationRes } from '../../pages/home/landing/interface';
 import { Word } from '../../dto/word.dto';
 import { environment } from '../../../environments/environment';
 import { NotificationService } from '../../components/notification/notification.service';
-import { TRANSLATOR_RATE_LIMIT_MESSAGE } from '../../constants/translator-rate-limit.message';
 import { isAbortError } from '../../utils/abort';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Injectable({
   providedIn: 'root',
@@ -35,7 +35,10 @@ export class TranslationService {
   loading$ = this.loadingSubject.asObservable();
   emptyRes$ = this.emptyResSubject.asObservable();
 
-  constructor(private notificationService: NotificationService) {}
+  constructor(
+    private notificationService: NotificationService,
+    private transloco: TranslocoService,
+  ) {}
 
   translation(fromLang: string, word: string): Observable<TranslationRes[]> {
     const id = ++this.searchGeneration;
@@ -70,7 +73,10 @@ export class TranslationService {
           if (id !== this.searchGeneration) {
             return EMPTY;
           }
-          this.notificationService.error(TRANSLATOR_RATE_LIMIT_MESSAGE, 6000);
+          this.notificationService.error(
+            this.transloco.translate('toasts.rateLimit'),
+            6000,
+          );
           return of({
             kind: 'rateLimited' as const,
             data: [] as TranslationRes[],

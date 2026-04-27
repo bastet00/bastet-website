@@ -3,7 +3,7 @@
     <p
       class="mx-auto w-fit text-3xl my-10 text-white translation-to-egy-text after:bg-third"
     >
-      اضف كلمه
+      {{ 'adminAdd.title' | transloco }}
     </p>
 
     <div class="holder text-white px-2">
@@ -18,7 +18,7 @@
               for="transliteration"
               class="grid grid-cols-[6rem_1fr] items-center gap-x-4 w-full gap-y-10"
             >
-              <span>القيمه الصوتيه</span>
+              <span>{{ 'adminAdd.transliteration' | transloco }}</span>
               <input
                 formControlName="transliteration"
                 id="transliteration"
@@ -37,7 +37,7 @@
             for="gardiner"
             class="grid grid-cols-[6rem_1fr] items-center gap-x-4 w-full"
           >
-            <span>جاردنر</span>
+            <span>{{ 'adminAdd.gardiner' | transloco }}</span>
             <input
               formControlName="gardiner"
               id="gardiner"
@@ -57,7 +57,7 @@
             class="grid grid-cols-[6rem_1fr] items-start gap-x-4 w-full"
           >
             <div class="flex flex-col gap-y-1">
-              <span>التصنيفات</span>
+              <span>{{ 'adminAdd.categories' | transloco }}</span>
             </div>
             <div
               id="category"
@@ -90,7 +90,7 @@
                     'text-white': !categoryStash.includes(categ),
                   }"
                 >
-                  {{ categ }}
+                  {{ 'categories.' + categ | transloco }}
                 </div>
               </div>
             </div>
@@ -100,9 +100,9 @@
             class="grid grid-cols-[6rem_1fr] items-start gap-x-4 w-full"
           >
             <div class="flex flex-col gap-y-1">
-              <span>عربي</span>
+              <span>{{ 'adminAdd.arabic' | transloco }}</span>
               <span class="text-sm font-normal leading-tight">
-                منفصله باستخدام ,
+                {{ 'adminAdd.separateComma' | transloco }}
               </span>
             </div>
             <input
@@ -123,14 +123,14 @@
             class="grid grid-cols-[6rem_1fr] items-start gap-x-4 w-full"
           >
             <div class="flex flex-col gap-y-1">
-              <span>انجليزي</span>
+              <span>{{ 'adminAdd.english' | transloco }}</span>
               <span class="text-sm font-normal leading-tight">
-                منفصله باستخدام ,
+                {{ 'adminAdd.separateComma' | transloco }}
               </span>
             </div>
             <input
               formControlName="english"
-              placeholder="اختياري"
+              [attr.placeholder]="'adminAdd.optionalPlaceholder' | transloco"
               id="english"
               dir="ltr"
               class="bg-inputBackground p-4 rounded-md w-full focus:outline-none placeholder:text-white/50 placeholder:text-end"
@@ -147,7 +147,7 @@
             for="resources"
             class="grid grid-cols-[6rem_1fr] items-center gap-x-4 w-full"
           >
-            <span>المصدر</span>
+            <span>{{ 'adminAdd.resources' | transloco }}</span>
             <input
               formControlName="resources"
               id="resources"
@@ -169,7 +169,15 @@
             }"
             class="p-4 rounded-3xl transition-all duration-500"
           >
-            {{ alertMessage }}
+            <ng-container *ngIf="isValidWord">{{
+              'adminAdd.btnSuccess' | transloco
+            }}</ng-container>
+            <ng-container *ngIf="!isValidWord && invalidFormSubmit">{{
+              'adminAdd.btnError' | transloco
+            }}</ng-container>
+            <ng-container *ngIf="!isValidWord && !invalidFormSubmit">{{
+              'adminAdd.btnDefault' | transloco
+            }}</ng-container>
           </button>
         </form>
         <!-- <div class="hidden xl:block w-1/3 min-h-full"> -->

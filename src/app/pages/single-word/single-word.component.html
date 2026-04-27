@@ -25,7 +25,7 @@
       <!-- blocks -->
 
       <div class="flex items-start flex-col">
-        <p class="text-main">عربي:</p>
+        <p class="text-main">{{ 'singleWord.arabic' | transloco }}</p>
         <div class="flex items-center gap-x-4">
           <p>{{ singleWordToView.arabic }}</p>
           <button (click)="toClipboard('arabic', arabicCopiedRef)">
@@ -41,7 +41,7 @@
         </div>
       </div>
       <div class="flex items-start flex-col">
-        <p class="text-main">الانجليزيه:</p>
+        <p class="text-main">{{ 'singleWord.english' | transloco }}</p>
         <div class="flex items-center gap-x-4">
           <p>{{ singleWordToView.english }}</p>
           <button (click)="toClipboard('english', englishCopiedRef)">
@@ -58,7 +58,7 @@
         </div>
       </div>
       <div class="flex items-start flex-col">
-        <p class="text-main">القيمه الصوتيه الانجليزيه:</p>
+        <p class="text-main">{{ 'singleWord.phoneticEn' | transloco }}</p>
         <div class="flex items-center gap-x-4">
           <p>{{ singleWordToView.transliteration }}</p>
           <button
@@ -76,7 +76,7 @@
         </div>
       </div>
       <div class="flex items-start flex-col">
-        <p class="text-main">الهيروغليفيه:</p>
+        <p class="text-main">{{ 'singleWord.hieroglyphic' | transloco }}</p>
         <div class="flex items-center gap-x-4">
           <p
             [innerHTML]="
@@ -96,7 +96,7 @@
         </div>
       </div>
       <div class="flex items-start flex-col">
-        <p class="text-main">علامات جاردنير:</p>
+        <p class="text-main">{{ 'singleWord.gardiner' | transloco }}</p>
         <div class="flex items-center gap-x-4">
           <p>{{ singleWordToView.hieroglyphics }}</p>
           <button
@@ -114,7 +114,7 @@
         </div>
       </div>
       <div class="flex items-start flex-col">
-        <p class="text-main">المصادر:</p>
+        <p class="text-main">{{ 'singleWord.resources' | transloco }}</p>
         <div class="flex items-center gap-x-4">
           <p>{{ singleWordToView.resources }}</p>
           <button (click)="toClipboard('resources', resourcesCopiedRef)">

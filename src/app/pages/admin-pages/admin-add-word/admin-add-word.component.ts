@@ -15,6 +15,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { CategoryService } from '../../../services/api/category.service';
 import { ArrowDown, CircleX, LucideAngularModule } from 'lucide-angular';
+import { TranslocoModule } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-admin-add-word',
@@ -24,6 +25,7 @@ import { ArrowDown, CircleX, LucideAngularModule } from 'lucide-angular';
     ReactiveFormsModule,
     CommonModule,
     LucideAngularModule,
+    TranslocoModule,
   ],
   templateUrl: './admin-add-word.component.html',
   styleUrl: './admin-add-word.component.scss',
@@ -54,15 +56,6 @@ export class AdminAddWordComponent {
     this.dropdownMenuState = !this.dropdownMenuState;
   }
 
-  get alertMessage(): string {
-    if (this.isValidWord) {
-      return 'تمت الاضافه بنجاح';
-    } else if (this.invalidFormSubmit) {
-      return 'حدث خطأ اثناء الاضافه';
-    } else {
-      return 'اضافه';
-    }
-  }
   wordForm = this.fb.group({
     resources: ['', Validators.required],
     transliteration: ['', Validators.required],

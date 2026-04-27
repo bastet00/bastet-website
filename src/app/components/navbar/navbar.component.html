@@ -1,24 +1,69 @@
 <nav class="bg-navBackground flex-no-wrap fixed top-0 z-10 w-full py-2">
   <div class="flex px-5 md:px-28 items-center justify-between">
     <ul class="flex items-center gap-x-10 text-white">
-      <li><a class="cursor-pointer" href="#translation">الترجمة</a></li>
-      <li><a class="cursor-pointer" href="/categories">القاموس</a></li>
+      <li>
+        <a class="cursor-pointer" href="#translation">{{
+          'nav.translation' | transloco
+        }}</a>
+      </li>
+      <li>
+        <a class="cursor-pointer" href="/categories">{{
+          'nav.dictionary' | transloco
+        }}</a>
+      </li>
       <li>
         <a
           class="cursor-pointer"
           target="_blank"
           href="https://blog.bastet-app.com/"
-          >المدونة</a
+          >{{ 'nav.blog' | transloco }}</a
         >
       </li>
-      <li><a class="cursor-pointer" href="#team">عن الفريق</a></li>
       <li>
-        <a class="cursor-pointer" routerLink="/" fragment="social">تابعنا</a>
+        <a class="cursor-pointer" href="#team">{{
+          'nav.aboutTeam' | transloco
+        }}</a>
+      </li>
+      <li>
+        <a class="cursor-pointer" routerLink="/" fragment="social">{{
+          'nav.follow' | transloco
+        }}</a>
       </li>
     </ul>
 
-    <a href="/">
-      <img src="/logo.svg" />
-    </a>
+    <div class="flex items-center gap-6">
+      <div
+        class="flex items-center gap-2 text-sm text-white/90 [direction:ltr] select-none"
+        role="group"
+        [attr.aria-label]="'Language'"
+      >
+        <button
+          type="button"
+          (click)="setLocale('ar')"
+          [ngClass]="{
+            'text-main': i18n.isArabicActive(),
+            'text-white/50': !i18n.isArabicActive(),
+          }"
+          class="px-0 font-medium transition-colors"
+        >
+          {{ 'nav.langAr' | transloco }}
+        </button>
+        <span class="text-white/35" aria-hidden="true">|</span>
+        <button
+          type="button"
+          (click)="setLocale('en')"
+          [ngClass]="{
+            'text-main': !i18n.isArabicActive(),
+            'text-white/50': i18n.isArabicActive(),
+          }"
+          class="px-0 font-medium transition-colors"
+        >
+          {{ 'nav.langEn' | transloco }}
+        </button>
+      </div>
+      <a href="/">
+        <img src="/logo.svg" alt="Bastet" />
+      </a>
+    </div>
   </div>
 </nav>

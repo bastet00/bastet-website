@@ -3,17 +3,16 @@
     <!-- Right Column: Arabic Text -->
     <div class="text-right text-white">
       <b class="flex justify-center text-lg mt-10 text-titleColor">
-        شاهد الفيديو التعريفي الان !
+        {{ 'videoIntro.watchIntro' | transloco }}
       </b>
       <div class="flex justify-evenly">
         <img src="/start-bracket.svg" />
         <img src="/end-bracket.svg" />
       </div>
       <p class="text-lg mt-10 ml-10">
-        فريق
-        <span class="text-main">باستيت</span>
-        قام بتطوير تطبيق و طريقة جديدة لكتابة اللغة المصرية القديمة عن طريق دمج
-        الابجدية العربية مع الخط الهيروغليفي
+        <span>{{ 'videoIntro.teamP1a' | transloco }}</span>
+        <span class="text-main">{{ 'videoIntro.brand' | transloco }}</span>
+        <span>{{ 'videoIntro.teamP1b' | transloco }}</span>
       </p>
       <a
         target="_blank"
@@ -43,18 +42,19 @@
   <div id="team" class="grid md:grid-cols-2 gap-10 mt-20">
     <!-- Right Column: Arabic Text -->
     <div class="text-right text-white">
-      <b class="flex justify-center text-lg mt-10 text-titleColor"> الفريق </b>
+      <b class="flex justify-center text-lg mt-10 text-titleColor">
+        {{ 'videoIntro.theTeam' | transloco }}
+      </b>
       <div class="flex justify-evenly">
         <img src="/start-bracket.svg" />
         <img src="/end-bracket.svg" />
       </div>
       <p class="text-lg mt-10 ml-10">
-        فريق
-        <span class="text-main">باستيت</span>
-        قام بعمل المشروع بشكل تطوعي, يمكنكم الوصول لحسابتهم عن طريق الضغط علي
-        صورة كل من اعضاء الفريق شكر من القلب
+        <span>{{ 'videoIntro.teamP2a' | transloco }}</span>
+        <span class="text-main">{{ 'videoIntro.brand' | transloco }}</span>
+        <span>{{ 'videoIntro.teamP2b' | transloco }}</span>
         <span class="text-4xl text-titleColor">𓄣</span>
-        لكل من ساهم في بناء المشروع
+        <span>{{ 'videoIntro.teamP2c' | transloco }}</span>
       </p>
     </div>
     <div class="grid md:grid-cols-3 grid-cols-2 gap-6">
@@ -121,7 +121,9 @@
   />
   <div id="social" class="mt-20 mb-8 scroll-mt-24">
     <div class="text-right text-white">
-      <b class="flex justify-center text-lg mt-6 text-titleColor">تابعنا</b>
+      <b class="flex justify-center text-lg mt-6 text-titleColor">{{
+        'videoIntro.followUs' | transloco
+      }}</b>
       <div class="flex justify-evenly">
         <img src="/start-bracket.svg" alt="" />
         <img src="/end-bracket.svg" alt="" />
@@ -130,9 +132,9 @@
     <p
       class="text-center text-lg text-gray-300 max-w-md mx-auto mt-6 mb-8 px-4"
     >
-      تواصل معنا عبر
-      <span class="text-main">باستيت</span>
-      على منصات التواصل
+      {{ 'videoIntro.connectPrefix' | transloco }}
+      <span class="text-main">{{ 'videoIntro.brand' | transloco }}</span>
+      {{ 'videoIntro.connectSuffix' | transloco }}
     </p>
     <div
       class="flex flex-wrap justify-center items-stretch gap-4 max-w-3xl mx-auto px-4"
@@ -142,7 +144,7 @@
         href="https://www.instagram.com/bastetapp/"
         target="_blank"
         rel="noopener noreferrer"
-        aria-label="باستيت على إنستغرام"
+        [attr.aria-label]="'videoIntro.ariaInstagram' | transloco"
       >
         <lucide-icon
           [img]="instagramIcon"
@@ -161,7 +163,7 @@
         href="https://www.tiktok.com/@bastetapp"
         target="_blank"
         rel="noopener noreferrer"
-        aria-label="باستيت على تيك توك"
+        [attr.aria-label]="'videoIntro.ariaTiktok' | transloco"
       >
         <svg
           class="h-9 w-9 text-titleColor group-hover:text-main transition-colors"
@@ -184,7 +186,7 @@
         href="https://www.facebook.com/amranwar00/"
         target="_blank"
         rel="noopener noreferrer"
-        aria-label="باستيت على فيسبوك"
+        [attr.aria-label]="'videoIntro.ariaFacebook' | transloco"
       >
         <lucide-icon
           [img]="facebookIcon"
@@ -203,7 +205,7 @@
         href="https://www.youtube.com/@bastetapp"
         target="_blank"
         rel="noopener noreferrer"
-        aria-label="باستيت على يوتيوب"
+        [attr.aria-label]="'videoIntro.ariaYoutube' | transloco"
       >
         <lucide-icon
           [img]="youtubeIcon"

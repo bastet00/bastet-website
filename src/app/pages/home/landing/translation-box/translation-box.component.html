@@ -7,7 +7,7 @@
       <p
         class="m-0 mb-0.5 w-full min-w-0 break-words text-right text-lg font-medium text-white/90"
       >
-        الترجمة:
+        {{ 'translationBox.resultHeading' | transloco }}
       </p>
     </div>
     <div class="translation-area-wrapper mx-auto mt-0 max-w-full text-right">
@@ -38,10 +38,18 @@
           @if (sentenceLineUsingArabicLetters) {
             <svg
               (click)="
-                copySentenceTranslation(sentenceLineUsingArabicLetters, $event)
+                copySentenceTranslation(
+                  sentenceLineUsingArabicLetters,
+                  $event,
+                  'ar'
+                )
               "
               (keydown.enter)="
-                copySentenceTranslation(sentenceLineUsingArabicLetters, $event)
+                copySentenceTranslation(
+                  sentenceLineUsingArabicLetters,
+                  $event,
+                  'ar'
+                )
               "
               class="shrink-0 cursor-pointer self-center"
               width="20"
@@ -50,7 +58,7 @@
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
               role="button"
-              [attr.aria-label]="'نسخ الترجمة بالحروف العربية'"
+              [attr.aria-label]="'aria.copySentenceAr' | transloco"
               tabindex="0"
             >
               <path
@@ -65,7 +73,7 @@
           [class.opacity-50]="sentenceLoading"
         >
           <span class="shrink-0 text-xs text-white/40" aria-hidden="true">
-            بالحروف اللاتينية
+            {{ 'translationBox.latinScriptLabel' | transloco }}
           </span>
           @if (!sentenceLoading && !sentenceLine) {
             <span class="flex-1 break-words text-right text-sm text-white/30">
@@ -86,8 +94,10 @@
           }
           @if (sentenceLine) {
             <svg
-              (click)="copySentenceTranslation(sentenceLine, $event)"
-              (keydown.enter)="copySentenceTranslation(sentenceLine, $event)"
+              (click)="copySentenceTranslation(sentenceLine, $event, 'lat')"
+              (keydown.enter)="
+                copySentenceTranslation(sentenceLine, $event, 'lat')
+              "
               class="shrink-0 cursor-pointer self-center"
               width="20"
               height="20"
@@ -95,7 +105,7 @@
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
               role="button"
-              [attr.aria-label]="'نسخ الترجمة بالحروف اللاتينية'"
+              [attr.aria-label]="'aria.copySentenceLat' | transloco"
               tabindex="0"
             >
               <path
@@ -116,10 +126,10 @@
   >
     <div class="translation-result-area w-full min-w-0 max-w-full">
       <p class="m-0 w-full min-w-0 max-w-full break-words text-right text-sm">
-        لسوء الحظ، قاموسنا لا يحتوي على هذه الكلمة. التحقق من الإملاء الخاص بك.
-        إذا كان كل شيء صحيحًا وتريد منا أن نضيف هذه الكلمة،
+        {{ 'translationBox.emptyDictionary' | transloco }}
+        {{ 'translationBox.addWordPrompt' | transloco }}
         <span (click)="addWordSuggestion()" class="cursor-pointer text-main">
-          انقر هنا.
+          {{ 'translationBox.addWordCta' | transloco }}
         </span>
       </p>
     </div>
@@ -133,7 +143,7 @@
     <p
       class="m-0 mb-1 w-full min-w-0 break-words text-right text-lg font-medium text-white/90"
     >
-      كلمات مشابهه:
+      {{ 'translationBox.similarWords' | transloco }}
     </p>
   </div>
 }

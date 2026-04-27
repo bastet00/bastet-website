@@ -4,8 +4,8 @@ import { catchError, EMPTY, from, Observable, of, switchMap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { SentenceTranslationResponse } from '../../dto/sentence-translation.dto';
 import { NotificationService } from '../../components/notification/notification.service';
-import { TRANSLATOR_RATE_LIMIT_MESSAGE } from '../../constants/translator-rate-limit.message';
 import { isAbortError } from '../../utils/abort';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +15,10 @@ export class SentenceTranslationService {
   private abort: AbortController | null = null;
   private callGeneration = 0;
 
-  constructor(private notificationService: NotificationService) {}
+  constructor(
+    private notificationService: NotificationService,
+    private transloco: TranslocoService,
+  ) {}
 
   /** Invalidate any in-flight `getSentenceTranslation` (e.g. host destroyed). */
   cancelInFlight(): void {
@@ -49,7 +52,10 @@ export class SentenceTranslationService {
           if (id !== this.callGeneration) {
             return EMPTY;
           }
-          this.notificationService.error(TRANSLATOR_RATE_LIMIT_MESSAGE, 6000);
+          this.notificationService.error(
+            this.transloco.translate('toasts.rateLimit'),
+            6000,
+          );
           return of(this.emptyRes());
         }
         throw new Error('Sentence translation request failed');

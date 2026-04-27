@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
+import { TranslocoModule } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-static',
   standalone: true,
-  imports: [],
+  imports: [TranslocoModule],
   templateUrl: './static.component.html',
   styleUrl: './static.component.scss',
 })
