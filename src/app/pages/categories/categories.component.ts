@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { LucideAngularModule } from 'lucide-angular';
 import { FormsModule } from '@angular/forms';
@@ -8,9 +8,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { CATEGORIES } from './categories';
 import { TranslationResultComponent } from '../../components/translation-result/translation-result.component';
 import { CategoryService } from '../../services/category.service';
-import { toWordCardDto, WordCardDto } from '../../dto/word.dto';
+import { Word, WordCardDto } from '../../dto/word.dto';
 import { CommonModule } from '@angular/common';
-import { TranslocoModule } from '@ngneat/transloco';
+import { TranslocoModule, TranslocoService } from '@ngneat/transloco';
+import { Subscription } from 'rxjs';
+import { mapWordToResultCard } from '../../utils/map-word-to-result-card.util';
 
 @Component({
   selector: 'app-categories',
@@ -29,16 +31,31 @@ import { TranslocoModule } from '@ngneat/transloco';
   templateUrl: './categories.component.html',
   styleUrl: './categories.component.scss',
 })
-export class CategoriesComponent {
+export class CategoriesComponent implements OnInit, OnDestroy {
   categories = CATEGORIES;
   selectedCategory = 'gods';
+  /** API payload; re-mapped when UI language changes (same as landing similar words). */
+  private rawWords: Word[] = [];
   words: WordCardDto[] = [];
   loading: boolean = true;
+  private langSub?: Subscription;
 
-  constructor(private categoryService: CategoryService) {}
+  constructor(
+    private categoryService: CategoryService,
+    private transloco: TranslocoService,
+    private cdr: ChangeDetectorRef,
+  ) {}
 
   ngOnInit() {
+    this.langSub = this.transloco.langChanges$.subscribe(() => {
+      this.applyWordViewFromCache();
+      this.cdr.markForCheck();
+    });
     this.loadWords();
+  }
+
+  ngOnDestroy() {
+    this.langSub?.unsubscribe();
   }
 
   onCategoryChange() {
@@ -47,11 +64,18 @@ export class CategoriesComponent {
     }
   }
 
+  private applyWordViewFromCache() {
+    this.words = this.rawWords.map((w) =>
+      mapWordToResultCard(w, this.transloco.getActiveLang()),
+    ) as WordCardDto[];
+  }
+
   loadWords() {
     this.loading = true;
     this.categoryService.getWordsByCategory(this.selectedCategory).subscribe({
       next: (words) => {
-        this.words = words.map((word) => toWordCardDto(word)) as WordCardDto[];
+        this.rawWords = words;
+        this.applyWordViewFromCache();
         this.loading = false;
       },
       error: (error) => {

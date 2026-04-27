@@ -17,6 +17,7 @@ import {
   MAX_TRANSLATION_INPUT_LENGTH,
 } from '../../../../constants/translation-input-limits';
 import { TranslocoModule, TranslocoService } from '@ngneat/transloco';
+import { mapWordToResultCard } from '../../../../utils/map-word-to-result-card.util';
 
 @Component({
   selector: 'app-translation-box',
@@ -88,39 +89,10 @@ export class TranslationBoxComponent implements OnInit, OnDestroy {
     this.sentenceRequestSub = null;
   }
 
-  /**
-   * Similar-word cards: EN UI → English gloss + transliteration; AR → Arabic + Egyptian (MdC) form.
-   */
-  private mapApiWordToView(word: TranslationRes): TranslationResToView {
-    const e0 = word.egyptian[0];
-    if (!e0) {
-      return { id: word.id, arabic: '', egyptian: '' };
-    }
-    const tr = (e0.transliteration?.trim() || e0.word) as string;
-    if (this.transloco.getActiveLang() === 'en') {
-      const englishLine =
-        word.english?.length && word.english[0]
-          ? word.english.map((e) => e.word).join(', ')
-          : word.arabic.map((a) => a.word).join(', ');
-      return {
-        id: word.id,
-        arabic: englishLine,
-        egyptian: tr,
-        category: word.category,
-        hieroglyphicSigns: e0.hieroglyphicSigns?.join(' '),
-      };
-    }
-    return {
-      id: word.id,
-      arabic: word.arabic.map((a) => a.word).join(', '),
-      egyptian: e0.word,
-      category: word.category,
-      hieroglyphicSigns: e0.hieroglyphicSigns?.join(' '),
-    };
-  }
-
   private applyWordsFromCache(): void {
-    this.words = this.lastRawTranslation.map((w) => this.mapApiWordToView(w));
+    this.words = this.lastRawTranslation.map((w) =>
+      mapWordToResultCard(w, this.transloco.getActiveLang()),
+    );
   }
 
   ngOnInit(): void {

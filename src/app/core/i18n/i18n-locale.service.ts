@@ -18,9 +18,13 @@ export class I18nLocaleService {
       this.transloco.setActiveLang(fromStorage);
     }
     this.transloco.langChanges$.subscribe((lang) => {
-      this.applyToDocument(lang);
+      this.applyBidiToDocument(lang);
     });
-    this.applyToDocument(this.transloco.getActiveLang());
+    this.applyBidiToDocument(this.transloco.getActiveLang());
+    // `translate()` in ctor runs before lazy-loaded JSON; `selectTranslate` updates when ready + on lang change
+    this.transloco.selectTranslate<string>('app.htmlTitle').subscribe((t) => {
+      this.title.setTitle(t);
+    });
   }
 
   setActiveLang(lang: AppLocale): void {
@@ -32,12 +36,11 @@ export class I18nLocaleService {
     return this.transloco.getActiveLang() === 'ar';
   }
 
-  private applyToDocument(lang: string): void {
+  private applyBidiToDocument(lang: string): void {
     const dir: 'rtl' | 'ltr' = lang === 'ar' ? 'rtl' : 'ltr';
     const html = document.documentElement;
     html.setAttribute('dir', dir);
     html.setAttribute('lang', lang);
     document.body.setAttribute('dir', dir);
-    this.title.setTitle(this.transloco.translate('app.htmlTitle'));
   }
 }
