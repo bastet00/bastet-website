@@ -2,7 +2,7 @@
   <app-suspend
     *ngIf="loading || (isSentenceBlockVisible && sentenceLoading)"
   ></app-suspend>
-  @if (isSentenceBlockVisible) {
+  @if (isSentenceBlockVisible && !sentenceLoading) {
     <div
       class="translation-area-wrapper mx-auto mt-0 max-w-full"
       [class.text-left]="uiLtr"
@@ -28,25 +28,17 @@
         [attr.dir]="uiLtr ? 'ltr' : 'rtl'"
       >
         @if (!uiLtr) {
-          <div
-            class="flex min-w-0 items-center gap-2 [direction:rtl]"
-            [class.opacity-50]="sentenceLoading"
-          >
-            @if (!sentenceLoading && !sentenceLineUsingArabicLetters) {
+          <div class="flex min-w-0 items-center gap-2 [direction:rtl]">
+            @if (!sentenceLineUsingArabicLetters) {
               <span class="flex-1 break-words text-right text-sm text-white/30">
                 —
               </span>
             }
-            @if (!sentenceLoading && sentenceLineUsingArabicLetters) {
+            @if (sentenceLineUsingArabicLetters) {
               <span
                 class="text-secondary text-sm min-w-0 break-words text-right leading-relaxed [direction:rtl] max-w-full"
               >
                 {{ sentenceLineUsingArabicLetters }}
-              </span>
-            }
-            @if (sentenceLoading) {
-              <span class="flex-1 break-words text-right text-sm text-white/50">
-                …
               </span>
             }
             @if (sentenceLineUsingArabicLetters) {
@@ -85,13 +77,12 @@
         }
         <div
           class="flex min-w-0 items-center gap-2"
-          [class.opacity-50]="sentenceLoading"
           [attr.dir]="uiLtr ? 'ltr' : 'rtl'"
         >
           <span class="shrink-0 text-xs text-white/40" aria-hidden="true">
             {{ 'translationBox.latinScriptLabel' | transloco }}
           </span>
-          @if (!sentenceLoading && !sentenceLine) {
+          @if (!sentenceLine) {
             <span
               class="flex-1 break-words text-sm text-white/30"
               [class.text-left]="uiLtr"
@@ -100,22 +91,13 @@
               —
             </span>
           }
-          @if (!sentenceLoading && sentenceLine) {
+          @if (sentenceLine) {
             <span
               class="text-secondary min-w-0 break-words text-sm leading-relaxed max-w-full"
               [class.text-left]="uiLtr"
               [class.text-right]="!uiLtr"
             >
               {{ sentenceLine }}
-            </span>
-          }
-          @if (sentenceLoading) {
-            <span
-              class="flex-1 break-words text-sm text-white/50"
-              [class.text-left]="uiLtr"
-              [class.text-right]="!uiLtr"
-            >
-              …
             </span>
           }
           @if (sentenceLine) {
