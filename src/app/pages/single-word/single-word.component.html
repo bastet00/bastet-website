@@ -18,8 +18,10 @@
     <div class="translation-result-area flex flex-col gap-y-5">
       <!-- header  -->
       <h2
-        class="translation-to-egy-text w-fit mx-auto text-3xl"
-        [innerHTML]="sanitizeSymbol(singleWordToView.egyptian)"
+        class="w-fit mx-auto text-3xl"
+        [class.translation-to-egy-text]="!isUiEn"
+        [class.text-secondary]="isUiEn"
+        [innerHTML]="sanitizeSymbol(mainWordHeading)"
       ></h2>
 
       <!-- blocks -->

@@ -36,7 +36,7 @@
 
   <div
     class="flex items-center gap-x-2 text-sm text-gray-400"
-    *ngIf="word.category"
+    *ngIf="word.category?.length"
   >
     <span class="category-label">{{
       'translationResult.category' | transloco

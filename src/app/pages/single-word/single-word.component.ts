@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { TranslationService } from '../../services/api/translation.service';
 import { Word } from '../../dto/word.dto';
@@ -8,7 +8,8 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { CommonModule, Location } from '@angular/common';
 import { SuspendComponent } from '../../components/suspend/suspend.component';
 import { LucideAngularModule, ArrowRight, CheckIcon } from 'lucide-angular';
-import { TranslocoModule } from '@ngneat/transloco';
+import { TranslocoModule, TranslocoService } from '@ngneat/transloco';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-single-word',
@@ -24,19 +25,43 @@ import { TranslocoModule } from '@ngneat/transloco';
   templateUrl: './single-word.component.html',
   styleUrl: './single-word.component.scss',
 })
-export class SingleWordComponent implements OnInit {
+export class SingleWordComponent implements OnInit, OnDestroy {
   readonly ArrowRight = ArrowRight;
   readonly checkIcon = CheckIcon;
+  private langSub: Subscription;
 
   constructor(
     private route: ActivatedRoute,
     private translationService: TranslationService,
     private sanitizer: DomSanitizer,
     private location: Location,
-  ) {}
+    private transloco: TranslocoService,
+    private cdr: ChangeDetectorRef,
+  ) {
+    this.langSub = this.transloco.langChanges$.subscribe(() =>
+      this.cdr.markForCheck(),
+    );
+  }
 
   singleWord: Word = {} as Word;
   singleWordToView = {} as TranslationResToView;
+
+  /** English UI: Latin transliteration; Arabic: dictionary Egyptian (Arabic) form. Same as landing word cards. */
+  get mainWordHeading(): string {
+    const e0 = this.singleWord?.egyptian?.[0];
+    if (!e0) {
+      return this.singleWordToView.egyptian ?? '';
+    }
+    if (this.transloco.getActiveLang() === 'en') {
+      const tr = e0.transliteration?.trim();
+      return (tr || e0.word) ?? '';
+    }
+    return e0.word ?? '';
+  }
+
+  get isUiEn(): boolean {
+    return this.transloco.getActiveLang() === 'en';
+  }
 
   ngOnInit(): void {
     const param = this.route.snapshot.paramMap.get('id') as string;
@@ -82,5 +107,9 @@ export class SingleWordComponent implements OnInit {
 
   sanitizeSymbol(symbol: string): SafeHtml {
     return this.sanitizer.bypassSecurityTrustHtml(symbol);
+  }
+
+  ngOnDestroy(): void {
+    this.langSub.unsubscribe();
   }
 }
