@@ -158,6 +158,10 @@ export class UserInputComponent implements OnInit, OnDestroy {
     this.onChange(text, { delay: 0 });
   }
 
+  addSuggestionKey(key: string) {
+    this.addText(this.transloco.translate(key));
+  }
+
   copyLiteralHieroglyphics(event?: Event): void {
     event?.stopPropagation();
     if (!this.hieroglyphicsText) {

@@ -3,92 +3,118 @@
     *ngIf="loading || (isSentenceBlockVisible && sentenceLoading)"
   ></app-suspend>
   @if (isSentenceBlockVisible) {
-    <div class="translation-area-wrapper mx-auto mt-0 max-w-full text-right">
+    <div
+      class="translation-area-wrapper mx-auto mt-0 max-w-full"
+      [class.text-left]="uiLtr"
+      [class.text-right]="!uiLtr"
+      [attr.dir]="uiLtr ? 'ltr' : 'rtl'"
+    >
       <p
-        class="m-0 mb-0.5 w-full min-w-0 break-words text-right text-lg font-medium text-white/90"
+        class="m-0 mb-0.5 w-full min-w-0 break-words text-lg font-medium text-white/90"
       >
         {{ 'translationBox.resultHeading' | transloco }}
       </p>
     </div>
-    <div class="translation-area-wrapper mx-auto mt-0 max-w-full text-right">
+    <div
+      class="translation-area-wrapper mx-auto mt-0 max-w-full"
+      [class.text-left]="uiLtr"
+      [class.text-right]="!uiLtr"
+      [attr.dir]="uiLtr ? 'ltr' : 'rtl'"
+    >
       <div
-        class="translation-result-area flex w-full min-w-0 max-w-full flex-col gap-2 text-right"
+        class="translation-result-area flex w-full min-w-0 max-w-full flex-col gap-2"
+        [class.text-left]="uiLtr"
+        [class.text-right]="!uiLtr"
+        [attr.dir]="uiLtr ? 'ltr' : 'rtl'"
       >
+        @if (!uiLtr) {
+          <div
+            class="flex min-w-0 items-center gap-2 [direction:rtl]"
+            [class.opacity-50]="sentenceLoading"
+          >
+            @if (!sentenceLoading && !sentenceLineUsingArabicLetters) {
+              <span class="flex-1 break-words text-right text-sm text-white/30">
+                —
+              </span>
+            }
+            @if (!sentenceLoading && sentenceLineUsingArabicLetters) {
+              <span
+                class="text-secondary text-sm min-w-0 break-words text-right leading-relaxed [direction:rtl] max-w-full"
+              >
+                {{ sentenceLineUsingArabicLetters }}
+              </span>
+            }
+            @if (sentenceLoading) {
+              <span class="flex-1 break-words text-right text-sm text-white/50">
+                …
+              </span>
+            }
+            @if (sentenceLineUsingArabicLetters) {
+              <svg
+                (click)="
+                  copySentenceTranslation(
+                    sentenceLineUsingArabicLetters,
+                    $event,
+                    'ar'
+                  )
+                "
+                (keydown.enter)="
+                  copySentenceTranslation(
+                    sentenceLineUsingArabicLetters,
+                    $event,
+                    'ar'
+                  )
+                "
+                class="shrink-0 cursor-pointer self-center"
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                role="button"
+                [attr.aria-label]="'aria.copySentenceAr' | transloco"
+                tabindex="0"
+              >
+                <path
+                  d="M13.9415 11.9467V3.22293C13.9415 2.18918 13.1003 1.34793 12.0665 1.34793H3.34277C2.84566 1.34848 2.36907 1.5462 2.01756 1.89771C1.66605 2.24923 1.46832 2.72582 1.46777 3.22293V11.9467C1.46777 12.9804 2.30902 13.8217 3.34277 13.8217H12.0665C13.1003 13.8217 13.9415 12.9804 13.9415 11.9467ZM2.71777 11.9467V3.22293C2.71777 2.87835 2.99819 2.59793 3.34277 2.59793H12.0665C12.4111 2.59793 12.6915 2.87835 12.6915 3.22293V11.9467C12.6915 12.2913 12.4111 12.5717 12.0665 12.5717H3.34277C2.99819 12.5717 2.71777 12.2913 2.71777 11.9467ZM16.6569 6.17835H15.1378C14.972 6.17835 14.813 6.2442 14.6958 6.36141C14.5786 6.47862 14.5128 6.63759 14.5128 6.80335C14.5128 6.96911 14.5786 7.12808 14.6958 7.24529C14.813 7.3625 14.972 7.42835 15.1378 7.42835H16.6569C17.0015 7.42835 17.2819 7.70876 17.2819 8.05335V16.7771C17.2819 17.1217 17.0015 17.4021 16.6569 17.4021H7.93361C7.58902 17.4021 7.30861 17.1217 7.30861 16.7771V15.0492C7.30861 14.8834 7.24276 14.7244 7.12555 14.6072C7.00834 14.49 6.84937 14.4242 6.68361 14.4242C6.51785 14.4242 6.35888 14.49 6.24167 14.6072C6.12445 14.7244 6.05861 14.8834 6.05861 15.0492V16.7771C6.05861 17.8108 6.89986 18.6521 7.93361 18.6521H16.6569C17.6907 18.6521 18.5319 17.8108 18.5319 16.7771V8.05335C18.5319 7.0196 17.6907 6.17835 16.6569 6.17835Z"
+                  fill="#F4931E"
+                />
+              </svg>
+            }
+          </div>
+        }
         <div
-          class="flex min-w-0 items-center gap-2 [direction:rtl]"
+          class="flex min-w-0 items-center gap-2"
           [class.opacity-50]="sentenceLoading"
-        >
-          @if (!sentenceLoading && !sentenceLineUsingArabicLetters) {
-            <span class="flex-1 break-words text-right text-sm text-white/30">
-              —
-            </span>
-          }
-          @if (!sentenceLoading && sentenceLineUsingArabicLetters) {
-            <span
-              class="text-secondary text-sm min-w-0 break-words text-right leading-relaxed [direction:rtl] max-w-full"
-            >
-              {{ sentenceLineUsingArabicLetters }}
-            </span>
-          }
-          @if (sentenceLoading) {
-            <span class="flex-1 break-words text-right text-sm text-white/50">
-              …
-            </span>
-          }
-          @if (sentenceLineUsingArabicLetters) {
-            <svg
-              (click)="
-                copySentenceTranslation(
-                  sentenceLineUsingArabicLetters,
-                  $event,
-                  'ar'
-                )
-              "
-              (keydown.enter)="
-                copySentenceTranslation(
-                  sentenceLineUsingArabicLetters,
-                  $event,
-                  'ar'
-                )
-              "
-              class="shrink-0 cursor-pointer self-center"
-              width="20"
-              height="20"
-              viewBox="0 0 20 20"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              role="button"
-              [attr.aria-label]="'aria.copySentenceAr' | transloco"
-              tabindex="0"
-            >
-              <path
-                d="M13.9415 11.9467V3.22293C13.9415 2.18918 13.1003 1.34793 12.0665 1.34793H3.34277C2.84566 1.34848 2.36907 1.5462 2.01756 1.89771C1.66605 2.24923 1.46832 2.72582 1.46777 3.22293V11.9467C1.46777 12.9804 2.30902 13.8217 3.34277 13.8217H12.0665C13.1003 13.8217 13.9415 12.9804 13.9415 11.9467ZM2.71777 11.9467V3.22293C2.71777 2.87835 2.99819 2.59793 3.34277 2.59793H12.0665C12.4111 2.59793 12.6915 2.87835 12.6915 3.22293V11.9467C12.6915 12.2913 12.4111 12.5717 12.0665 12.5717H3.34277C2.99819 12.5717 2.71777 12.2913 2.71777 11.9467ZM16.6569 6.17835H15.1378C14.972 6.17835 14.813 6.2442 14.6958 6.36141C14.5786 6.47862 14.5128 6.63759 14.5128 6.80335C14.5128 6.96911 14.5786 7.12808 14.6958 7.24529C14.813 7.3625 14.972 7.42835 15.1378 7.42835H16.6569C17.0015 7.42835 17.2819 7.70876 17.2819 8.05335V16.7771C17.2819 17.1217 17.0015 17.4021 16.6569 17.4021H7.93361C7.58902 17.4021 7.30861 17.1217 7.30861 16.7771V15.0492C7.30861 14.8834 7.24276 14.7244 7.12555 14.6072C7.00834 14.49 6.84937 14.4242 6.68361 14.4242C6.51785 14.4242 6.35888 14.49 6.24167 14.6072C6.12445 14.7244 6.05861 14.8834 6.05861 15.0492V16.7771C6.05861 17.8108 6.89986 18.6521 7.93361 18.6521H16.6569C17.6907 18.6521 18.5319 17.8108 18.5319 16.7771V8.05335C18.5319 7.0196 17.6907 6.17835 16.6569 6.17835Z"
-                fill="#F4931E"
-              />
-            </svg>
-          }
-        </div>
-        <div
-          class="flex min-w-0 items-center gap-2 [direction:rtl]"
-          [class.opacity-50]="sentenceLoading"
+          [attr.dir]="uiLtr ? 'ltr' : 'rtl'"
         >
           <span class="shrink-0 text-xs text-white/40" aria-hidden="true">
             {{ 'translationBox.latinScriptLabel' | transloco }}
           </span>
           @if (!sentenceLoading && !sentenceLine) {
-            <span class="flex-1 break-words text-right text-sm text-white/30">
+            <span
+              class="flex-1 break-words text-sm text-white/30"
+              [class.text-left]="uiLtr"
+              [class.text-right]="!uiLtr"
+            >
               —
             </span>
           }
           @if (!sentenceLoading && sentenceLine) {
             <span
-              class="text-secondary min-w-0 break-words text-right text-sm leading-relaxed [direction:rtl] max-w-full"
+              class="text-secondary min-w-0 break-words text-sm leading-relaxed max-w-full"
+              [class.text-left]="uiLtr"
+              [class.text-right]="!uiLtr"
             >
               {{ sentenceLine }}
             </span>
           }
           @if (sentenceLoading) {
-            <span class="flex-1 break-words text-right text-sm text-white/50">
+            <span
+              class="flex-1 break-words text-sm text-white/50"
+              [class.text-left]="uiLtr"
+              [class.text-right]="!uiLtr"
+            >
               …
             </span>
           }
@@ -138,10 +164,13 @@
 
 @if (!emptyRes && !loading && words.length) {
   <div
-    class="translation-area-wrapper mx-auto mt-1 max-w-full text-right md:mt-3"
+    class="translation-area-wrapper mx-auto mt-1 max-w-full md:mt-3"
+    [class.text-left]="uiLtr"
+    [class.text-right]="!uiLtr"
+    [attr.dir]="uiLtr ? 'ltr' : 'rtl'"
   >
     <p
-      class="m-0 mb-1 w-full min-w-0 break-words text-right text-lg font-medium text-white/90"
+      class="m-0 mb-1 w-full min-w-0 break-words text-lg font-medium text-white/90"
     >
       {{ 'translationBox.similarWords' | transloco }}
     </p>

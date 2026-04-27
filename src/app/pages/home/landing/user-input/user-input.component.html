@@ -87,7 +87,7 @@
       <textarea
         [(ngModel)]="translationText"
         (ngModelChange)="onChange($event)"
-        class="translation-area placeholder:text-right h-[150px] w-full pb-12"
+        class="translation-area placeholder:text-start h-[150px] w-full pb-12"
         [attr.placeholder]="'input.placeholder' | transloco"
       ></textarea>
       <div
@@ -143,19 +143,34 @@
       </div>
     </div>
     <div class="options-wrapper">
-      <button (click)="addText('شمس')" class="options-btn">
+      <button
+        (click)="addSuggestionKey('input.suggestionSun')"
+        class="options-btn"
+      >
         {{ 'input.suggestionSun' | transloco }}
       </button>
-      <button (click)="addText('صباح الخير')" class="options-btn">
+      <button
+        (click)="addSuggestionKey('input.suggestionGreeting')"
+        class="options-btn"
+      >
         {{ 'input.suggestionGreeting' | transloco }}
       </button>
-      <button (click)="addText('عدالة')" class="options-btn">
+      <button
+        (click)="addSuggestionKey('input.suggestionJustice')"
+        class="options-btn"
+      >
         {{ 'input.suggestionJustice' | transloco }}
       </button>
-      <button (click)="addText('قلب')" class="options-btn">
+      <button
+        (click)="addSuggestionKey('input.suggestionHeart')"
+        class="options-btn"
+      >
         {{ 'input.suggestionHeart' | transloco }}
       </button>
-      <button (click)="addText('جميل')" class="options-btn">
+      <button
+        (click)="addSuggestionKey('input.suggestionBeautiful')"
+        class="options-btn"
+      >
         {{ 'input.suggestionBeautiful' | transloco }}
       </button>
     </div>

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { TranslationService } from '../../../../services/api/translation.service';
 import { SentenceTranslationService } from '../../../../services/api/sentence-translation.service';
 import { LandingSearchTextService } from '../../../../services/landing-search-text.service';
@@ -44,6 +44,8 @@ export class TranslationBoxComponent implements OnInit, OnDestroy {
 
   Arabic = [] as ArabicWord[];
   words = [] as TranslationResToView[];
+  /** Last search payload from API; re-mapped on Transloco language change. */
+  private lastRawTranslation: TranslationRes[] = [];
   /** Synced with TranslationService.loading$ (BehaviorSubject false initially). */
   loading = false;
   showAddingSuggestionSuccess = false;
@@ -57,7 +59,13 @@ export class TranslationBoxComponent implements OnInit, OnDestroy {
     private landingText: LandingSearchTextService,
     private languageService: LanguageService,
     private transloco: TranslocoService,
+    private cdr: ChangeDetectorRef,
   ) {}
+
+  /** Transloco UI: English = LTR alignment for UI chrome; Arabic = RTL. */
+  get uiLtr(): boolean {
+    return this.transloco.getActiveLang() === 'en';
+  }
 
   helperText: string = '';
   hoverToElement: string | null = null;
@@ -78,6 +86,41 @@ export class TranslationBoxComponent implements OnInit, OnDestroy {
     this.sentenceLoading = false;
     this.sentenceRequestSub?.unsubscribe();
     this.sentenceRequestSub = null;
+  }
+
+  /**
+   * Similar-word cards: EN UI → English gloss + transliteration; AR → Arabic + Egyptian (MdC) form.
+   */
+  private mapApiWordToView(word: TranslationRes): TranslationResToView {
+    const e0 = word.egyptian[0];
+    if (!e0) {
+      return { id: word.id, arabic: '', egyptian: '' };
+    }
+    const tr = (e0.transliteration?.trim() || e0.word) as string;
+    if (this.transloco.getActiveLang() === 'en') {
+      const englishLine =
+        word.english?.length && word.english[0]
+          ? word.english.map((e) => e.word).join(', ')
+          : word.arabic.map((a) => a.word).join(', ');
+      return {
+        id: word.id,
+        arabic: englishLine,
+        egyptian: tr,
+        category: word.category,
+        hieroglyphicSigns: e0.hieroglyphicSigns?.join(' '),
+      };
+    }
+    return {
+      id: word.id,
+      arabic: word.arabic.map((a) => a.word).join(', '),
+      egyptian: e0.word,
+      category: word.category,
+      hieroglyphicSigns: e0.hieroglyphicSigns?.join(' '),
+    };
+  }
+
+  private applyWordsFromCache(): void {
+    this.words = this.lastRawTranslation.map((w) => this.mapApiWordToView(w));
   }
 
   ngOnInit(): void {
@@ -122,15 +165,8 @@ export class TranslationBoxComponent implements OnInit, OnDestroy {
     this.streamSub.add(
       this.transService.data$.subscribe({
         next: (translation: TranslationRes[]) => {
-          this.words = translation.map((word) => {
-            return {
-              id: word.id,
-              arabic: word.arabic.map((arabic) => arabic.word).join(', '),
-              egyptian: word.egyptian[0].word,
-              category: word.category,
-              hieroglyphicSigns: word.egyptian[0].hieroglyphicSigns?.join(' '),
-            };
-          });
+          this.lastRawTranslation = translation;
+          this.applyWordsFromCache();
         },
       }),
     );
@@ -142,6 +178,12 @@ export class TranslationBoxComponent implements OnInit, OnDestroy {
     this.streamSub.add(
       this.transService.emptyRes$.subscribe((emptyRes) => {
         this.emptyRes = emptyRes;
+      }),
+    );
+    this.streamSub.add(
+      this.transloco.langChanges$.subscribe(() => {
+        this.applyWordsFromCache();
+        this.cdr.markForCheck();
       }),
     );
   }
